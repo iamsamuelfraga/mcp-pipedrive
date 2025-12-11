@@ -51,6 +51,9 @@
     "url": "https://github.com/iamsamuelfraga/mcp-pipedrive/issues"
   },
   "homepage": "https://github.com/iamsamuelfraga/mcp-pipedrive#readme",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "bottleneck": "^2.19.5",
