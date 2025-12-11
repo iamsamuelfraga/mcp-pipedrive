@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.0...v1.1.1) (2025-12-11)
+
+
+### Bug Fixes
+
+* correct mcp-publisher download URL ([f82cf07](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/f82cf075ff684df95f8c232fb8511163bb26a178))
+
 # [1.1.0](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.3...v1.1.0) (2025-12-11)
 
 
