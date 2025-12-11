@@ -3,7 +3,7 @@ import { GetRoleSchema } from '../../schemas/role.js';
 
 export function getGetRoleTool(client: PipedriveClient) {
   return {
-    'roles/get': {
+    'roles_get': {
       description: `Get detailed information about a specific role by ID.
 
 Retrieves complete information about a single role including hierarchy, assignments, and settings.

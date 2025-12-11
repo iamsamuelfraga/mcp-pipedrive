@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonProductsTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_products',
+    name: 'persons_list_products',
     description: `List products associated with a person.
 
 Returns all products that have been sold to or associated with this person through deals.

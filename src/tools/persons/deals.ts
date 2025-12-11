@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonDealsTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_deals',
+    name: 'persons_list_deals',
     description: `List all deals associated with a specific person.
 
 Returns all deals where the person is linked, including:

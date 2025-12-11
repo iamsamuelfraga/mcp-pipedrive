@@ -3,7 +3,7 @@ import { GetUserPermissionsSchema } from '../../schemas/user.js';
 
 export function getUserPermissionsTool(client: PipedriveClient) {
   return {
-    'users/get_permissions': {
+    'users_get_permissions': {
       description: `Get user permissions.
 
 Returns all permissions assigned to the specified user including access levels and restrictions.

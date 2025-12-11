@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListOrganizationFieldsTool(client: PipedriveClient) {
   return {
-    'fields/list_organization_fields': {
+    'fields_list_organization_fields': {
       description: `Get all field definitions for organizations, including custom fields.
 
 Use this to discover what fields are available before creating or updating organizations. Returns field keys, types, validation rules, and whether fields are required.

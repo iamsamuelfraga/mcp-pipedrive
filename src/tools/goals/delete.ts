@@ -3,7 +3,7 @@ import { DeleteGoalSchema } from '../../schemas/goal.js';
 
 export function getDeleteGoalTool(client: PipedriveClient) {
   return {
-    'goals/delete': {
+    'goals_delete': {
       description: `Delete an existing goal.
 
 Permanently removes a goal. The associated report will also be deleted.

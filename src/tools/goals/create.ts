@@ -3,7 +3,7 @@ import { CreateGoalSchema } from '../../schemas/goal.js';
 
 export function getCreateGoalTool(client: PipedriveClient) {
   return {
-    'goals/create': {
+    'goals_create': {
       description: `Add a new goal to track performance metrics.
 
 Creates a goal with specified type, assignee, expected outcome, and duration.

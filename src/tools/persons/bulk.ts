@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getBulkDeletePersonsTool(client: PipedriveClient) {
   return {
-    name: 'persons/bulk_delete',
+    name: 'persons_bulk_delete',
     description: `Delete multiple persons in bulk.
 
 Efficiently deletes multiple person records in a single operation. This is useful for:

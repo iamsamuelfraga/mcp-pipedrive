@@ -3,7 +3,7 @@ import { GetPermissionSetAssignmentsSchema } from '../../schemas/permission-set.
 
 export function getPermissionSetAssignmentsTool(client: PipedriveClient) {
   return {
-    'permission-sets/get_assignments': {
+    'permission_sets_get_assignments': {
       description: `Get permission set assignments.
 
 Returns all users assigned to a specific permission set with pagination support.

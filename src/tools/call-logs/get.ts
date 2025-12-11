@@ -3,7 +3,7 @@ import { GetCallLogSchema } from '../../schemas/call-log.js';
 
 export function getGetCallLogTool(client: PipedriveClient) {
   return {
-    'call_logs/get': {
+    'call_logs_get': {
       description: `Get details of a specific call log by ID.
 
 Retrieves complete information about a single call log including phone numbers, duration, outcome, and linked records.

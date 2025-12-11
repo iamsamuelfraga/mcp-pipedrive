@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListProductDealsTool(client: PipedriveClient) {
   return {
-    name: 'products/list_deals',
+    name: 'products_list_deals',
     description: `Get all deals where a specific product is attached.
 
 Returns a list of deals that have this product in their products list.

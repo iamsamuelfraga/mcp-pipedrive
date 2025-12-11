@@ -3,7 +3,7 @@ import { ListActivityTypesSchema } from '../../schemas/activity-type.js';
 
 export function getListActivityTypesTool(client: PipedriveClient) {
   return {
-    'activity_types/list': {
+    'activity_types_list': {
       description: `Get all activity types.
 
 Retrieves all activity types including both default and custom types.

@@ -19,7 +19,7 @@ const ListAllActivitiesArgsSchema = z.object({
 
 export function createListAllActivitiesTool(client: PipedriveClient) {
   return {
-    name: 'activities/list_all_auto',
+    name: 'activities_list_all_auto',
     description:
       'Automatically fetch all activities across all pages. Use this when you need complete data without manual pagination.',
     inputSchema: {

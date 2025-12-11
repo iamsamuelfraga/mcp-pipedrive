@@ -3,7 +3,7 @@ import { GetDealSchema } from '../../schemas/deal.js';
 
 export function getUpdateTools(client: PipedriveClient) {
   return {
-    'deals/list_field_updates': {
+    'deals_list_field_updates': {
       description: `List updates about deal field values (changelog).
 
 Returns the complete changelog of a deal, showing all field value changes over time.
@@ -33,7 +33,7 @@ Common use cases:
       },
     },
 
-    'deals/list_updates': {
+    'deals_list_updates': {
       description: `List updates about a deal (flow).
 
 Returns a chronological list of all updates and activities related to a deal, including field changes, notes, emails, and other events.
@@ -63,7 +63,7 @@ Common use cases:
       },
     },
 
-    'deals/list_participant_updates': {
+    'deals_list_participant_updates': {
       description: `List updates about participants of a deal.
 
 Returns the changelog of participants added to or removed from a deal.

@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getCurrentUserTool(client: PipedriveClient) {
   return {
-    'system/get_current_user': {
+    'system_get_current_user': {
       description: `Get information about the currently authenticated user.
 
 Returns complete details about the user associated with the API token, including:

@@ -3,7 +3,7 @@ import { BulkDeleteFiltersSchema } from '../../schemas/filter.js';
 
 export function getBulkDeleteFiltersTool(client: PipedriveClient) {
   return {
-    'filters/bulk_delete': {
+    'filters_bulk_delete': {
       description: `Delete multiple filters at once in Pipedrive.
 
 Marks multiple filters as deleted in a single operation. More efficient than deleting one at a time.

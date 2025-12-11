@@ -24,7 +24,7 @@ interface CursorPaginatedResponse<T> {
 
 export function createListProjectsTool(client: PipedriveClient) {
   return {
-    name: 'projects/list',
+    name: 'projects_list',
     description:
       'List projects with cursor-based pagination. Returns projects with filtering options by status, phase, and archive state.',
     inputSchema: {

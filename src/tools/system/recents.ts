@@ -3,7 +3,7 @@ import { GetRecentsSchema } from '../../schemas/system.js';
 
 export function getRecentsTool(client: PipedriveClient) {
   return {
-    'system/get_recents': {
+    'system_get_recents': {
       description: `Get recently viewed or modified items.
 
 Returns data about all recent changes that occurred after the given timestamp. This is useful for tracking activity, syncing data, or showing users what they've recently worked on.

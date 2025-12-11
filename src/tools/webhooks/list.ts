@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListWebhooksTool(client: PipedriveClient) {
   return {
-    'webhooks/list': {
+    'webhooks_list': {
       description: `Get all webhooks configured for the company.
 
 Returns a list of all webhooks that have been created in Pipedrive, including:

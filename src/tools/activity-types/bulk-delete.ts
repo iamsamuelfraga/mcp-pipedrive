@@ -3,7 +3,7 @@ import { BulkDeleteActivityTypesSchema } from '../../schemas/activity-type.js';
 
 export function getBulkDeleteActivityTypesTool(client: PipedriveClient) {
   return {
-    'activity_types/bulk_delete': {
+    'activity_types_bulk_delete': {
       description: `Delete multiple activity types in bulk.
 
 Marks multiple activity types as deleted in a single operation. Only custom activity types can be deleted.

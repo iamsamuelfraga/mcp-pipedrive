@@ -3,7 +3,7 @@ import { ListGoalsSchema } from '../../schemas/goal.js';
 
 export function getListGoalsTool(client: PipedriveClient) {
   return {
-    'goals/list': {
+    'goals_list': {
       description: `Get all goals with optional filters.
 
 Retrieves goals based on various filtering criteria including type, title, assignee, and period.

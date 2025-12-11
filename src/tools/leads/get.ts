@@ -3,7 +3,7 @@ import { GetLeadSchema } from '../../schemas/lead.js';
 
 export function getGetLeadTool(client: PipedriveClient) {
   return {
-    'leads/get': {
+    'leads_get': {
       description: `Get details of a specific lead by UUID.
 
 Returns detailed information about a single lead including all fields and custom field values.

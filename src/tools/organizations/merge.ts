@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getMergeOrganizationsTool(client: PipedriveClient) {
   return {
-    name: 'organizations/merge',
+    name: 'organizations_merge',
     description: `Merge two organizations into one.
 
 Combines two organization records, moving all related data to the primary organization:

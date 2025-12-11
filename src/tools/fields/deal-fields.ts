@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListDealFieldsTool(client: PipedriveClient) {
   return {
-    'fields/list_deal_fields': {
+    'fields_list_deal_fields': {
       description: `Get all field definitions for deals, including custom fields.
 
 Use this to discover what fields are available before creating or updating deals. Returns field keys, types, validation rules, and whether fields are required.

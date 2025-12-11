@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getBulkDeleteOrganizationsTool(client: PipedriveClient) {
   return {
-    name: 'organizations/bulk_delete',
+    name: 'organizations_bulk_delete',
     description: `Delete multiple organizations in bulk.
 
 Efficiently deletes multiple organization records in a single operation. This is useful for:

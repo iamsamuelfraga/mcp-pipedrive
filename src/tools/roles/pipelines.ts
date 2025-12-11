@@ -3,7 +3,7 @@ import { ListRolePipelinesSchema, UpdateRolePipelinesSchema } from '../../schema
 
 export function getRolePipelinesTools(client: PipedriveClient) {
   return {
-    'roles/list_role_pipelines': {
+    'roles_list_role_pipelines': {
       description: `List pipeline visibility for a role.
 
 Returns all pipelines and their visibility status for a specific role. For more information on pipeline visibility, please refer to the Visibility groups article.
@@ -33,7 +33,7 @@ Common use cases:
       },
     },
 
-    'roles/update_role_pipelines': {
+    'roles_update_role_pipelines': {
       description: `Update pipeline visibility for a role.
 
 Updates the specified pipelines to be visible and/or hidden for a specific role. For more information on pipeline visibility, please refer to the Visibility groups article.

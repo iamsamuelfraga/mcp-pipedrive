@@ -9,7 +9,7 @@ const GetTeamUsersArgsSchema = z.object({
 
 export function createGetTeamUsersTool(client: PipedriveClient) {
   return {
-    name: 'teams/get-users',
+    name: 'teams_get_users',
     description: 'Get all users in a team.',
     inputSchema: {
       type: 'object',

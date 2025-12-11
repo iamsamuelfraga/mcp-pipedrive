@@ -3,7 +3,7 @@ import { UpdateFileSchema } from '../../schemas/file.js';
 
 export function getUpdateFileTool(client: PipedriveClient) {
   return {
-    'files/update': {
+    'files_update': {
       description: `Update file metadata (name or description).
 
 Updates a file's name or description. Does not modify the actual file content.

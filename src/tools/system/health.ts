@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getHealthCheckTool(client: PipedriveClient) {
   return {
-    'system/health_check': {
+    'system_health_check': {
       description: `Check API connectivity and authentication status.
 
 Verifies that the Pipedrive API is accessible and the authentication token is valid by making a test request to GET /users/me.

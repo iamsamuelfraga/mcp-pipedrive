@@ -3,7 +3,7 @@ import { UpdateTaskSchema } from '../../schemas/task.js';
 
 export function getUpdateTaskTool(client: PipedriveClient) {
   return {
-    'tasks/update': {
+    'tasks_update': {
       description: `Update an existing task.
 
 Updates task properties such as subject, description, assignee, due date, or completion status.

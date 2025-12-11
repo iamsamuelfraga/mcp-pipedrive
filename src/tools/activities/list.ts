@@ -21,7 +21,7 @@ const ListActivitiesArgsSchema = z.object({
 
 export function createListActivitiesTool(client: PipedriveClient) {
   return {
-    name: 'activities/list',
+    name: 'activities_list',
     description:
       'List activities with pagination and filtering options. Can filter by user, type, done status, and date range.',
     inputSchema: {

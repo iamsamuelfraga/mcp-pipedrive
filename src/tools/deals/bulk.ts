@@ -14,7 +14,7 @@ const BulkDeleteDealsSchema = z
 
 export function getBulkTools(client: PipedriveClient) {
   return {
-    'deals/bulk_delete': {
+    'deals_bulk_delete': {
       description: `Delete multiple deals in bulk.
 
 Marks multiple deals as deleted. After 30 days, the deals will be permanently deleted.

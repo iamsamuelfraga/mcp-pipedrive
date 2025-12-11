@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListPipelinesTool(client: PipedriveClient) {
   return {
-    'pipelines/list': {
+    'pipelines_list': {
       description: `List all pipelines.
 
 Returns all pipelines in the Pipedrive account, including their stages.

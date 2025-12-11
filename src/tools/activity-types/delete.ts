@@ -3,7 +3,7 @@ import { DeleteActivityTypeSchema } from '../../schemas/activity-type.js';
 
 export function getDeleteActivityTypeTool(client: PipedriveClient) {
   return {
-    'activity_types/delete': {
+    'activity_types_delete': {
       description: `Delete an activity type.
 
 Marks an activity type as deleted. Only custom activity types can be deleted, not system-defined ones.

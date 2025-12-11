@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getCreateChannelTool(client: PipedriveClient) {
   return {
-    name: 'channels/create',
+    name: 'channels_create',
     description: `Create a new messaging channel in Pipedrive. Only admins are able to register new channels.
 
 This endpoint requires the **Messengers integration** OAuth scope and the Messaging manifest ready for the Messaging app extension.

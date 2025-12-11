@@ -3,7 +3,7 @@ import { GetDealsTimelineSchema } from '../../schemas/deal.js';
 
 export function getTimelineTools(client: PipedriveClient) {
   return {
-    'deals/get_deals_timeline': {
+    'deals_get_deals_timeline': {
       description: `Get deals timeline grouped by intervals.
 
 Returns open and won deals grouped by a defined interval of time set in a date-type field.
@@ -56,7 +56,7 @@ Common use cases:
       },
     },
 
-    'deals/get_archived_deals_timeline': {
+    'deals_get_archived_deals_timeline': {
       description: `Get archived deals timeline grouped by intervals.
 
 Returns archived deals grouped by a defined interval of time set in a date-type field.

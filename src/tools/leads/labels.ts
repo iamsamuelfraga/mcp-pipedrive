@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getLeadLabelsTool(client: PipedriveClient) {
   return {
-    'leads/get_labels': {
+    'leads_get_labels': {
       description: `Get all lead labels (tags/categories).
 
 Returns details of all lead labels available in your Pipedrive account.

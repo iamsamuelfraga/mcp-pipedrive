@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getSearchPersonsTool(client: PipedriveClient) {
   return {
-    name: 'persons/search',
+    name: 'persons_search',
     description: `Search for persons by name, email, phone, or notes.
 
 The search uses Pipedrive's intelligent search that:

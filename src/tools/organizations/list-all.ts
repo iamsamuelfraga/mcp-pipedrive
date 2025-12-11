@@ -11,7 +11,7 @@ const ListAllOrganizationsArgsSchema = z.object({
 
 export function createListAllOrganizationsTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list_all_auto',
+    name: 'organizations_list_all_auto',
     description:
       'Automatically fetch all organizations across all pages. Use this when you need complete data without manual pagination.',
     inputSchema: {

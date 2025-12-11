@@ -3,7 +3,7 @@ import { SearchByFieldSchema } from '../../schemas/search.js';
 
 export function getSearchByFieldTool(client: PipedriveClient) {
   return {
-    'search/by_field': {
+    'search_by_field': {
       description: `Search for items by a specific field value.
 
 Searches for items by targeting a specific field (custom or standard fields).

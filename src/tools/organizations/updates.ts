@@ -10,7 +10,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListOrganizationChangelogTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list_field_updates',
+    name: 'organizations_list_field_updates',
     description: `List updates about organization field values (changelog).
 
 Returns a chronological list of changes made to organization fields. This is useful for:
@@ -74,7 +74,7 @@ Uses cursor-based pagination for efficient navigation through large change histo
  */
 export function getListOrganizationFlowTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list_updates',
+    name: 'organizations_list_updates',
     description: `List updates about an organization (activity stream).
 
 Returns a comprehensive timeline of all activities and changes related to an organization:

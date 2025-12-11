@@ -3,7 +3,7 @@ import { SearchLeadsSchema } from '../../schemas/lead.js';
 
 export function getSearchLeadsTool(client: PipedriveClient) {
   return {
-    'leads/search': {
+    'leads_search': {
       description: `Search leads by title, notes, and custom fields.
 
 Searches all leads by title, notes, and/or custom fields using a search term.

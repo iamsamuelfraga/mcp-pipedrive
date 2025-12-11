@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonFilesTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_files',
+    name: 'persons_list_files',
     description: `List all files attached to a specific person.
 
 Returns all files associated with the person, including:

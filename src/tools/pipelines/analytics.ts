@@ -13,7 +13,7 @@ import {
  */
 export function getPipelineAnalyticsTools(client: PipedriveClient) {
   return {
-    'pipelines/conversion_statistics': {
+    'pipelines_conversion_statistics': {
       description: `Get deal conversion rates in a pipeline for a specific time period.
 
 Returns stage-to-stage conversion rates and pipeline-to-close rates, showing how deals progress through the pipeline.
@@ -67,7 +67,7 @@ Common use cases:
       },
     },
 
-    'pipelines/movement_statistics': {
+    'pipelines_movement_statistics': {
       description: `Get deal movement statistics in a pipeline for a specific time period.
 
 Returns comprehensive statistics about how deals moved through the pipeline, including new deals, won/lost deals, and average deal age.
@@ -125,7 +125,7 @@ Common use cases:
       },
     },
 
-    'pipelines/deals': {
+    'pipelines_deals': {
       description: `Get all deals in a specific pipeline.
 
 Returns a list of deals in the pipeline with optional filtering by stage, user, or custom filter. Includes pagination support and optional summary statistics.

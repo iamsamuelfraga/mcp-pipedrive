@@ -3,7 +3,7 @@ import { UpdateActivityTypeSchema } from '../../schemas/activity-type.js';
 
 export function getUpdateActivityTypeTool(client: PipedriveClient) {
   return {
-    'activity_types/update': {
+    'activity_types_update': {
       description: `Update an existing activity type.
 
 Updates activity type properties such as name, icon, color, or display order.

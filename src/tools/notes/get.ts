@@ -3,7 +3,7 @@ import { GetNoteSchema } from '../../schemas/note.js';
 
 export function getGetNoteTool(client: PipedriveClient) {
   return {
-    'notes/get': {
+    'notes_get': {
       description: `Get detailed information about a specific note.
 
 Returns note content and metadata including creator, timestamps, and associated entities.

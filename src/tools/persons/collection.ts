@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getPersonsCollectionTool(client: PipedriveClient) {
   return {
-    name: 'persons/get_collection',
+    name: 'persons_get_collection',
     description: `Get all persons using the collection endpoint.
 
 This endpoint provides an alternative way to fetch persons with different capabilities:
@@ -16,7 +16,7 @@ This endpoint provides an alternative way to fetch persons with different capabi
 - Optimized for data synchronization
 - Better performance for large-scale operations
 
-Key differences from persons/list:
+Key differences from persons_list:
 - Uses cursor pagination instead of offset/limit
 - Supports date-based filtering for incremental sync
 - More efficient for fetching large volumes

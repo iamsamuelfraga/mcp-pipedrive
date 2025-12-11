@@ -11,7 +11,7 @@ const GetMailThreadsArgsSchema = z.object({
 
 export function createGetMailThreadsTool(client: PipedriveClient) {
   return {
-    name: 'mailbox/get-threads',
+    name: 'mailbox_get_threads',
     description:
       'Get mail threads in a specified folder ordered by the most recent message within.',
     inputSchema: {

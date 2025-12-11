@@ -11,12 +11,12 @@ import { getRemoteFileTool } from './remote.js';
  * Get all file-related tools for the MCP server
  *
  * This function aggregates all 7 file tools into a single object:
- * - Upload: upload
- * - List: list
- * - Read: get, download
- * - Update: update
- * - Delete: delete
- * - Remote links: create_remote_link
+ * - Upload: files_upload
+ * - List: files_list
+ * - Read: files_get, files_download
+ * - Update: files_update
+ * - Delete: files_delete
+ * - Remote links: files_create_remote_link
  *
  * @param client - The PipedriveClient instance to use for API calls
  * @returns Object containing all file tools with their configurations

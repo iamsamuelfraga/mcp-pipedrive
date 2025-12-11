@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getUserSettingsTool(client: PipedriveClient) {
   return {
-    'system/get_user_settings': {
+    'system_get_user_settings': {
       description: `List settings of the authorized user.
 
 Returns all configuration settings for the currently authorized Pipedrive user. This includes personal preferences, feature flags, limits, and account-specific configurations.

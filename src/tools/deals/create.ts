@@ -3,7 +3,7 @@ import { CreateDealSchema } from '../../schemas/deal.js';
 
 export function getCreateDealTool(client: PipedriveClient) {
   return {
-    'deals/create': {
+    'deals_create': {
       description: `Create a new deal in Pipedrive.
 
 Creates a new deal with the specified information. Only title is required.

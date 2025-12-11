@@ -3,7 +3,7 @@ import { GetGoalResultsSchema } from '../../schemas/goal.js';
 
 export function getGetGoalResultsTool(client: PipedriveClient) {
   return {
-    'goals/get_results': {
+    'goals_get_results': {
       description: `Get the progress and results of a goal for a specified period.
 
 Retrieves goal progress data including current value, target, and completion percentage.

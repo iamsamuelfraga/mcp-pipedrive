@@ -3,7 +3,7 @@ import { SearchOrganizationsSchema } from '../../schemas/search.js';
 
 export function getSearchOrganizationsTool(client: PipedriveClient) {
   return {
-    'search/organizations': {
+    'search_organizations': {
       description: `Search for organizations with advanced filtering options.
 
 Performs an organization-specific search across all organization fields.

@@ -11,7 +11,7 @@ interface CursorPaginatedResponse<T> {
 
 export function createListProjectTemplatesTool(client: PipedriveClient) {
   return {
-    name: 'project_templates/list',
+    name: 'project_templates_list',
     description: `List all project templates with cursor-based pagination.
 
 Project templates are reusable blueprints for creating new projects with

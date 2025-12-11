@@ -14,7 +14,7 @@ const UpdateTeamArgsSchema = z.object({
 
 export function createUpdateTeamTool(client: PipedriveClient) {
   return {
-    name: 'teams/update',
+    name: 'teams_update',
     description: 'Update the properties of a team.',
     inputSchema: {
       type: 'object',

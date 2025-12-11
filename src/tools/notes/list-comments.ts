@@ -3,7 +3,7 @@ import { ListNoteCommentsSchema } from '../../schemas/note.js';
 
 export function getListNoteCommentsTool(client: PipedriveClient) {
   return {
-    'notes/list_comments': {
+    'notes_list_comments': {
       description: `List all comments for a note with pagination options.
 
 Returns a paginated list of comments associated with a specific note.

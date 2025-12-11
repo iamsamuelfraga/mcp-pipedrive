@@ -3,7 +3,7 @@ import { ListDealPersonsSchema } from '../../schemas/deal.js';
 
 export function getPersonTools(client: PipedriveClient) {
   return {
-    'deals/list_persons': {
+    'deals_list_persons': {
       description: `List all persons associated with a deal.
 
 Returns all persons (contacts) linked to a specific deal, including the primary contact and any participants.

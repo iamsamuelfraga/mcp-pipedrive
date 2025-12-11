@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getUserConnectionsTool(client: PipedriveClient) {
   return {
-    'system/get_user_connections': {
+    'system_get_user_connections': {
       description: `Get all user connections for the authorized user.
 
 Returns data about all external service connections (integrations) for the currently authorized user. This shows which third-party services the user has connected to their Pipedrive account.

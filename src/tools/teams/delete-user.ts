@@ -9,7 +9,7 @@ const DeleteUserFromTeamArgsSchema = z.object({
 
 export function createDeleteUserFromTeamTool(client: PipedriveClient) {
   return {
-    name: 'teams/delete-user',
+    name: 'teams_delete_user',
     description: 'Remove a user from a team.',
     inputSchema: {
       type: 'object',

@@ -12,7 +12,7 @@ const ListOrganizationFilesArgsSchema = z.object({
 
 export function createListOrganizationFilesTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list_files',
+    name: 'organizations_list_files',
     description: 'List all files attached to a specific organization.',
     inputSchema: {
       type: 'object',

@@ -3,7 +3,7 @@ import { DuplicateDealSchema } from '../../schemas/deal.js';
 
 export function getDuplicateDealTool(client: PipedriveClient) {
   return {
-    'deals/duplicate': {
+    'deals_duplicate': {
       description: `Duplicate an existing deal.
 
 Creates a copy of an existing deal with all its properties. The new deal will have the same values, person, organization, etc.

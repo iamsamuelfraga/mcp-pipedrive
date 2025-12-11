@@ -3,7 +3,7 @@ import { UniversalSearchSchema } from '../../schemas/search.js';
 
 export function getUniversalSearchTool(client: PipedriveClient) {
   return {
-    'search/universal': {
+    'search_universal': {
       description: `Search across all Pipedrive entities (deals, persons, organizations, products, leads, files).
 
 Performs a universal search that can search across multiple item types simultaneously.

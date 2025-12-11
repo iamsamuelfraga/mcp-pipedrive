@@ -3,7 +3,7 @@ import { DeleteDealSchema } from '../../schemas/deal.js';
 
 export function getDeleteDealTool(client: PipedriveClient) {
   return {
-    'deals/delete': {
+    'deals_delete': {
       description: `Delete a deal permanently.
 
 WARNING: This permanently deletes the deal. Consider marking as lost instead.

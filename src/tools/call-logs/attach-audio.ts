@@ -3,7 +3,7 @@ import { AttachAudioSchema } from '../../schemas/call-log.js';
 
 export function getAttachAudioTool(client: PipedriveClient) {
   return {
-    'call_logs/attach_audio': {
+    'call_logs_attach_audio': {
       description: `Attach an audio recording file to a call log.
 
 Uploads an audio file and associates it with a call log. The call log will be marked as having a recording.

@@ -18,7 +18,7 @@ interface SingleResponse<T> {
 
 export function createGetProjectBoardsTool(client: PipedriveClient) {
   return {
-    name: 'projects/boards/list',
+    name: 'projects_boards_list',
     description:
       'Get all project boards that are not deleted. Returns boards ordered by their order number.',
     inputSchema: {
@@ -46,7 +46,7 @@ export function createGetProjectBoardsTool(client: PipedriveClient) {
 
 export function createGetProjectBoardTool(client: PipedriveClient) {
   return {
-    name: 'projects/boards/get',
+    name: 'projects_boards_get',
     description: 'Get details of a specific project board by ID.',
     inputSchema: {
       type: 'object',

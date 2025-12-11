@@ -3,7 +3,7 @@ import { UpdatePipelineSchema } from '../../schemas/pipeline.js';
 
 export function getUpdatePipelineTool(client: PipedriveClient) {
   return {
-    'pipelines/update': {
+    'pipelines_update': {
       description: `Update an existing pipeline.
 
 Updates pipeline configuration including name, order, active status, and probability tracking.

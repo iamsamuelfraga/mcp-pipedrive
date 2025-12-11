@@ -4,7 +4,7 @@ import type { PipedriveResponse } from '../../types/common.js';
 
 export function getProductPermittedUsersTool(client: PipedriveClient) {
   return {
-    name: 'products/list_permitted_users',
+    name: 'products_list_permitted_users',
     description: `List all users who have access to view and edit a specific product.
 
 Returns a list of users who have permission to access this product based on

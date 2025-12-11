@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getDeletePersonPictureTool(client: PipedriveClient) {
   return {
-    name: 'persons/delete_picture',
+    name: 'persons_delete_picture',
     description: `Delete a person's profile picture.
 
 Removes the profile picture from the person record. The person will revert to:
@@ -57,7 +57,7 @@ the association with the person.`,
  */
 export function getAddPersonPictureTool(client: PipedriveClient) {
   return {
-    name: 'persons/add_picture',
+    name: 'persons_add_picture',
     description: `Add or update a person's profile picture.
 
 Uploads an image file to set as the person's profile picture. The image will be:

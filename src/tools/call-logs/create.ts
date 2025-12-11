@@ -3,7 +3,7 @@ import { CreateCallLogSchema } from '../../schemas/call-log.js';
 
 export function getCreateCallLogTool(client: PipedriveClient) {
   return {
-    'call_logs/create': {
+    'call_logs_create': {
       description: `Add a new call log to track phone call activity.
 
 Creates a call log with phone numbers, outcome, duration, and timestamps. Can be linked to persons, organizations, deals, leads, and activities.

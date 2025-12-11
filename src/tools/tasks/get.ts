@@ -3,7 +3,7 @@ import { GetTaskSchema } from '../../schemas/task.js';
 
 export function getGetTaskTool(client: PipedriveClient) {
   return {
-    'tasks/get': {
+    'tasks_get': {
       description: `Get detailed information about a specific task by ID.
 
 Retrieves complete information about a single task including subject, description, assignee, due date, and completion status.

@@ -11,7 +11,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListProductFollowersTool(client: PipedriveClient) {
   return {
-    name: 'products/list_followers',
+    name: 'products_list_followers',
     description: `List all followers of a specific product.
 
 Returns a list of users who are following this product and will receive
@@ -77,7 +77,7 @@ This is useful for:
  */
 export function getAddProductFollowerTool(client: PipedriveClient) {
   return {
-    name: 'products/add_follower',
+    name: 'products_add_follower',
     description: `Add a follower to a product.
 
 Followers are users who will receive notifications about updates to this product.
@@ -128,7 +128,7 @@ Note: Users can only be added as followers if they have access to the product.`,
  */
 export function getDeleteProductFollowerTool(client: PipedriveClient) {
   return {
-    name: 'products/delete_follower',
+    name: 'products_delete_follower',
     description: `Remove a follower from a product.
 
 Stops a user from receiving notifications about this product.

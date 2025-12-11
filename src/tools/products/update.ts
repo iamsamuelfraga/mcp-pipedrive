@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getUpdateProductTool(client: PipedriveClient) {
   return {
-    name: 'products/update',
+    name: 'products_update',
     description: `Update an existing product in Pipedrive.
 
 All fields are optional except id. Only provide the fields you want to update.

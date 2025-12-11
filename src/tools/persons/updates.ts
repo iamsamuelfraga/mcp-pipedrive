@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonChangelogTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_field_updates',
+    name: 'persons_list_field_updates',
     description: `List updates about person field values (changelog).
 
 Returns a chronological list of changes made to person fields. This is useful for:
@@ -71,7 +71,7 @@ Uses cursor-based pagination for efficient navigation through large change histo
  */
 export function getListPersonFlowTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_updates',
+    name: 'persons_list_updates',
     description: `List updates about a person (activity stream).
 
 Returns a comprehensive timeline of all activities and changes related to a person:

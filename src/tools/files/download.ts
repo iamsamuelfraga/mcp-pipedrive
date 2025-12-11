@@ -3,7 +3,7 @@ import { DownloadFileSchema } from '../../schemas/file.js';
 
 export function getDownloadFileTool(client: PipedriveClient) {
   return {
-    'files/download': {
+    'files_download': {
       description: `Get download URL for a file.
 
 Returns a temporary download URL that can be used to download the file content.

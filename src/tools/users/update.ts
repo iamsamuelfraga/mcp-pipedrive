@@ -3,7 +3,7 @@ import { UpdateUserSchema } from '../../schemas/user.js';
 
 export function getUpdateUserTool(client: PipedriveClient) {
   return {
-    'users/update': {
+    'users_update': {
       description: `Update user details.
 
 Updates information for an existing user. Requires admin permissions.

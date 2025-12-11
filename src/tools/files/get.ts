@@ -3,7 +3,7 @@ import { GetFileSchema } from '../../schemas/file.js';
 
 export function getGetFileTool(client: PipedriveClient) {
   return {
-    'files/get': {
+    'files_get': {
       description: `Get detailed information about a specific file.
 
 Returns file metadata including name, size, type, associated entities, upload date, and more.

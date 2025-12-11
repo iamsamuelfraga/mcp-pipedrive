@@ -41,7 +41,7 @@ const CreateActivityArgsSchema = z.object({
 
 export function createCreateActivityTool(client: PipedriveClient) {
   return {
-    name: 'activities/create',
+    name: 'activities_create',
     description:
       'Create a new activity. Subject, type, and due_date are required. Can link to deals, persons, organizations, projects, or leads.',
     inputSchema: {

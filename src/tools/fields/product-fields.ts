@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListProductFieldsTool(client: PipedriveClient) {
   return {
-    'fields/list_product_fields': {
+    'fields_list_product_fields': {
       description: `Get all field definitions for products, including custom fields.
 
 Use this to discover what fields are available before creating or updating products. Returns field keys, types, validation rules, and whether fields are required.

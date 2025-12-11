@@ -3,7 +3,7 @@ import { GetPipelineSchema } from '../../schemas/pipeline.js';
 
 export function getGetPipelineTool(client: PipedriveClient) {
   return {
-    'pipelines/get': {
+    'pipelines_get': {
       description: `Get detailed information about a specific pipeline.
 
 Returns pipeline details including all its stages and deal statistics.

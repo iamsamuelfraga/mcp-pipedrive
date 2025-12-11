@@ -3,7 +3,7 @@ import { DeleteCallLogSchema } from '../../schemas/call-log.js';
 
 export function getDeleteCallLogTool(client: PipedriveClient) {
   return {
-    'call_logs/delete': {
+    'call_logs_delete': {
       description: `Delete a call log.
 
 Permanently removes a call log from the system. If there is an audio recording attached, it will also be deleted.

@@ -9,7 +9,7 @@ const GetActivityArgsSchema = z.object({
 
 export function createGetActivityTool(client: PipedriveClient) {
   return {
-    name: 'activities/get',
+    name: 'activities_get',
     description: 'Get details of a specific activity by ID.',
     inputSchema: {
       type: 'object',

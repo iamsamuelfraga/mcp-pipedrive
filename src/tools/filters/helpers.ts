@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getFilterHelpersTool(client: PipedriveClient) {
   return {
-    'filters/helpers': {
+    'filters_helpers': {
       description: `Get all available filter helpers and field types.
 
 Returns comprehensive information about what conditions and helpers are available for creating/updating filters.

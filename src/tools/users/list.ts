@@ -3,7 +3,7 @@ import { ListUsersSchema } from '../../schemas/user.js';
 
 export function getListUsersTool(client: PipedriveClient) {
   return {
-    'users/list': {
+    'users_list': {
       description: `List all users within the company.
 
 Returns all users in the Pipedrive company account with their details including roles, permissions, and settings.

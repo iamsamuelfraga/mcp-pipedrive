@@ -3,7 +3,7 @@ import { ListDealPermittedUsersSchema } from '../../schemas/deal.js';
 
 export function getPermissionTools(client: PipedriveClient) {
   return {
-    'deals/list_permitted_users': {
+    'deals_list_permitted_users': {
       description: `List permitted users for a deal.
 
 Returns the list of users who have access to view and edit a specific deal based on its visibility settings.

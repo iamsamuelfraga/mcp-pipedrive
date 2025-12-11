@@ -3,7 +3,7 @@ import { ListRolesSchema } from '../../schemas/role.js';
 
 export function getListRolesTool(client: PipedriveClient) {
   return {
-    'roles/list': {
+    'roles_list': {
       description: `List all roles within the company.
 
 Returns all roles with pagination support, including role hierarchy and assignment counts.

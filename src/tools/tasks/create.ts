@@ -3,7 +3,7 @@ import { CreateTaskSchema } from '../../schemas/task.js';
 
 export function getCreateTaskTool(client: PipedriveClient) {
   return {
-    'tasks/create': {
+    'tasks_create': {
       description: `Add a new task to a project or as a standalone task.
 
 Creates a task with subject, optional description, assignee, due date, and project association.

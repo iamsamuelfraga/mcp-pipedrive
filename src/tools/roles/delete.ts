@@ -3,7 +3,7 @@ import { DeleteRoleSchema } from '../../schemas/role.js';
 
 export function getDeleteRoleTool(client: PipedriveClient) {
   return {
-    'roles/delete': {
+    'roles_delete': {
       description: `Delete a role.
 
 Removes a role from the company. Requires admin permissions.

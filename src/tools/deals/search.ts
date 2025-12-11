@@ -3,7 +3,7 @@ import { SearchDealsSchema } from '../../schemas/deal.js';
 
 export function getSearchDealsTool(client: PipedriveClient) {
   return {
-    'deals/search': {
+    'deals_search': {
       description: `Search for deals using a text query.
 
 Searches deals by title, notes, or custom fields. Much faster than filtering all deals.

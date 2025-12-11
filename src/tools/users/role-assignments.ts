@@ -3,7 +3,7 @@ import { ListUserRoleAssignmentsSchema } from '../../schemas/user.js';
 
 export function getUserRoleAssignmentsTool(client: PipedriveClient) {
   return {
-    'users/list_role_assignments': {
+    'users_list_role_assignments': {
       description: `List role assignments for a user.
 
 Returns all role assignments for a specific user with pagination support.

@@ -13,7 +13,7 @@ interface SingleResponse<T> {
 
 export function createArchiveProjectTool(client: PipedriveClient) {
   return {
-    name: 'projects/archive',
+    name: 'projects_archive',
     description:
       'Archive a project. Archived projects can be retrieved by using the include_archived filter.',
     inputSchema: {

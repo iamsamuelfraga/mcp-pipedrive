@@ -4,7 +4,7 @@ import type { PipedriveResponse } from '../../types/common.js';
 
 export function createBulkDeleteActivitiesTool(client: PipedriveClient) {
   return {
-    name: 'activities/bulk_delete',
+    name: 'activities_bulk_delete',
     description: `Delete multiple activities in a single request.
 
 This endpoint allows you to delete up to 100 activities at once by providing

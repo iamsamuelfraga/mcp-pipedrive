@@ -3,7 +3,7 @@ import { CreateLeadSchema } from '../../schemas/lead.js';
 
 export function getCreateLeadTool(client: PipedriveClient) {
   return {
-    'leads/create': {
+    'leads_create': {
       description: `Create a new lead in Pipedrive.
 
 Creates a new lead with the specified information. A lead must be linked to a person or an organization (or both).

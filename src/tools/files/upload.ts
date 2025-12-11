@@ -5,7 +5,7 @@ import { basename } from 'path';
 
 export function getUploadFileTool(client: PipedriveClient) {
   return {
-    'files/upload': {
+    'files_upload': {
       description: `Upload a file to Pipedrive and attach it to a deal, person, organization, activity, or product.
 
 Uploads a file from the specified file path and associates it with at least one entity.

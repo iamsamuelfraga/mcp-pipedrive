@@ -3,7 +3,7 @@ import { GetUserSchema } from '../../schemas/user.js';
 
 export function getGetUserTool(client: PipedriveClient) {
   return {
-    'users/get': {
+    'users_get': {
       description: `Get detailed information about a specific user by ID.
 
 Retrieves complete information about a single user including roles, permissions, timezone, and access settings.

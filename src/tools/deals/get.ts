@@ -3,7 +3,7 @@ import { GetDealSchema } from '../../schemas/deal.js';
 
 export function getGetDealTool(client: PipedriveClient) {
   return {
-    'deals/get': {
+    'deals_get': {
       description: `Get detailed information about a specific deal by ID.
 
 Retrieves complete information about a single deal, including all custom fields.

@@ -3,7 +3,7 @@ import { GetFilterSchema } from '../../schemas/filter.js';
 
 export function getGetFilterTool(client: PipedriveClient) {
   return {
-    'filters/get': {
+    'filters_get': {
       description: `Get a specific filter by ID.
 
 Returns detailed data about a specific filter, including its condition lines.

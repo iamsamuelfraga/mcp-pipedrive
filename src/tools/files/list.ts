@@ -3,7 +3,7 @@ import { ListFilesSchema } from '../../schemas/file.js';
 
 export function getListFilesTool(client: PipedriveClient) {
   return {
-    'files/list': {
+    'files_list': {
       description: `List files with pagination and filtering options.
 
 Returns a paginated list of files. Use filters to narrow results by associated entity (deal, person, organization, activity, product).

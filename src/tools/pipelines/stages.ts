@@ -11,7 +11,7 @@ import {
 
 export function getPipelineStageTools(client: PipedriveClient) {
   return {
-    'pipelines/get_stages': {
+    'pipelines_get_stages': {
       description: `Get all stages for a specific pipeline.
 
 Returns all stages in a pipeline with their configuration.
@@ -44,7 +44,7 @@ Common use cases:
       },
     },
 
-    'stages/create': {
+    'stages_create': {
       description: `Create a new stage in a pipeline.
 
 Adds a new stage to a pipeline with specified configuration.
@@ -83,7 +83,7 @@ Common use cases:
       },
     },
 
-    'stages/update': {
+    'stages_update': {
       description: `Update an existing stage.
 
 Updates stage configuration including name, order, probability, and rotten settings.
@@ -122,7 +122,7 @@ Common use cases:
       },
     },
 
-    'stages/get_all': {
+    'stages_get_all': {
       description: `Get all stages across all pipelines or filter by pipeline.
 
 Returns data about all stages with their configuration.
@@ -165,7 +165,7 @@ Common use cases:
       },
     },
 
-    'stages/get': {
+    'stages_get': {
       description: `Get a single stage by ID.
 
 Returns detailed data about a specific stage.
@@ -199,7 +199,7 @@ Common use cases:
       },
     },
 
-    'stages/delete': {
+    'stages_delete': {
       description: `Delete a single stage.
 
 Marks a stage as deleted in Pipedrive.
@@ -229,12 +229,12 @@ Common use cases:
       },
     },
 
-    'stages/delete_multiple': {
+    'stages_delete_multiple': {
       description: `Delete multiple stages in bulk.
 
 Marks multiple stages as deleted in one operation.
 
-Note: This endpoint has been deprecated by Pipedrive. Consider using stages/delete for each stage instead.
+Note: This endpoint has been deprecated by Pipedrive. Consider using stages_delete for each stage instead.
 
 Workflow tips:
 - Provide comma-separated stage IDs

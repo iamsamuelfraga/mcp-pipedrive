@@ -3,7 +3,7 @@ import { UpdateNoteSchema } from '../../schemas/note.js';
 
 export function getUpdateNoteTool(client: PipedriveClient) {
   return {
-    'notes/update': {
+    'notes_update': {
       description: `Update an existing note.
 
 Updates note content, entity associations, or pinned status.

@@ -3,7 +3,7 @@ import { UpdateFilterSchema } from '../../schemas/filter.js';
 
 export function getUpdateFilterTool(client: PipedriveClient) {
   return {
-    'filters/update': {
+    'filters_update': {
       description: `Update an existing filter in Pipedrive.
 
 Updates a filter's name and/or conditions. Only provide fields you want to change.

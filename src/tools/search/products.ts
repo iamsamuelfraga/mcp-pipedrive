@@ -3,7 +3,7 @@ import { SearchProductsSchema } from '../../schemas/search.js';
 
 export function getSearchProductsTool(client: PipedriveClient) {
   return {
-    'search/products': {
+    'search_products': {
       description: `Search for products with advanced filtering options.
 
 Performs a product-specific search across all product fields.

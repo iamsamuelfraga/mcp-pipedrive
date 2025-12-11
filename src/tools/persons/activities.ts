@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonActivitiesTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_activities',
+    name: 'persons_list_activities',
     description: `List all activities associated with a specific person.
 
 Returns all activities (calls, meetings, tasks, etc.) linked to the person, including:

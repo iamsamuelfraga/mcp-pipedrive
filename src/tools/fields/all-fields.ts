@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListAllFieldsTool(client: PipedriveClient) {
   return {
-    'fields/list_all_fields': {
+    'fields_list_all_fields': {
       description: `Get ALL field definitions across all entity types in a single call.
 
 This is a convenient aggregator that fetches field definitions for deals, persons, organizations, activities, and products in one request. Useful for getting a complete overview of all custom fields in your Pipedrive account.

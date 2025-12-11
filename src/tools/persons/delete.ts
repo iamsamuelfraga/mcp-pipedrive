@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getDeletePersonTool(client: PipedriveClient) {
   return {
-    name: 'persons/delete',
+    name: 'persons_delete',
     description: `Delete a person from Pipedrive.
 
 Warning: This action cannot be undone. The person will be permanently deleted.

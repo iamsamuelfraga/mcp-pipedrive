@@ -3,7 +3,7 @@ import { DeleteLeadSchema } from '../../schemas/lead.js';
 
 export function getDeleteLeadTool(client: PipedriveClient) {
   return {
-    'leads/delete': {
+    'leads_delete': {
       description: `Delete a specific lead from Pipedrive.
 
 Permanently deletes a lead by its UUID. This action cannot be undone.

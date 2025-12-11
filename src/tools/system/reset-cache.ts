@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getResetCacheTool(client: PipedriveClient) {
   return {
-    'system/reset_cache': {
+    'system_reset_cache': {
       description: `Clear all cached data from the MCP server.
 
 Removes all entries from the cache, forcing fresh API requests for subsequent operations. This is useful for:

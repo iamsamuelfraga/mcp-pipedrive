@@ -3,7 +3,7 @@ import { CreateActivityTypeSchema } from '../../schemas/activity-type.js';
 
 export function getCreateActivityTypeTool(client: PipedriveClient) {
   return {
-    'activity_types/create': {
+    'activity_types_create': {
       description: `Add a new custom activity type.
 
 Creates a custom activity type with specified name, icon, and color.

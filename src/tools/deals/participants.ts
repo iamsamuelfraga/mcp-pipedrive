@@ -7,7 +7,7 @@ import {
 
 export function getParticipantTools(client: PipedriveClient) {
   return {
-    'deals/add_participant': {
+    'deals_add_participant': {
       description: `Add a participant (person) to a deal.
 
 Participants are persons who are involved in the deal beyond the primary contact.
@@ -36,7 +36,7 @@ Common use cases:
       },
     },
 
-    'deals/remove_participant': {
+    'deals_remove_participant': {
       description: `Remove a participant from a deal.
 
 Removes a person from the deal's participants list.
@@ -66,7 +66,7 @@ Common use cases:
       },
     },
 
-    'deals/list_participants': {
+    'deals_list_participants': {
       description: `List all participants of a deal.
 
 Returns all persons participating in this deal.

@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getDeletePersonFollowerTool(client: PipedriveClient) {
   return {
-    name: 'persons/delete_follower',
+    name: 'persons_delete_follower',
     description: `Delete a follower from a person.
 
 Removes a user from the list of followers for this person. After removal:

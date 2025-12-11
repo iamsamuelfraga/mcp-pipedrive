@@ -3,7 +3,7 @@ import { GetDealSummarySchema } from '../../schemas/deal.js';
 
 export function getSummaryTools(client: PipedriveClient) {
   return {
-    'deals/get_summary': {
+    'deals_get_summary': {
       description: `Get deal statistics and summary.
 
 Returns aggregated statistics about deals, including counts by status, total values, and conversion rates.
@@ -40,7 +40,7 @@ Common use cases:
       },
     },
 
-    'deals/get_archived_summary': {
+    'deals_get_archived_summary': {
       description: `Get archived deals statistics and summary.
 
 Returns aggregated statistics about archived deals, including counts by status, total values, and conversion rates.

@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getAddPersonFollowerTool(client: PipedriveClient) {
   return {
-    name: 'persons/add_follower',
+    name: 'persons_add_follower',
     description: `Add a follower to a person.
 
 Followers are users who will receive notifications about updates to this person.
@@ -60,7 +60,7 @@ Note: Users can only be added as followers if they have access to the person.`,
  */
 export function getListPersonFollowersTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_followers',
+    name: 'persons_list_followers',
     description: `List all followers of a specific person.
 
 Returns a list of users who are following this person and will receive

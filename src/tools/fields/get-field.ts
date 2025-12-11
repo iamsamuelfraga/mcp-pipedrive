@@ -10,7 +10,7 @@ const GetFieldSchema = z.object({
 
 export function getGetFieldTool(client: PipedriveClient) {
   return {
-    'fields/get_field': {
+    'fields_get_field': {
       description: `Get details of a specific field by ID and entity type.
 
 Retrieves complete information about a single field definition, including all validation rules, options, and metadata.

@@ -3,7 +3,7 @@ import { UpdateNoteCommentSchema } from '../../schemas/note.js';
 
 export function getUpdateNoteCommentTool(client: PipedriveClient) {
   return {
-    'notes/update_comment': {
+    'notes_update_comment': {
       description: `Update an existing comment on a note.
 
 Modifies the content of a specific comment on a note.
@@ -12,7 +12,7 @@ Workflow tips:
 - Both note id and comment_id are required
 - comment_id is a UUID, not a number
 - Only the content can be updated
-- Use notes/list_comments to find the comment_id
+- Use notes_list_comments to find the comment_id
 
 Common use cases:
 - Fix typos: { "id": 123, "comment_id": "uuid-here", "content": "Corrected text" }

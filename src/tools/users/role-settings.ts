@@ -3,7 +3,7 @@ import { ListUserRoleSettingsSchema } from '../../schemas/user.js';
 
 export function getUserRoleSettingsTool(client: PipedriveClient) {
   return {
-    'users/list_role_settings': {
+    'users_list_role_settings': {
       description: `List user role settings.
 
 Returns all role-based settings for the specified user.

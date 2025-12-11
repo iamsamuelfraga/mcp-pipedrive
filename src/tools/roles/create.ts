@@ -3,7 +3,7 @@ import { AddRoleSchema } from '../../schemas/role.js';
 
 export function getCreateRoleTool(client: PipedriveClient) {
   return {
-    'roles/create': {
+    'roles_create': {
       description: `Add a new role to the company.
 
 Creates a new role with optional parent role for hierarchy. Requires admin permissions.

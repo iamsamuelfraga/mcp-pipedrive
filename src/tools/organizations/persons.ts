@@ -11,7 +11,7 @@ const ListOrganizationPersonsArgsSchema = z.object({
 
 export function createListOrganizationPersonsTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list_persons',
+    name: 'organizations_list_persons',
     description: 'List all persons associated with a specific organization.',
     inputSchema: {
       type: 'object',

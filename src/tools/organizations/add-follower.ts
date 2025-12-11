@@ -9,7 +9,7 @@ const AddOrganizationFollowerArgsSchema = z.object({
 
 export function createAddOrganizationFollowerTool(client: PipedriveClient) {
   return {
-    name: 'organizations/add_follower',
+    name: 'organizations_add_follower',
     description: 'Add a follower to an organization.',
     inputSchema: {
       type: 'object',

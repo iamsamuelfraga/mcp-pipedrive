@@ -3,7 +3,7 @@ import { GetCurrentUserSchema } from '../../schemas/user.js';
 
 export function getCurrentUserTool(client: PipedriveClient) {
   return {
-    'users/get_current': {
+    'users_get_current': {
       description: `Get information about the current authorized user.
 
 Returns details about the user associated with the API token being used.

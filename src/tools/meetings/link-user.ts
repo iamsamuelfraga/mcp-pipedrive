@@ -3,7 +3,7 @@ import { LinkUserProviderSchema } from '../../schemas/meeting.js';
 
 export function getLinkUserProviderTool(client: PipedriveClient) {
   return {
-    'meetings/link_user_provider': {
+    'meetings_link_user_provider': {
       description: `Link a user with the installed video call integration.
 
 Creates a connection between a Pipedrive user and a video calling app provider. This must be called after a user installs the video calling app so that the user's information is sent to Pipedrive.

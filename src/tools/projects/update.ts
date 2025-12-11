@@ -28,7 +28,7 @@ interface SingleResponse<T> {
 
 export function createUpdateProjectTool(client: PipedriveClient) {
   return {
-    name: 'projects/update',
+    name: 'projects_update',
     description: 'Update an existing project. Provide the project ID and fields to update.',
     inputSchema: {
       type: 'object',

@@ -3,7 +3,7 @@ import { MarkDealAsWonSchema, MarkDealAsLostSchema } from '../../schemas/deal.js
 
 export function getStatusTools(client: PipedriveClient) {
   return {
-    'deals/mark_as_won': {
+    'deals_mark_as_won': {
       description: `Mark a deal as won.
 
 Updates the deal status to "won" and moves it to the appropriate won stage in the pipeline.
@@ -33,7 +33,7 @@ Common use cases:
       },
     },
 
-    'deals/mark_as_lost': {
+    'deals_mark_as_lost': {
       description: `Mark a deal as lost.
 
 Updates the deal status to "lost" and optionally records the reason why the deal was lost.

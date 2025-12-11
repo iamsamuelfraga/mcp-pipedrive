@@ -3,7 +3,7 @@ import { SearchPersonsSchema } from '../../schemas/search.js';
 
 export function getSearchPersonsTool(client: PipedriveClient) {
   return {
-    'search/persons': {
+    'search_persons': {
       description: `Search for persons with advanced filtering options.
 
 Performs a person-specific search with additional filtering by organization.

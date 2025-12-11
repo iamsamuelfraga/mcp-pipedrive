@@ -3,7 +3,7 @@ import { ListFiltersSchema } from '../../schemas/filter.js';
 
 export function getListFiltersTools(client: PipedriveClient) {
   return {
-    'filters/list': {
+    'filters_list': {
       description: `List all filters in Pipedrive.
 
 Returns data about all filters. Each filter is a set of conditions used to filter items.

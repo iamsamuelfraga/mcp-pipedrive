@@ -8,7 +8,7 @@ const DeleteMailThreadArgsSchema = z.object({
 
 export function createDeleteMailThreadTool(client: PipedriveClient) {
   return {
-    name: 'mailbox/delete-thread',
+    name: 'mailbox_delete_thread',
     description: 'Mark a mail thread as deleted.',
     inputSchema: {
       type: 'object',

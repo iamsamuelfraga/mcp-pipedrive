@@ -3,7 +3,7 @@ import { ListDealMailMessagesSchema } from '../../schemas/deal.js';
 
 export function getMailTools(client: PipedriveClient) {
   return {
-    'deals/list_mail_messages': {
+    'deals_list_mail_messages': {
       description: `List mail messages associated with a deal.
 
 Returns all email messages linked to a specific deal, including sent and received emails.

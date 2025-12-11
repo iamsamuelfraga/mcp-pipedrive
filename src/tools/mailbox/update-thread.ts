@@ -23,7 +23,7 @@ const UpdateMailThreadArgsSchema = z.object({
 
 export function createUpdateMailThreadTool(client: PipedriveClient) {
   return {
-    name: 'mailbox/update-thread',
+    name: 'mailbox_update_thread',
     description: 'Update the properties of a mail thread.',
     inputSchema: {
       type: 'object',

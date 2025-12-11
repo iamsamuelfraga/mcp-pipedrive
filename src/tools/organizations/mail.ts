@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListOrganizationMailMessagesTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list_mail_messages',
+    name: 'organizations_list_mail_messages',
     description: `List mail messages associated with an organization.
 
 Returns all email messages linked to this organization, including:

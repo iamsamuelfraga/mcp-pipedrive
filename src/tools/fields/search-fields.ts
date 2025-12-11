@@ -23,7 +23,7 @@ interface FieldsResponse {
 
 export function getSearchFieldsTool(client: PipedriveClient) {
   return {
-    'fields/search_fields': {
+    'fields_search_fields': {
       description: `Search for fields by name or key across entity types.
 
 Searches field definitions by matching against field names (case-insensitive) or field keys. Useful for finding specific custom fields when you don't know the exact field ID.

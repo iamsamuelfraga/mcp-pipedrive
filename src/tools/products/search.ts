@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getSearchProductsTool(client: PipedriveClient) {
   return {
-    name: 'products/search',
+    name: 'products_search',
     description: `Search for products by name, code, or custom fields.
 
 This is a powerful search tool that finds products matching your query across multiple fields.

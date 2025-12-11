@@ -7,7 +7,7 @@ import {
 
 export function getFollowerTools(client: PipedriveClient) {
   return {
-    'deals/add_follower': {
+    'deals_add_follower': {
       description: `Add a follower to a deal.
 
 Followers receive notifications about deal updates and can track the deal's progress.
@@ -35,7 +35,7 @@ Common use cases:
       },
     },
 
-    'deals/remove_follower': {
+    'deals_remove_follower': {
       description: `Remove a follower from a deal.
 
 Stops a user from receiving notifications about this deal.
@@ -62,7 +62,7 @@ Common use cases:
       },
     },
 
-    'deals/list_followers': {
+    'deals_list_followers': {
       description: `List all followers of a deal.
 
 Returns list of users following this deal and receiving notifications about it.

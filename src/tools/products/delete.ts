@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getDeleteProductTool(client: PipedriveClient) {
   return {
-    name: 'products/delete',
+    name: 'products_delete',
     description: `Delete a product from Pipedrive.
 
 The product will be marked as deleted and after 30 days will be permanently deleted.

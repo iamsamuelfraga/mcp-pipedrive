@@ -9,7 +9,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListProductsTool(client: PipedriveClient) {
   return {
-    name: 'products/list',
+    name: 'products_list',
     description: `List all products with optional filtering and pagination.
 
 Supports filtering by:
@@ -94,7 +94,7 @@ Returns paginated results. Use start/limit for manual pagination.`,
  */
 export function getListAllProductsAutoTool(client: PipedriveClient) {
   return {
-    name: 'products/list_all_auto',
+    name: 'products_list_all_auto',
     description: `Automatically fetch ALL products using pagination.
 
 This tool handles pagination automatically and returns all products matching the filters.

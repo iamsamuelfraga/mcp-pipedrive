@@ -3,7 +3,7 @@ import { UpdateDealSchema, MoveDealStageSchema } from '../../schemas/deal.js';
 
 export function getUpdateDealTools(client: PipedriveClient) {
   return {
-    'deals/update': {
+    'deals_update': {
       description: `Update an existing deal.
 
 Updates one or more fields of an existing deal. Only provide fields you want to change.
@@ -57,7 +57,7 @@ Common use cases:
       },
     },
 
-    'deals/move_to_stage': {
+    'deals_move_to_stage': {
       description: `Move a deal to a different stage in the pipeline.
 
 Convenience tool to move a deal to another stage. Use this instead of deals/update when only changing stages.

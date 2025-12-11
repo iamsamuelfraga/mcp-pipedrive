@@ -4,7 +4,7 @@ import type { PipedriveResponse } from '../../types/common.js';
 
 export function createGetProjectTemplateTool(client: PipedriveClient) {
   return {
-    name: 'project_templates/get',
+    name: 'project_templates_get',
     description: `Get details of a single project template by ID.
 
 Returns complete information about a project template including its structure,

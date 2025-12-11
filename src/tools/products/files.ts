@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListProductFilesTool(client: PipedriveClient) {
   return {
-    name: 'products/list_files',
+    name: 'products_list_files',
     description: `List all files attached to a specific product.
 
 Returns files associated with the product such as:

@@ -8,7 +8,7 @@ const DeleteOrganizationRelationshipArgsSchema = z.object({
 
 export function createDeleteOrganizationRelationshipTool(client: PipedriveClient) {
   return {
-    name: 'org-relationships/delete',
+    name: 'org_relationships_delete',
     description: 'Delete an organization relationship.',
     inputSchema: {
       type: 'object',

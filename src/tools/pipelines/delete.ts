@@ -3,7 +3,7 @@ import { DeletePipelineSchema } from '../../schemas/pipeline.js';
 
 export function getDeletePipelineTool(client: PipedriveClient) {
   return {
-    'pipelines/delete': {
+    'pipelines_delete': {
       description: `Delete a pipeline.
 
 Permanently removes a pipeline and all its stages.
@@ -13,7 +13,7 @@ Workflow tips:
 - Deals in this pipeline will need to be moved first
 - Consider deactivating instead of deleting
 - All stages in the pipeline will be deleted
-- Use pipelines/get first to verify
+- Use pipelines_get first to verify
 
 Common use cases:
 - Remove pipeline: { "id": 1 }

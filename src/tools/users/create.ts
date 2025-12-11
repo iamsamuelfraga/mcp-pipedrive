@@ -3,7 +3,7 @@ import { AddUserSchema } from '../../schemas/user.js';
 
 export function getCreateUserTool(client: PipedriveClient) {
   return {
-    'users/create': {
+    'users_create': {
       description: `Add a new user to the company.
 
 Creates a new user account in the Pipedrive company. Requires admin permissions.

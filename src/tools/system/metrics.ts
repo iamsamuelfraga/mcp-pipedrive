@@ -3,7 +3,7 @@ import { metricsCollector } from '../../utils/metrics.js';
 
 export function getMetricsTool(client: PipedriveClient) {
   return {
-    'system/get_metrics': {
+    'system_get_metrics': {
       description: `Get performance metrics for the MCP server.
 
 Returns comprehensive statistics about the server's performance including:

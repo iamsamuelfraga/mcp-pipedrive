@@ -9,7 +9,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonsTool(client: PipedriveClient) {
   return {
-    name: 'persons/list',
+    name: 'persons_list',
     description: `List all persons with optional filtering and pagination.
 
 Supports filtering by:
@@ -90,7 +90,7 @@ Returns paginated results. Use start/limit for manual pagination.`,
  */
 export function getListAllPersonsAutoTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_all_auto',
+    name: 'persons_list_all_auto',
     description: `Automatically fetch ALL persons using pagination.
 
 This tool handles pagination automatically and returns all persons matching the filters.
@@ -98,7 +98,7 @@ Use this when you need the complete list without managing pagination manually.
 
 Warning: This can return a large dataset if you have many persons.
 
-Supports the same filters as persons/list:
+Supports the same filters as persons_list:
 - user_id: Filter by owner
 - org_id: Filter by organization
 - first_char: Filter by first character of name

@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListActivityFieldsTool(client: PipedriveClient) {
   return {
-    'fields/list_activity_fields': {
+    'fields_list_activity_fields': {
       description: `Get all field definitions for activities, including custom fields.
 
 Use this to discover what fields are available before creating or updating activities. Returns field keys, types, validation rules, and whether fields are required.

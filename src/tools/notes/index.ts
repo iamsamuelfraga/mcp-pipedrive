@@ -13,15 +13,15 @@ import { getDeleteNoteCommentTool } from './delete-comment.js';
  * Get all note-related tools for the MCP server
  *
  * This function aggregates all 9 note tools into a single object:
- * - Create: create
- * - List: list
- * - Read: get
- * - Update: update
- * - Delete: delete
- * - List comments: list_comments
- * - Add comment: add_comment
- * - Update comment: update_comment
- * - Delete comment: delete_comment
+ * - Create: notes_create
+ * - List: notes_list
+ * - Read: notes_get
+ * - Update: notes_update
+ * - Delete: notes_delete
+ * - List comments: notes_list_comments
+ * - Add comment: notes_add_comment
+ * - Update comment: notes_update_comment
+ * - Delete comment: notes_delete_comment
  *
  * @param client - The PipedriveClient instance to use for API calls
  * @returns Object containing all note tools with their configurations

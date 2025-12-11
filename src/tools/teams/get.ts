@@ -13,7 +13,7 @@ const GetTeamArgsSchema = z.object({
 
 export function createGetTeamTool(client: PipedriveClient) {
   return {
-    name: 'teams/get',
+    name: 'teams_get',
     description: 'Get details of a specific team by ID.',
     inputSchema: {
       type: 'object',

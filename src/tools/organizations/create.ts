@@ -24,7 +24,7 @@ const CreateOrganizationArgsSchema = z.object({
 
 export function createCreateOrganizationTool(client: PipedriveClient) {
   return {
-    name: 'organizations/create',
+    name: 'organizations_create',
     description:
       'Create a new organization. Name is required. Supports address fields and custom fields.',
     inputSchema: {

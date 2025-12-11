@@ -9,7 +9,7 @@ const MarkActivityAsDoneArgsSchema = z.object({
 
 export function createMarkActivityAsDoneTool(client: PipedriveClient) {
   return {
-    name: 'activities/mark_as_done',
+    name: 'activities_mark_as_done',
     description:
       'Mark an activity as done. This is a convenience tool that updates the activity with done: true.',
     inputSchema: {

@@ -14,7 +14,7 @@ const GetUserTeamsArgsSchema = z.object({
 
 export function createGetUserTeamsTool(client: PipedriveClient) {
   return {
-    name: 'teams/get-user-teams',
+    name: 'teams_get_user_teams',
     description: 'Get all teams that a specific user belongs to.',
     inputSchema: {
       type: 'object',

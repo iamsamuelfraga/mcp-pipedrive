@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonMailMessagesTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_mail_messages',
+    name: 'persons_list_mail_messages',
     description: `List mail messages associated with a person.
 
 Returns all email messages linked to this person, including:

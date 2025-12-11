@@ -13,7 +13,7 @@ interface ListResponse<T> {
 
 export function createGetProjectGroupsTool(client: PipedriveClient) {
   return {
-    name: 'projects/groups/list',
+    name: 'projects_groups_list',
     description:
       'Get all active groups under a specific project. Returns groups ordered by their order number.',
     inputSchema: {

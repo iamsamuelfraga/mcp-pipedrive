@@ -8,7 +8,7 @@ import {
 
 export function getProductTools(client: PipedriveClient) {
   return {
-    'deals/add_product': {
+    'deals_add_product': {
       description: `Add a product to a deal.
 
 Attaches a product to the deal with specific pricing, quantity, and discount.
@@ -53,7 +53,7 @@ Common use cases:
       },
     },
 
-    'deals/update_product': {
+    'deals_update_product': {
       description: `Update a product attached to a deal.
 
 Modifies the price, quantity, discount, or other details of a product already attached to a deal.
@@ -95,7 +95,7 @@ Common use cases:
       },
     },
 
-    'deals/remove_product': {
+    'deals_remove_product': {
       description: `Remove a product from a deal.
 
 Detaches a product from the deal.
@@ -125,7 +125,7 @@ Common use cases:
       },
     },
 
-    'deals/list_products': {
+    'deals_list_products': {
       description: `List all products attached to a deal.
 
 Returns all products associated with this deal, including pricing and quantity details.

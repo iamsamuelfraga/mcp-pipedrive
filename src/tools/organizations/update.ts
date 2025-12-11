@@ -24,7 +24,7 @@ const UpdateOrganizationArgsSchema = z.object({
 
 export function createUpdateOrganizationTool(client: PipedriveClient) {
   return {
-    name: 'organizations/update',
+    name: 'organizations_update',
     description: 'Update an existing organization. Only provided fields will be updated.',
     inputSchema: {
       type: 'object',

@@ -10,7 +10,7 @@ const AddUserToTeamArgsSchema = z.object({
 
 export function createAddUserToTeamTool(client: PipedriveClient) {
   return {
-    name: 'teams/add-user',
+    name: 'teams_add_user',
     description: 'Add a user to a team.',
     inputSchema: {
       type: 'object',

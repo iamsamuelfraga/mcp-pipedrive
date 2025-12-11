@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListCurrenciesTool(client: PipedriveClient) {
   return {
-    'system/list_currencies': {
+    'system_list_currencies': {
       description: `Get list of supported currencies and exchange rates.
 
 Returns all currencies configured in your Pipedrive account, including:

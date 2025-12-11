@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getLeadSourcesTool(client: PipedriveClient) {
   return {
-    'leads/get_sources': {
+    'leads_get_sources': {
       description: `Get all lead sources (where leads came from).
 
 Returns all lead sources available in Pipedrive. Lead sources indicate where your leads originated.

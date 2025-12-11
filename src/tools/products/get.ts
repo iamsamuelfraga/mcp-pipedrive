@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getGetProductTool(client: PipedriveClient) {
   return {
-    name: 'products/get',
+    name: 'products_get',
     description: `Get detailed information about a specific product.
 
 Returns complete product data including:

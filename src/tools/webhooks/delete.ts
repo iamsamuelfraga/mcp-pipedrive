@@ -3,7 +3,7 @@ import { DeleteWebhookSchema } from '../../schemas/webhook.js';
 
 export function getDeleteWebhookTool(client: PipedriveClient) {
   return {
-    'webhooks/delete': {
+    'webhooks_delete': {
       description: `Delete a webhook by its ID.
 
 Permanently removes a webhook from Pipedrive. Once deleted, the webhook will no longer send notifications to the subscription URL.

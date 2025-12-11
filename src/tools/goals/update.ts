@@ -3,7 +3,7 @@ import { UpdateGoalSchema } from '../../schemas/goal.js';
 
 export function getUpdateGoalTool(client: PipedriveClient) {
   return {
-    'goals/update': {
+    'goals_update': {
       description: `Update an existing goal.
 
 Updates goal properties such as title, type, assignee, expected outcome, duration, or interval.

@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getGetPersonTool(client: PipedriveClient) {
   return {
-    name: 'persons/get',
+    name: 'persons_get',
     description: `Get detailed information about a specific person by ID.
 
 Returns all person data including:

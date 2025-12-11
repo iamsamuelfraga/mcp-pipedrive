@@ -3,7 +3,7 @@ import { DeleteFilterSchema } from '../../schemas/filter.js';
 
 export function getDeleteFilterTool(client: PipedriveClient) {
   return {
-    'filters/delete': {
+    'filters_delete': {
       description: `Delete a filter in Pipedrive.
 
 Marks a filter as deleted. The filter will no longer be available for use.

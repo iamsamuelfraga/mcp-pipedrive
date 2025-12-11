@@ -8,7 +8,7 @@ const DeleteOrganizationArgsSchema = z.object({
 
 export function createDeleteOrganizationTool(client: PipedriveClient) {
   return {
-    name: 'organizations/delete',
+    name: 'organizations_delete',
     description: 'Delete an organization by ID.',
     inputSchema: {
       type: 'object',

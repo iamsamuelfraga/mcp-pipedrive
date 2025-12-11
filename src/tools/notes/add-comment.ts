@@ -3,7 +3,7 @@ import { AddNoteCommentSchema } from '../../schemas/note.js';
 
 export function getAddNoteCommentTool(client: PipedriveClient) {
   return {
-    'notes/add_comment': {
+    'notes_add_comment': {
       description: `Add a new comment to a note.
 
 Creates a comment on an existing note, allowing for threaded discussions.

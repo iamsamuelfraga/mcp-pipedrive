@@ -3,7 +3,7 @@ import { ListLeadsSchema } from '../../schemas/lead.js';
 
 export function getListLeadsTools(client: PipedriveClient) {
   return {
-    'leads/list': {
+    'leads_list': {
       description: `List leads with pagination and filtering options.
 
 Returns a paginated list of non-archived leads. Use filters to narrow results by owner, person, or organization.
@@ -53,7 +53,7 @@ Common use cases:
       },
     },
 
-    'leads/list_all_auto': {
+    'leads_list_all_auto': {
       description: `Automatically fetch ALL leads with pagination handling.
 
 This tool automatically handles pagination and fetches all non-archived leads matching the filters.

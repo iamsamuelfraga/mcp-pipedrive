@@ -28,7 +28,7 @@ interface SingleResponse<T> {
 
 export function createCreateProjectTool(client: PipedriveClient) {
   return {
-    name: 'projects/create',
+    name: 'projects_create',
     description:
       'Create a new project. Requires title, board_id, and phase_id. Optionally include description, dates, deals, and labels.',
     inputSchema: {

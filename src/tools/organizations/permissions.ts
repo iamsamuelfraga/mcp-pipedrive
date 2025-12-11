@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListOrganizationPermittedUsersTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list_permitted_users',
+    name: 'organizations_list_permitted_users',
     description: `List users permitted to access an organization.
 
 Returns a list of all users who have permission to view and/or edit this organization record.

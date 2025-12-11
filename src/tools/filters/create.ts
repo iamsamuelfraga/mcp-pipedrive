@@ -3,7 +3,7 @@ import { CreateFilterSchema } from '../../schemas/filter.js';
 
 export function getCreateFilterTool(client: PipedriveClient) {
   return {
-    'filters/create': {
+    'filters_create': {
       description: `Create a new filter in Pipedrive.
 
 Adds a new filter with conditions. Returns the filter ID upon success.

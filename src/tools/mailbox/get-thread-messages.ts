@@ -9,7 +9,7 @@ const GetMailThreadMessagesArgsSchema = z.object({
 
 export function createGetMailThreadMessagesTool(client: PipedriveClient) {
   return {
-    name: 'mailbox/get-thread-messages',
+    name: 'mailbox_get_thread_messages',
     description: 'Get all mail messages inside a specific mail thread.',
     inputSchema: {
       type: 'object',

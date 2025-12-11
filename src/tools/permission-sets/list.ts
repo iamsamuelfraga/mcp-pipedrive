@@ -3,7 +3,7 @@ import { ListPermissionSetsSchema } from '../../schemas/permission-set.js';
 
 export function getListPermissionSetsTool(client: PipedriveClient) {
   return {
-    'permission-sets/list': {
+    'permission_sets_list': {
       description: `List all permission sets within the company.
 
 Returns all permission sets with their configurations, including admin and regular user sets across different apps.

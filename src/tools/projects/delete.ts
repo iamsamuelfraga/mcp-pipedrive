@@ -14,7 +14,7 @@ interface DeleteResponse {
 
 export function createDeleteProjectTool(client: PipedriveClient) {
   return {
-    name: 'projects/delete',
+    name: 'projects_delete',
     description:
       'Delete a project by marking it as deleted. This does not permanently remove the project.',
     inputSchema: {

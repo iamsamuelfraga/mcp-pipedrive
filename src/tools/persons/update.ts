@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getUpdatePersonTool(client: PipedriveClient) {
   return {
-    name: 'persons/update',
+    name: 'persons_update',
     description: `Update an existing person's information.
 
 Required fields:

@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getListPersonPermittedUsersTool(client: PipedriveClient) {
   return {
-    name: 'persons/list_permitted_users',
+    name: 'persons_list_permitted_users',
     description: `List users permitted to access a person.
 
 Returns a list of all users who have permission to view and/or edit this person record.

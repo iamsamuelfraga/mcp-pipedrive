@@ -9,7 +9,7 @@ const GetOrganizationRelationshipsArgsSchema = z.object({
 
 export function createGetOrganizationRelationshipsTool(client: PipedriveClient) {
   return {
-    name: 'org-relationships/get-all',
+    name: 'org_relationships_get_all',
     description: 'Get all relationships for a specific organization.',
     inputSchema: {
       type: 'object',

@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getReceiveMessageTool(client: PipedriveClient) {
   return {
-    name: 'channels/receive-message',
+    name: 'channels_receive_message',
     description: `Add an incoming message to a conversation in Pipedrive.
 
 This endpoint requires the **Messengers integration** OAuth scope and the Messaging manifest ready for the Messaging app extension.

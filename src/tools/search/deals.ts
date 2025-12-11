@@ -3,7 +3,7 @@ import { SearchDealsSchema } from '../../schemas/search.js';
 
 export function getSearchDealsTool(client: PipedriveClient) {
   return {
-    'search/deals': {
+    'search_deals': {
       description: `Search for deals with advanced filtering options.
 
 Performs a deal-specific search with additional filtering by person, organization, and status.

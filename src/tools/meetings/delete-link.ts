@@ -3,7 +3,7 @@ import { DeleteUserProviderLinkSchema } from '../../schemas/meeting.js';
 
 export function getDeleteUserProviderLinkTool(client: PipedriveClient) {
   return {
-    'meetings/delete_user_provider_link': {
+    'meetings_delete_user_provider_link': {
       description: `Delete the link between a user and the installed video call integration.
 
 Removes the connection between a Pipedrive user and a video calling app provider. After deletion, the user will no longer have access to the video calling integration features.

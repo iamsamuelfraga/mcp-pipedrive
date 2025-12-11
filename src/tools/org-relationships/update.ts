@@ -19,7 +19,7 @@ const UpdateOrganizationRelationshipArgsSchema = z.object({
 
 export function createUpdateOrganizationRelationshipTool(client: PipedriveClient) {
   return {
-    name: 'org-relationships/update',
+    name: 'org_relationships_update',
     description: 'Update the properties of an organization relationship.',
     inputSchema: {
       type: 'object',

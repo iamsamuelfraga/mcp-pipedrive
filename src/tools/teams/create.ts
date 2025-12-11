@@ -12,7 +12,7 @@ const CreateTeamArgsSchema = z.object({
 
 export function createCreateTeamTool(client: PipedriveClient) {
   return {
-    name: 'teams/create',
+    name: 'teams_create',
     description: 'Add a new team to the company.',
     inputSchema: {
       type: 'object',

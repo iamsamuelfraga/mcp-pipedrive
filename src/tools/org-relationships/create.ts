@@ -12,7 +12,7 @@ const CreateOrganizationRelationshipArgsSchema = z.object({
 
 export function createCreateOrganizationRelationshipTool(client: PipedriveClient) {
   return {
-    name: 'org-relationships/create',
+    name: 'org_relationships_create',
     description: 'Create a new organization relationship.',
     inputSchema: {
       type: 'object',

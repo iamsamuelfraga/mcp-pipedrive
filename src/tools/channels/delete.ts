@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getDeleteChannelTool(client: PipedriveClient) {
   return {
-    name: 'channels/delete',
+    name: 'channels_delete',
     description: `Delete an existing messenger's channel and all related entities (conversations and messages).
 
 This endpoint requires the **Messengers integration** OAuth scope and the Messaging manifest ready for the Messaging app extension.

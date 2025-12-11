@@ -3,7 +3,7 @@ import { ListCallLogsSchema } from '../../schemas/call-log.js';
 
 export function getListCallLogsTool(client: PipedriveClient) {
   return {
-    'call_logs/list': {
+    'call_logs_list': {
       description: `Get all call logs assigned to the current user.
 
 Retrieves call logs with pagination support. Returns logs for phone calls including duration, outcome, and associated records.

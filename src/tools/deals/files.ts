@@ -5,7 +5,7 @@ import { basename } from 'path';
 
 export function getFileTools(client: PipedriveClient) {
   return {
-    'deals/attach_file': {
+    'deals_attach_file': {
       description: `Attach a file to a deal.
 
 Uploads and attaches a file to the deal. Useful for contracts, proposals, presentations, etc.
@@ -42,7 +42,7 @@ Common use cases:
       },
     },
 
-    'deals/list_files': {
+    'deals_list_files': {
       description: `List all files attached to a deal.
 
 Returns all files associated with this deal.

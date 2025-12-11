@@ -3,7 +3,7 @@ import { MergeDealsSchema } from '../../schemas/deal.js';
 
 export function getMergeTools(client: PipedriveClient) {
   return {
-    'deals/merge': {
+    'deals_merge': {
       description: `Merge two deals together.
 
 Merges one deal into another, combining their data. The source deal will be deleted and its data will be merged into the target deal.

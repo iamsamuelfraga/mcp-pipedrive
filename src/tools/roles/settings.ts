@@ -8,7 +8,7 @@ import {
 
 export function getRoleSettingsTools(client: PipedriveClient) {
   return {
-    'roles/get_role_settings': {
+    'roles_get_role_settings': {
       description: `Get role settings.
 
 Returns all settings configured for a specific role.
@@ -35,7 +35,7 @@ Common use cases:
       },
     },
 
-    'roles/add_role_setting': {
+    'roles_add_role_setting': {
       description: `Add or update a role setting.
 
 Creates or updates a setting for a role. Requires admin permissions.
@@ -66,7 +66,7 @@ Common use cases:
       },
     },
 
-    'roles/update_role_setting': {
+    'roles_update_role_setting': {
       description: `Update a role setting.
 
 Updates an existing setting for a role. Requires admin permissions.
@@ -96,7 +96,7 @@ Common use cases:
       },
     },
 
-    'roles/delete_role_setting': {
+    'roles_delete_role_setting': {
       description: `Delete a role setting.
 
 Removes a setting from a role. Requires admin permissions.

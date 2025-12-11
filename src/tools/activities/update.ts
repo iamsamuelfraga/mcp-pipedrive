@@ -43,7 +43,7 @@ const UpdateActivityArgsSchema = z.object({
 
 export function createUpdateActivityTool(client: PipedriveClient) {
   return {
-    name: 'activities/update',
+    name: 'activities_update',
     description: 'Update an existing activity. Only provided fields will be updated.',
     inputSchema: {
       type: 'object',

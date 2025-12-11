@@ -15,7 +15,7 @@ const ListActivitiesByDealArgsSchema = z.object({
 
 export function createListActivitiesByDealTool(client: PipedriveClient) {
   return {
-    name: 'activities/list_by_deal',
+    name: 'activities_list_by_deal',
     description: 'List all activities associated with a specific deal.',
     inputSchema: {
       type: 'object',

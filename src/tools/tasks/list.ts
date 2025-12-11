@@ -3,7 +3,7 @@ import { ListTasksSchema } from '../../schemas/task.js';
 
 export function getListTasksTool(client: PipedriveClient) {
   return {
-    'tasks/list': {
+    'tasks_list': {
       description: `Get all tasks with optional filters.
 
 Retrieves tasks using cursor-based pagination. Can filter by assignee, project, parent task, and completion status.

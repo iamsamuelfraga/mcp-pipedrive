@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getCreatePersonTool(client: PipedriveClient) {
   return {
-    name: 'persons/create',
+    name: 'persons_create',
     description: `Create a new person in Pipedrive.
 
 Required fields:

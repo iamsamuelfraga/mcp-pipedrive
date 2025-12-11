@@ -3,7 +3,7 @@ import { ListNotesSchema } from '../../schemas/note.js';
 
 export function getListNotesTool(client: PipedriveClient) {
   return {
-    'notes/list': {
+    'notes_list': {
       description: `List notes with pagination and filtering options.
 
 Returns a paginated list of notes. Use filters to narrow results by associated entity.

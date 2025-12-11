@@ -3,7 +3,7 @@ import { ListDealsSchema } from '../../schemas/deal.js';
 
 export function getListDealsTools(client: PipedriveClient) {
   return {
-    'deals/list': {
+    'deals_list': {
       description: `List deals with pagination and filtering options.
 
 Returns a paginated list of deals. Use filters to narrow results by status, stage, owner, person, organization, or pipeline.
@@ -65,7 +65,7 @@ Common use cases:
       },
     },
 
-    'deals/list_all_auto': {
+    'deals_list_all_auto': {
       description: `Automatically fetch ALL deals with pagination handling.
 
 This tool automatically handles pagination and fetches all deals matching the filters.
@@ -133,7 +133,7 @@ Common use cases:
       },
     },
 
-    'deals/list_archived': {
+    'deals_list_archived': {
       description: `List archived deals with pagination and filtering options.
 
 Returns a paginated list of archived deals. Archived deals are deals that have been removed from active pipelines.

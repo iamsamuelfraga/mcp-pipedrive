@@ -3,7 +3,7 @@ import { CreateNoteSchema } from '../../schemas/note.js';
 
 export function getCreateNoteTool(client: PipedriveClient) {
   return {
-    'notes/create': {
+    'notes_create': {
       description: `Create a new note and attach it to a deal, person, organization, or lead.
 
 Creates a note with the specified content and associates it with one or more entities.

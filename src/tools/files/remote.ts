@@ -3,7 +3,7 @@ import { LinkRemoteFileSchema } from '../../schemas/file.js';
 
 export function getRemoteFileTool(client: PipedriveClient) {
   return {
-    'files/create_remote_link': {
+    'files_create_remote_link': {
       description: `Link a remote file from Google Drive, Dropbox, OneDrive, Box, or SharePoint.
 
 Creates a link to a file stored in external cloud storage and associates it with a Pipedrive entity.

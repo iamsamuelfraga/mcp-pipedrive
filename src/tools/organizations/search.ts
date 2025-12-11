@@ -16,7 +16,7 @@ const SearchOrganizationsArgsSchema = z.object({
 
 export function createSearchOrganizationsTool(client: PipedriveClient) {
   return {
-    name: 'organizations/search',
+    name: 'organizations_search',
     description: 'Search organizations by name or other fields. Returns matching organizations.',
     inputSchema: {
       type: 'object',

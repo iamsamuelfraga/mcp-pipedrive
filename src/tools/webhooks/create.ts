@@ -3,7 +3,7 @@ import { CreateWebhookSchema } from '../../schemas/webhook.js';
 
 export function getCreateWebhookTool(client: PipedriveClient) {
   return {
-    'webhooks/create': {
+    'webhooks_create': {
       description: `Create a new webhook to receive real-time notifications from Pipedrive.
 
 Creates a webhook that will send HTTP POST requests to your endpoint when specified events occur.

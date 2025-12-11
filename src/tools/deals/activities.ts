@@ -3,7 +3,7 @@ import { ListDealActivitiesSchema } from '../../schemas/deal.js';
 
 export function getActivityTools(client: PipedriveClient) {
   return {
-    'deals/list_activities': {
+    'deals_list_activities': {
       description: `List all activities associated with a deal.
 
 Returns all activities linked to a specific deal, including calls, meetings, tasks, emails, and deadlines.

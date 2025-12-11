@@ -14,7 +14,7 @@ const ListOrganizationsArgsSchema = z.object({
 
 export function createListOrganizationsTool(client: PipedriveClient) {
   return {
-    name: 'organizations/list',
+    name: 'organizations_list',
     description:
       'List organizations with pagination support. Returns paginated list of organizations with filtering options.',
     inputSchema: {

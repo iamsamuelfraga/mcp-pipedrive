@@ -7,7 +7,7 @@ import {
 
 export function getUserFollowerTools(client: PipedriveClient) {
   return {
-    'users/list_followers': {
+    'users_list_followers': {
       description: `List followers of a user.
 
 Returns all users who are following the specified user.
@@ -32,7 +32,7 @@ Common use cases:
       },
     },
 
-    'users/add_follower': {
+    'users_add_follower': {
       description: `Add a follower to a user.
 
 Makes one user follow another user's activities.
@@ -58,7 +58,7 @@ Common use cases:
       },
     },
 
-    'users/delete_follower': {
+    'users_delete_follower': {
       description: `Remove a follower from a user.
 
 Removes the follower relationship between two users.

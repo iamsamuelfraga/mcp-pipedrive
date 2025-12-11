@@ -9,9 +9,9 @@ import { getDeleteConversationTool } from './delete-conversation.js';
  */
 export function getChannelTools(client: PipedriveClient) {
   return {
-    'channels/create': getCreateChannelTool(client),
-    'channels/delete': getDeleteChannelTool(client),
-    'channels/receive-message': getReceiveMessageTool(client),
-    'channels/delete-conversation': getDeleteConversationTool(client),
+    'channels_create': getCreateChannelTool(client),
+    'channels_delete': getDeleteChannelTool(client),
+    'channels_receive_message': getReceiveMessageTool(client),
+    'channels_delete_conversation': getDeleteConversationTool(client),
   };
 }

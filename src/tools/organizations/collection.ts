@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getOrganizationsCollectionTool(client: PipedriveClient) {
   return {
-    name: 'organizations/get_collection',
+    name: 'organizations_get_collection',
     description: `Get all organizations using the collection endpoint.
 
 This endpoint provides an alternative way to fetch organizations with different capabilities:

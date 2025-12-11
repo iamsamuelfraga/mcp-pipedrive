@@ -13,7 +13,7 @@ const GetMailMessageArgsSchema = z.object({
 
 export function createGetMailMessageTool(client: PipedriveClient) {
   return {
-    name: 'mailbox/get-message',
+    name: 'mailbox_get_message',
     description: 'Get details of a specific mail message by ID.',
     inputSchema: {
       type: 'object',

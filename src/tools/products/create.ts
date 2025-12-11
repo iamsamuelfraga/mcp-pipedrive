@@ -8,7 +8,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getCreateProductTool(client: PipedriveClient) {
   return {
-    name: 'products/create',
+    name: 'products_create',
     description: `Create a new product in Pipedrive.
 
 Required fields:

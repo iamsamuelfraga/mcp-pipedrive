@@ -3,7 +3,7 @@ import { UpdateLeadSchema } from '../../schemas/lead.js';
 
 export function getUpdateLeadTool(client: PipedriveClient) {
   return {
-    'leads/update': {
+    'leads_update': {
       description: `Update an existing lead in Pipedrive.
 
 Updates one or more properties of a lead. Only properties included in the request will be updated.

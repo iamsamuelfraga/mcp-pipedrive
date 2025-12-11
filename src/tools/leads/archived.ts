@@ -3,7 +3,7 @@ import { ListArchivedLeadsSchema } from '../../schemas/lead.js';
 
 export function getListArchivedLeadsTool(client: PipedriveClient) {
   return {
-    'leads/list_archived': {
+    'leads_list_archived': {
       description: `List archived leads with pagination and filtering options.
 
 Returns a paginated list of archived leads. Archived leads are leads that have been

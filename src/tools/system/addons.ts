@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 
 export function getListAddonsTool(client: PipedriveClient) {
   return {
-    'system/list_addons': {
+    'system_list_addons': {
       description: `Get all add-ons for a single company.
 
 Returns the add-ons (billing subscriptions) configured for your Pipedrive company account.

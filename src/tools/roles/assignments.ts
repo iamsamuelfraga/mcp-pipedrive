@@ -7,7 +7,7 @@ import {
 
 export function getRoleAssignmentTools(client: PipedriveClient) {
   return {
-    'roles/get_role_assignments': {
+    'roles_get_role_assignments': {
       description: `Get role assignments.
 
 Returns all users assigned to a specific role with pagination support.
@@ -43,7 +43,7 @@ Common use cases:
       },
     },
 
-    'roles/add_role_assignment': {
+    'roles_add_role_assignment': {
       description: `Add a role assignment.
 
 Assigns a role to a user. Requires admin permissions.
@@ -70,7 +70,7 @@ Common use cases:
       },
     },
 
-    'roles/delete_role_assignment': {
+    'roles_delete_role_assignment': {
       description: `Delete a role assignment.
 
 Removes a role from a user. Requires admin permissions.

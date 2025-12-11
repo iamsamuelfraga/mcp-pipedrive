@@ -3,7 +3,7 @@ import { CreatePipelineSchema } from '../../schemas/pipeline.js';
 
 export function getCreatePipelineTool(client: PipedriveClient) {
   return {
-    'pipelines/create': {
+    'pipelines_create': {
       description: `Create a new pipeline.
 
 Creates a new pipeline with the specified name and configuration.

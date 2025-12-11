@@ -7,7 +7,7 @@ import type { PipedriveResponse } from '../../types/common.js';
  */
 export function getMergePersonsTool(client: PipedriveClient) {
   return {
-    name: 'persons/merge',
+    name: 'persons_merge',
     description: `Merge two persons into one.
 
 Combines two person records, moving all related data to the primary person:
@@ -26,7 +26,7 @@ Best practices:
 2. Ensure you're merging duplicates, not different people
 3. The person with ID 'id' will be kept (primary)
 4. The person with 'merge_with_id' will be deleted (secondary)
-5. Use persons/get to verify both records first
+5. Use persons_get to verify both records first
 
 Use cases:
 - Removing duplicate persons

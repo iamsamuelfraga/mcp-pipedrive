@@ -22,7 +22,7 @@ interface SingleResponse<T> {
 
 export function createGetProjectPhasesTool(client: PipedriveClient) {
   return {
-    name: 'projects/phases/list',
+    name: 'projects_phases_list',
     description:
       'Get all active project phases under a specific board. Returns phases ordered by their order number.',
     inputSchema: {
@@ -55,7 +55,7 @@ export function createGetProjectPhasesTool(client: PipedriveClient) {
 
 export function createGetProjectPhaseTool(client: PipedriveClient) {
   return {
-    name: 'projects/phases/get',
+    name: 'projects_phases_get',
     description: 'Get details of a specific project phase by ID.',
     inputSchema: {
       type: 'object',

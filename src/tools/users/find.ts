@@ -3,7 +3,7 @@ import { FindUsersSchema } from '../../schemas/user.js';
 
 export function getFindUsersTool(client: PipedriveClient) {
   return {
-    'users/find': {
+    'users_find': {
       description: `Find users by name or email.
 
 Searches for users within the company by name or email address. Returns matching users with their details.

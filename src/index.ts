@@ -165,22 +165,32 @@ const allTools: Record<string, Tool> = {
 function isWriteOperation(toolName: string): boolean {
   return (
     toolName.includes('/create') ||
+    toolName.includes('_create') ||
     toolName.includes('/update') ||
+    toolName.includes('_update') ||
     toolName.includes('/delete') ||
+    toolName.includes('_delete') ||
     toolName.includes('/add_') ||
+    toolName.includes('_add_') ||
     toolName.includes('/remove_') ||
+    toolName.includes('_remove_') ||
     toolName.includes('/upload') ||
+    toolName.includes('_upload') ||
     toolName.includes('/duplicate') ||
+    toolName.includes('_duplicate') ||
     toolName.includes('/mark_') ||
+    toolName.includes('_mark_') ||
     toolName.includes('/attach_') ||
-    toolName.includes('/move_')
+    toolName.includes('_attach_') ||
+    toolName.includes('/move_') ||
+    toolName.includes('_move_')
   );
 }
 
 // Filter by toolset and read-only mode
 const tools = Object.fromEntries(
   Object.entries(allTools).filter(([name, _tool]) => {
-    const toolset = name.split('/')[0];
+    const toolset = name.split(/[/_]/)[0];
     if (!enabledToolsets.includes(toolset)) {
       logger.debug('Toolset disabled, skipping tool', { tool: name, toolset });
       return false;
@@ -285,7 +295,7 @@ async function main() {
   // Log available tools by category
   const toolsByCategory: Record<string, number> = {};
   Object.keys(tools).forEach((name) => {
-    const category = name.split('/')[0];
+    const category = name.split(/[/_]/)[0];
     toolsByCategory[category] = (toolsByCategory[category] || 0) + 1;
   });
 

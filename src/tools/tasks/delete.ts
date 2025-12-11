@@ -3,7 +3,7 @@ import { DeleteTaskSchema } from '../../schemas/task.js';
 
 export function getDeleteTaskTool(client: PipedriveClient) {
   return {
-    'tasks/delete': {
+    'tasks_delete': {
       description: `Delete an existing task.
 
 Permanently removes a task from the system.

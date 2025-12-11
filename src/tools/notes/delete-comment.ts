@@ -3,7 +3,7 @@ import { DeleteNoteCommentSchema } from '../../schemas/note.js';
 
 export function getDeleteNoteCommentTool(client: PipedriveClient) {
   return {
-    'notes/delete_comment': {
+    'notes_delete_comment': {
       description: `Delete a comment from a note.
 
 Permanently removes a comment from a note.
@@ -12,7 +12,7 @@ Workflow tips:
 - This action cannot be undone
 - Both note id and comment_id are required
 - comment_id is a UUID, not a number
-- Use notes/list_comments to find the comment_id
+- Use notes_list_comments to find the comment_id
 - Deleted comments cannot be recovered
 
 Common use cases:

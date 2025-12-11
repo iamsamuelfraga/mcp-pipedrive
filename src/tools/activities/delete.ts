@@ -8,7 +8,7 @@ const DeleteActivityArgsSchema = z.object({
 
 export function createDeleteActivityTool(client: PipedriveClient) {
   return {
-    name: 'activities/delete',
+    name: 'activities_delete',
     description: 'Delete an activity by ID.',
     inputSchema: {
       type: 'object',
