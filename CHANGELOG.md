@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.2...v1.1.3) (2025-12-11)
+
+
+### Bug Fixes
+
+* migrate server.json to 2025-09-29 schema format ([6323330](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/632333099364b787b20cc5838dc7136a198cd8d4))
+
 ## [1.1.2](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.1...v1.1.2) (2025-12-11)
 
 
