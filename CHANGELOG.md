@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.1...v1.1.2) (2025-12-11)
+
+
+### Bug Fixes
+
+* correct server.json format for MCP registry ([5c30c05](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/5c30c057f74f80bc1f7c4e607cadb4d98d0ad48d))
+
 ## [1.1.1](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.0...v1.1.1) (2025-12-11)
 
 
