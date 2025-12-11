@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.3...v1.1.0) (2025-12-11)
+
+
+### Features
+
+* add MCP registry publishing workflow ([b42c97b](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/b42c97b388a6485d85728b3c8d7c52b065ae2da5))
+
 ## [1.0.3](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.2...v1.0.3) (2025-12-11)
 
 
