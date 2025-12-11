@@ -14,10 +14,9 @@ import {
   ListPromptsRequestSchema,
   GetPromptRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { PipedriveClient } from '../../pipedrive-client.js';
 
-// Mock the PipedriveClient
-vi.mock('../../pipedrive-client.js', () => {
+// Mock the PipedriveClient with vi.hoisted for vitest v4
+const { PipedriveClient } = vi.hoisted(() => {
   return {
     PipedriveClient: vi.fn().mockImplementation(() => ({
       get: vi.fn().mockResolvedValue({ data: [] }),
@@ -27,6 +26,10 @@ vi.mock('../../pipedrive-client.js', () => {
     })),
   };
 });
+
+vi.mock('../../pipedrive-client.js', () => ({
+  PipedriveClient,
+}));
 
 // Mock the logger to avoid console output during tests
 vi.mock('../../utils/logger.js', () => ({

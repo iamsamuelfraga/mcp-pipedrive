@@ -13,7 +13,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        node-version: [22, 24]
 
     steps:
       - uses: actions/checkout@v4
@@ -42,9 +42,9 @@ jobs:
       - name: Test
         run: npm test
 
-      - name: Upload coverage (Node 20 only)
-        if: matrix.node-version == 20
-        uses: codecov/codecov-action@v4
+      - name: Upload coverage (Node 22 only)
+        if: matrix.node-version == 22
+        uses: codecov/codecov-action@v5
         with:
           files: ./coverage/lcov.info
           flags: unittests
