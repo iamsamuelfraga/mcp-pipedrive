@@ -1,5 +1,4 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/draft/server.schema.json",
   "name": "io.github.iamsamuelfraga/mcp-pipedrive",
   "description": "Complete Pipedrive CRM integration with 254 MCP tools for deals, contacts, and pipelines",
   "version": "1.1.1",
