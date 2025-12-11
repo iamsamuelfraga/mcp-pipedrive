@@ -5,7 +5,10 @@ import type { MailMessage } from '../../types/pipedrive-api.js';
 
 const GetMailMessageArgsSchema = z.object({
   id: z.number().describe('ID of the mail message'),
-  include_body: z.union([z.boolean(), z.number()]).optional().describe('Whether to include the full message body or not'),
+  include_body: z
+    .union([z.boolean(), z.number()])
+    .optional()
+    .describe('Whether to include the full message body or not'),
 });
 
 export function createGetMailMessageTool(client: PipedriveClient) {
@@ -16,7 +19,10 @@ export function createGetMailMessageTool(client: PipedriveClient) {
       type: 'object',
       properties: {
         id: { type: 'number', description: 'ID of the mail message' },
-        include_body: { type: ['boolean', 'number'], description: 'Whether to include the full message body or not' },
+        include_body: {
+          type: ['boolean', 'number'],
+          description: 'Whether to include the full message body or not',
+        },
       },
       required: ['id'],
     },

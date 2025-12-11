@@ -13,7 +13,9 @@ export function createMockClient(): jest.Mocked<PipedriveClient> {
     uploadFile: vi.fn(),
     createPaginator: vi.fn(),
     getCacheStats: vi.fn().mockReturnValue({ size: 0 }),
-    getRateLimiterStats: vi.fn().mockReturnValue({ RECEIVED: 0, QUEUED: 0, RUNNING: 0, EXECUTING: 0, DONE: 0 }),
+    getRateLimiterStats: vi
+      .fn()
+      .mockReturnValue({ RECEIVED: 0, QUEUED: 0, RUNNING: 0, EXECUTING: 0, DONE: 0 }),
     clearCache: vi.fn(),
   } as unknown as jest.Mocked<PipedriveClient>;
 }

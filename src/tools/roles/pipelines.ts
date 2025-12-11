@@ -1,8 +1,5 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
-import {
-  ListRolePipelinesSchema,
-  UpdateRolePipelinesSchema,
-} from '../../schemas/role.js';
+import { ListRolePipelinesSchema, UpdateRolePipelinesSchema } from '../../schemas/role.js';
 
 export function getRolePipelinesTools(client: PipedriveClient) {
   return {
@@ -58,7 +55,8 @@ Common use cases:
           id: { type: 'number', description: 'ID of the role' },
           visible_pipeline_ids: {
             type: 'object',
-            description: 'Object where keys are pipeline IDs and values are 1 (visible) or 0 (hidden)',
+            description:
+              'Object where keys are pipeline IDs and values are 1 (visible) or 0 (hidden)',
             additionalProperties: { type: 'number' },
           },
         },

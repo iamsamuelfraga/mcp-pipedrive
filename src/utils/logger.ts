@@ -45,6 +45,5 @@ export class Logger {
 }
 
 // Singleton instance
-const logLevel =
-  (process.env.LOG_LEVEL?.toLowerCase() as LogLevel) || LogLevel.INFO;
+const logLevel = (process.env.LOG_LEVEL?.toLowerCase() as LogLevel) || LogLevel.INFO;
 export const logger = new Logger(logLevel);

@@ -27,7 +27,11 @@ Common use cases:
         properties: {
           term: { type: 'string', description: 'Search term (min 2 chars)' },
           fields: { type: 'string', description: 'Comma-separated field names to search' },
-          exact_match: { type: 'boolean', description: 'Perform exact match search', default: false },
+          exact_match: {
+            type: 'boolean',
+            description: 'Perform exact match search',
+            default: false,
+          },
           include_fields: {
             type: 'string',
             description: 'Comma-separated fields to include in response',

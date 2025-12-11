@@ -3,11 +3,14 @@ import { z } from 'zod';
 import { IdSchema } from '../../schemas/common.js';
 
 // Schema for bulk delete operations
-const BulkDeleteDealsSchema = z.object({
-  ids: z.array(IdSchema)
-    .min(1, 'At least one deal ID is required')
-    .describe('Array of deal IDs to delete'),
-}).strict();
+const BulkDeleteDealsSchema = z
+  .object({
+    ids: z
+      .array(IdSchema)
+      .min(1, 'At least one deal ID is required')
+      .describe('Array of deal IDs to delete'),
+  })
+  .strict();
 
 export function getBulkTools(client: PipedriveClient) {
   return {

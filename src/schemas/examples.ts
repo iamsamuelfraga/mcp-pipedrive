@@ -12,16 +12,9 @@ import {
   type UpdateDealInput,
 } from './deal.js';
 
-import {
-  CreatePersonSchema,
-  SearchPersonsSchema,
-  type CreatePersonInput,
-} from './person.js';
+import { CreatePersonSchema, SearchPersonsSchema, type CreatePersonInput } from './person.js';
 
-import {
-  CreateOrganizationSchema,
-  type CreateOrganizationInput,
-} from './organization.js';
+import { CreateOrganizationSchema, type CreateOrganizationInput } from './organization.js';
 
 import {
   CreateActivitySchema,
@@ -29,16 +22,9 @@ import {
   type CreateActivityInput,
 } from './activity.js';
 
-import {
-  UploadFileFromPathSchema,
-  type UploadFileFromPathInput,
-} from './file.js';
+import { UploadFileFromPathSchema, type UploadFileFromPathInput } from './file.js';
 
-import {
-  validate,
-  validateStrict,
-  formatZodError,
-} from './validator.js';
+import { validate, validateStrict, formatZodError } from './validator.js';
 
 // ============================================================================
 // Example 1: Creating a Deal with Validation

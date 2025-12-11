@@ -17,10 +17,16 @@ export function createCreateOrganizationRelationshipTool(client: PipedriveClient
     inputSchema: {
       type: 'object',
       properties: {
-        type: { type: 'string', description: 'The type of the relationship (e.g., parent, daughter, related)' },
+        type: {
+          type: 'string',
+          description: 'The type of the relationship (e.g., parent, daughter, related)',
+        },
         rel_owner_org_id: { type: 'number', description: 'The owner organization ID' },
         rel_linked_org_id: { type: 'number', description: 'The linked organization ID' },
-        org_id: { type: 'number', description: 'The ID of the base organization for the returned calculated values' },
+        org_id: {
+          type: 'number',
+          description: 'The ID of the base organization for the returned calculated values',
+        },
       },
       required: ['type', 'rel_owner_org_id', 'rel_linked_org_id', 'org_id'],
     },

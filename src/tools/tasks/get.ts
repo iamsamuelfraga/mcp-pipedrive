@@ -22,7 +22,7 @@ Common use cases:
         properties: {
           id: {
             type: 'number',
-            description: 'ID of the task to retrieve'
+            description: 'ID of the task to retrieve',
           },
         },
         required: ['id'],

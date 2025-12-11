@@ -256,11 +256,10 @@ describe('Search Tools', () => {
       const tool = tools['search/universal'];
       await tool.handler({ term: 'test' });
 
-      expect(mockClient.get).toHaveBeenCalledWith(
-        expect.any(String),
-        expect.any(Object),
-        { enabled: true, ttl: 60000 }
-      );
+      expect(mockClient.get).toHaveBeenCalledWith(expect.any(String), expect.any(Object), {
+        enabled: true,
+        ttl: 60000,
+      });
     });
   });
 
@@ -310,13 +309,9 @@ describe('Search Tools', () => {
       const tools = getSearchByFieldTool(mockClient);
       const tool = tools['search/by_field'];
 
-      await expect(
-        tool.handler({ term: 'test' })
-      ).rejects.toThrow();
+      await expect(tool.handler({ term: 'test' })).rejects.toThrow();
 
-      await expect(
-        tool.handler({ term: 'test', field_type: 'personField' })
-      ).rejects.toThrow();
+      await expect(tool.handler({ term: 'test', field_type: 'personField' })).rejects.toThrow();
 
       expect(mockClient.get).not.toHaveBeenCalled();
     });

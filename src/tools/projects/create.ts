@@ -7,7 +7,10 @@ const CreateProjectArgsSchema = z.object({
   board_id: z.number().positive().describe('Board ID'),
   phase_id: z.number().positive().describe('Phase ID'),
   description: z.string().optional().describe('Project description'),
-  status: z.enum(['open', 'completed', 'canceled', 'deleted']).optional().describe('Project status'),
+  status: z
+    .enum(['open', 'completed', 'canceled', 'deleted'])
+    .optional()
+    .describe('Project status'),
   owner_id: z.number().optional().describe('Owner user ID'),
   start_date: z.string().optional().describe('Start date (YYYY-MM-DD)'),
   end_date: z.string().optional().describe('End date (YYYY-MM-DD)'),
@@ -26,7 +29,8 @@ interface SingleResponse<T> {
 export function createCreateProjectTool(client: PipedriveClient) {
   return {
     name: 'projects/create',
-    description: 'Create a new project. Requires title, board_id, and phase_id. Optionally include description, dates, deals, and labels.',
+    description:
+      'Create a new project. Requires title, board_id, and phase_id. Optionally include description, dates, deals, and labels.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -34,7 +38,11 @@ export function createCreateProjectTool(client: PipedriveClient) {
         board_id: { type: 'number', description: 'Board ID' },
         phase_id: { type: 'number', description: 'Phase ID' },
         description: { type: 'string', description: 'Project description' },
-        status: { type: 'string', enum: ['open', 'completed', 'canceled', 'deleted'], description: 'Project status' },
+        status: {
+          type: 'string',
+          enum: ['open', 'completed', 'canceled', 'deleted'],
+          description: 'Project status',
+        },
         owner_id: { type: 'number', description: 'Owner user ID' },
         start_date: { type: 'string', description: 'Start date (YYYY-MM-DD)' },
         end_date: { type: 'string', description: 'End date (YYYY-MM-DD)' },
@@ -49,10 +57,7 @@ export function createCreateProjectTool(client: PipedriveClient) {
     handler: async (args: unknown) => {
       const parsed = CreateProjectArgsSchema.parse(args);
 
-      const response = await client.post<SingleResponse<Project>>(
-        '/projects',
-        parsed
-      );
+      const response = await client.post<SingleResponse<Project>>('/projects', parsed);
 
       return {
         content: [

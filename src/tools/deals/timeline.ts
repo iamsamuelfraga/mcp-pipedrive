@@ -24,7 +24,10 @@ Common use cases:
       inputSchema: {
         type: 'object' as const,
         properties: {
-          start_date: { type: 'string', description: 'The date when the first interval starts (YYYY-MM-DD)' },
+          start_date: {
+            type: 'string',
+            description: 'The date when the first interval starts (YYYY-MM-DD)',
+          },
           interval: {
             type: 'string',
             enum: ['day', 'week', 'month', 'quarter'],
@@ -40,7 +43,10 @@ Common use cases:
             enum: [0, 1],
             description: 'Whether to exclude deals list (1) or not (0)',
           },
-          totals_convert_currency: { type: 'string', description: '3-letter currency code for converted totals' },
+          totals_convert_currency: {
+            type: 'string',
+            description: '3-letter currency code for converted totals',
+          },
         },
         required: ['start_date', 'interval', 'amount', 'field_key'],
       },
@@ -67,7 +73,10 @@ Common use cases:
       inputSchema: {
         type: 'object' as const,
         properties: {
-          start_date: { type: 'string', description: 'The date when the first interval starts (YYYY-MM-DD)' },
+          start_date: {
+            type: 'string',
+            description: 'The date when the first interval starts (YYYY-MM-DD)',
+          },
           interval: {
             type: 'string',
             enum: ['day', 'week', 'month', 'quarter'],
@@ -83,7 +92,10 @@ Common use cases:
             enum: [0, 1],
             description: 'Whether to exclude deals list (1) or not (0)',
           },
-          totals_convert_currency: { type: 'string', description: '3-letter currency code for converted totals' },
+          totals_convert_currency: {
+            type: 'string',
+            description: '3-letter currency code for converted totals',
+          },
         },
         required: ['start_date', 'interval', 'amount', 'field_key'],
       },

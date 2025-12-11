@@ -4,30 +4,11 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import {
-  CreateDealSchema,
-  UpdateDealSchema,
-  ListDealsSchema,
-  SearchDealsSchema,
-} from '../deal.js';
-import {
-  CreatePersonSchema,
-  UpdatePersonSchema,
-  SearchPersonsSchema,
-} from '../person.js';
-import {
-  CreateOrganizationSchema,
-  UpdateOrganizationSchema,
-} from '../organization.js';
-import {
-  CreateActivitySchema,
-  ListActivitiesSchema,
-  ActivityTypeSchema,
-} from '../activity.js';
-import {
-  UploadFileSchema,
-  UploadFileFromPathSchema,
-} from '../file.js';
+import { CreateDealSchema, UpdateDealSchema, ListDealsSchema, SearchDealsSchema } from '../deal.js';
+import { CreatePersonSchema, UpdatePersonSchema, SearchPersonsSchema } from '../person.js';
+import { CreateOrganizationSchema, UpdateOrganizationSchema } from '../organization.js';
+import { CreateActivitySchema, ListActivitiesSchema, ActivityTypeSchema } from '../activity.js';
+import { UploadFileSchema, UploadFileFromPathSchema } from '../file.js';
 import {
   PaginationSchema,
   VisibilitySchema,
@@ -91,9 +72,7 @@ describe('Common Schemas', () => {
     });
 
     it('should reject invalid email format', () => {
-      const result = EmailSchema.safeParse([
-        { value: 'invalid-email', primary: true },
-      ]);
+      const result = EmailSchema.safeParse([{ value: 'invalid-email', primary: true }]);
       expect(result.success).toBe(false);
     });
 

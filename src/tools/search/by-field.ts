@@ -30,7 +30,11 @@ Common use cases:
             description: 'Type of field to search',
           },
           field_key: { type: 'string', description: 'API key of the field to search' },
-          exact_match: { type: 'boolean', description: 'Perform exact match search', default: false },
+          exact_match: {
+            type: 'boolean',
+            description: 'Perform exact match search',
+            default: false,
+          },
           return_item_ids: {
             type: 'boolean',
             description: 'Return item IDs instead of full objects',

@@ -22,7 +22,7 @@ Common use cases:
         properties: {
           id: {
             type: 'number',
-            description: 'ID of the activity type to delete'
+            description: 'ID of the activity type to delete',
           },
         },
         required: ['id'],

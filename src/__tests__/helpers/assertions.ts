@@ -175,10 +175,7 @@ export const assertValidProduct = (product: any) => {
 /**
  * Assert that an array contains only valid entities of a specific type
  */
-export const assertArrayOfValidEntities = <T>(
-  array: T[],
-  validator: (item: T) => void
-) => {
+export const assertArrayOfValidEntities = <T>(array: T[], validator: (item: T) => void) => {
   expect(Array.isArray(array)).toBe(true);
   array.forEach(validator);
 };
@@ -268,10 +265,7 @@ export const assertHasTimestamps = (obj: any) => {
 /**
  * Assert that a mock was called with specific arguments
  */
-export const assertCalledWith = (
-  mock: any,
-  ...expectedArgs: any[]
-) => {
+export const assertCalledWith = (mock: any, ...expectedArgs: any[]) => {
   expect(mock).toHaveBeenCalled();
   const calls = mock.mock.calls;
   const found = calls.some((call: any[]) => {
@@ -302,10 +296,7 @@ export const assertNotCalled = (mock: any) => {
 /**
  * Assert that an error has specific properties
  */
-export const assertErrorHasProps = (
-  error: Error,
-  props: Record<string, any>
-) => {
+export const assertErrorHasProps = (error: Error, props: Record<string, any>) => {
   expect(error).toBeDefined();
   expect(error).toBeInstanceOf(Error);
   for (const [key, value] of Object.entries(props)) {
@@ -316,10 +307,7 @@ export const assertErrorHasProps = (
 /**
  * Assert that a Pipedrive error has status code
  */
-export const assertPipedriveError = (
-  error: Error,
-  expectedStatusCode?: number
-) => {
+export const assertPipedriveError = (error: Error, expectedStatusCode?: number) => {
   expect(error).toBeDefined();
   expect(error).toBeInstanceOf(Error);
   expect((error as any).statusCode).toBeDefined();

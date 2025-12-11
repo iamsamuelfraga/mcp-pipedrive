@@ -7,7 +7,10 @@ const ListOrganizationActivitiesArgsSchema = z.object({
   id: z.number().describe('Organization ID'),
   start: z.number().default(0).describe('Pagination start'),
   limit: z.number().default(100).describe('Items per page'),
-  done: z.boolean().optional().describe('Filter by done status (true for done, false for not done)'),
+  done: z
+    .boolean()
+    .optional()
+    .describe('Filter by done status (true for done, false for not done)'),
 });
 
 export function createListOrganizationActivitiesTool(client: PipedriveClient) {
@@ -20,7 +23,10 @@ export function createListOrganizationActivitiesTool(client: PipedriveClient) {
         id: { type: 'number', description: 'Organization ID' },
         start: { type: 'number', description: 'Pagination start', default: 0 },
         limit: { type: 'number', description: 'Items per page', default: 100 },
-        done: { type: 'boolean', description: 'Filter by done status (true for done, false for not done)' },
+        done: {
+          type: 'boolean',
+          description: 'Filter by done status (true for done, false for not done)',
+        },
       },
       required: ['id'],
     },

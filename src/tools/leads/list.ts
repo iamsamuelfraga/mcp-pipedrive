@@ -31,7 +31,7 @@ Common use cases:
           filter_id: { type: 'number', description: 'ID of the filter to use' },
           sort: {
             type: 'string',
-            description: 'Field names and sorting mode (e.g., "title ASC, value DESC")'
+            description: 'Field names and sorting mode (e.g., "title ASC, value DESC")',
           },
           start: { type: 'number', description: 'Pagination start', default: 0 },
           limit: { type: 'number', description: 'Number of items to return', default: 100 },
@@ -81,7 +81,7 @@ Common use cases:
           filter_id: { type: 'number', description: 'ID of the filter to use' },
           sort: {
             type: 'string',
-            description: 'Field names and sorting mode'
+            description: 'Field names and sorting mode',
           },
           max_items: { type: 'number', description: 'Maximum number of items to return' },
         },

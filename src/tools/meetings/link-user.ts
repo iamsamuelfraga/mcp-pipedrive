@@ -29,19 +29,20 @@ Common use cases:
         properties: {
           user_provider_id: {
             type: 'string',
-            description: 'Unique identifier linking a user to the installed integration (UUID format)'
+            description:
+              'Unique identifier linking a user to the installed integration (UUID format)',
           },
           user_id: {
             type: 'number',
-            description: 'ID of the user to link'
+            description: 'ID of the user to link',
           },
           company_id: {
             type: 'number',
-            description: 'ID of the company'
+            description: 'ID of the company',
           },
           marketplace_client_id: {
             type: 'string',
-            description: 'Marketplace client identifier for the integration'
+            description: 'Marketplace client identifier for the integration',
           },
         },
         required: ['user_provider_id', 'user_id', 'company_id', 'marketplace_client_id'],

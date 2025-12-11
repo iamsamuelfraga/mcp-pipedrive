@@ -14,7 +14,10 @@ export function createGetOrganizationRelationshipsTool(client: PipedriveClient) 
     inputSchema: {
       type: 'object',
       properties: {
-        org_id: { type: 'number', description: 'The ID of the organization to get relationships for' },
+        org_id: {
+          type: 'number',
+          description: 'The ID of the organization to get relationships for',
+        },
       },
       required: ['org_id'],
     },

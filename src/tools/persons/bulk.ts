@@ -49,10 +49,9 @@ hundreds or thousands of records.`,
     handler: async (params: unknown) => {
       const validated = BulkDeletePersonsSchema.parse(params);
 
-      const response = await client.delete<PipedriveResponse<{ success: boolean }>>(
-        '/persons',
-        { ids: validated.ids }
-      );
+      const response = await client.delete<PipedriveResponse<{ success: boolean }>>('/persons', {
+        ids: validated.ids,
+      });
 
       return {
         content: [

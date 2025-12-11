@@ -14,7 +14,8 @@ interface ListResponse<T> {
 export function createGetProjectGroupsTool(client: PipedriveClient) {
   return {
     name: 'projects/groups/list',
-    description: 'Get all active groups under a specific project. Returns groups ordered by their order number.',
+    description:
+      'Get all active groups under a specific project. Returns groups ordered by their order number.',
     inputSchema: {
       type: 'object',
       properties: {

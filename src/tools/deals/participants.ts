@@ -53,7 +53,10 @@ Common use cases:
         type: 'object' as const,
         properties: {
           id: { type: 'number', description: 'ID of the deal' },
-          deal_participant_id: { type: 'number', description: 'ID of the deal participant to remove' },
+          deal_participant_id: {
+            type: 'number',
+            description: 'ID of the deal participant to remove',
+          },
         },
         required: ['id', 'deal_participant_id'],
       },

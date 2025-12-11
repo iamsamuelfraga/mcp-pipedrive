@@ -228,7 +228,9 @@ describe('DealStatusSchema', () => {
   });
 
   it('should reject invalid status', () => {
-    expect(() => DealStatusSchema.parse('invalid')).toThrow('Status must be one of: open, won, lost, deleted, all_not_deleted');
+    expect(() => DealStatusSchema.parse('invalid')).toThrow(
+      'Status must be one of: open, won, lost, deleted, all_not_deleted'
+    );
   });
 
   it('should reject empty string', () => {
@@ -245,7 +247,9 @@ describe('VisibilitySchema', () => {
   });
 
   it('should reject invalid visibility level', () => {
-    expect(() => VisibilitySchema.parse('2')).toThrow('Visibility must be one of: 1 (private), 3 (shared), 5 (private), 7 (public)');
+    expect(() => VisibilitySchema.parse('2')).toThrow(
+      'Visibility must be one of: 1 (private), 3 (shared), 5 (private), 7 (public)'
+    );
   });
 
   it('should reject numeric input', () => {
@@ -262,7 +266,9 @@ describe('MarketingStatusSchema', () => {
   });
 
   it('should reject invalid marketing status', () => {
-    expect(() => MarketingStatusSchema.parse('invalid')).toThrow('Marketing status must be one of: no_consent, unsubscribed, subscribed, archived');
+    expect(() => MarketingStatusSchema.parse('invalid')).toThrow(
+      'Marketing status must be one of: no_consent, unsubscribed, subscribed, archived'
+    );
   });
 });
 
@@ -299,7 +305,9 @@ describe('DateStringSchema', () => {
 
   it('should reject invalid date format', () => {
     expect(() => DateStringSchema.parse('12/10/2024')).toThrow('Date must be in YYYY-MM-DD format');
-    expect(() => DateStringSchema.parse('2024-12-10T00:00:00')).toThrow('Date must be in YYYY-MM-DD format');
+    expect(() => DateStringSchema.parse('2024-12-10T00:00:00')).toThrow(
+      'Date must be in YYYY-MM-DD format'
+    );
     expect(() => DateStringSchema.parse('2024-1-1')).toThrow('Date must be in YYYY-MM-DD format');
   });
 
@@ -315,8 +323,12 @@ describe('DateTimeStringSchema', () => {
   });
 
   it('should reject invalid datetime format', () => {
-    expect(() => DateTimeStringSchema.parse('2024-12-10')).toThrow('DateTime must be in ISO 8601 format');
-    expect(() => DateTimeStringSchema.parse('2024-12-10 10:30:00')).toThrow('DateTime must be in ISO 8601 format');
+    expect(() => DateTimeStringSchema.parse('2024-12-10')).toThrow(
+      'DateTime must be in ISO 8601 format'
+    );
+    expect(() => DateTimeStringSchema.parse('2024-12-10 10:30:00')).toThrow(
+      'DateTime must be in ISO 8601 format'
+    );
   });
 });
 
@@ -361,7 +373,9 @@ describe('SortDirectionSchema', () => {
   });
 
   it('should reject invalid direction', () => {
-    expect(() => SortDirectionSchema.parse('ascending')).toThrow('Sort direction must be either asc or desc');
+    expect(() => SortDirectionSchema.parse('ascending')).toThrow(
+      'Sort direction must be either asc or desc'
+    );
   });
 
   it('should reject uppercase', () => {

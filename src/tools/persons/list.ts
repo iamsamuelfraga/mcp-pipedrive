@@ -129,13 +129,15 @@ Supports the same filters as persons/list:
       },
     } as const,
     handler: async (params: unknown) => {
-      const validated = z.object({
-        user_id: z.number().int().positive().optional(),
-        org_id: z.number().int().positive().optional(),
-        first_char: z.string().length(1).optional(),
-        filter_id: z.number().int().positive().optional(),
-        sort: z.string().optional(),
-      }).parse(params);
+      const validated = z
+        .object({
+          user_id: z.number().int().positive().optional(),
+          org_id: z.number().int().positive().optional(),
+          first_char: z.string().length(1).optional(),
+          filter_id: z.number().int().positive().optional(),
+          sort: z.string().optional(),
+        })
+        .parse(params);
 
       const queryParams: Record<string, string | number | boolean> = {};
 
@@ -152,11 +154,15 @@ Supports the same filters as persons/list:
         content: [
           {
             type: 'text',
-            text: JSON.stringify({
-              success: true,
-              data: allPersons,
-              count: allPersons.length,
-            }, null, 2),
+            text: JSON.stringify(
+              {
+                success: true,
+                data: allPersons,
+                count: allPersons.length,
+              },
+              null,
+              2
+            ),
           },
         ],
       };

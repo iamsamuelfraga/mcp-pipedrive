@@ -120,7 +120,9 @@ describe('CreateDealSchema', () => {
       title: 'Deal',
       lost_reason: 'a'.repeat(256),
     };
-    expect(() => CreateDealSchema.parse(invalid)).toThrow('Lost reason cannot exceed 255 characters');
+    expect(() => CreateDealSchema.parse(invalid)).toThrow(
+      'Lost reason cannot exceed 255 characters'
+    );
   });
 });
 
@@ -240,17 +242,23 @@ describe('SearchDealsSchema', () => {
 
   it('should reject search term less than 2 characters', () => {
     const invalid = { term: 'a' };
-    expect(() => SearchDealsSchema.parse(invalid)).toThrow('Search term must be at least 2 characters');
+    expect(() => SearchDealsSchema.parse(invalid)).toThrow(
+      'Search term must be at least 2 characters'
+    );
   });
 
   it('should reject search term exceeding 255 characters', () => {
     const invalid = { term: 'a'.repeat(256) };
-    expect(() => SearchDealsSchema.parse(invalid)).toThrow('Search term cannot exceed 255 characters');
+    expect(() => SearchDealsSchema.parse(invalid)).toThrow(
+      'Search term cannot exceed 255 characters'
+    );
   });
 
   it('should reject invalid fields enum', () => {
     const invalid = { term: 'Search', fields: 'invalid' };
-    expect(() => SearchDealsSchema.parse(invalid)).toThrow('Fields must be one of: title, notes, custom_fields, all');
+    expect(() => SearchDealsSchema.parse(invalid)).toThrow(
+      'Fields must be one of: title, notes, custom_fields, all'
+    );
   });
 
   it('should reject invalid status', () => {
@@ -364,7 +372,9 @@ describe('AddDealProductSchema', () => {
       product_id: 10,
       comments: 'a'.repeat(1001),
     };
-    expect(() => AddDealProductSchema.parse(invalid)).toThrow('Comments cannot exceed 1000 characters');
+    expect(() => AddDealProductSchema.parse(invalid)).toThrow(
+      'Comments cannot exceed 1000 characters'
+    );
   });
 });
 
@@ -430,6 +440,8 @@ describe('MarkDealAsLostSchema', () => {
       id: 1,
       lost_reason: 'a'.repeat(256),
     };
-    expect(() => MarkDealAsLostSchema.parse(invalid)).toThrow('Lost reason cannot exceed 255 characters');
+    expect(() => MarkDealAsLostSchema.parse(invalid)).toThrow(
+      'Lost reason cannot exceed 255 characters'
+    );
   });
 });

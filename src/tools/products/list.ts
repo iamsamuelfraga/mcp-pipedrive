@@ -68,7 +68,8 @@ Returns paginated results. Use start/limit for manual pagination.`,
       if (validated.filter_id) queryParams.filter_id = validated.filter_id;
       if (validated.ids) queryParams.ids = validated.ids.join(',');
       if (validated.first_char) queryParams.first_char = validated.first_char;
-      if (validated.get_summary !== undefined) queryParams.get_summary = validated.get_summary ? 1 : 0;
+      if (validated.get_summary !== undefined)
+        queryParams.get_summary = validated.get_summary ? 1 : 0;
 
       const response = await client.get<PipedriveResponse<Product[]>>(
         '/products',
@@ -123,11 +124,13 @@ Supports the same filters as products/list:
       },
     } as const,
     handler: async (params: unknown) => {
-      const validated = z.object({
-        user_id: z.number().int().positive().optional(),
-        filter_id: z.number().int().positive().optional(),
-        first_char: z.string().length(1).optional(),
-      }).parse(params);
+      const validated = z
+        .object({
+          user_id: z.number().int().positive().optional(),
+          filter_id: z.number().int().positive().optional(),
+          first_char: z.string().length(1).optional(),
+        })
+        .parse(params);
 
       const queryParams: Record<string, string | number | boolean> = {};
 
@@ -142,11 +145,15 @@ Supports the same filters as products/list:
         content: [
           {
             type: 'text',
-            text: JSON.stringify({
-              success: true,
-              data: allProducts,
-              count: allProducts.length,
-            }, null, 2),
+            text: JSON.stringify(
+              {
+                success: true,
+                data: allProducts,
+                count: allProducts.length,
+              },
+              null,
+              2
+            ),
           },
         ],
       };

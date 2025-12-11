@@ -25,14 +25,21 @@ Common use cases:
         properties: {
           title: {
             type: 'string',
-            description: 'Goal title'
+            description: 'Goal title',
           },
           type: {
             type: 'object',
             description: 'Goal type configuration',
             properties: {
-              name: { type: 'string', description: 'Type name (e.g., deals_won, activities_completed)' },
-              params: { type: 'object', description: 'Additional parameters', additionalProperties: true },
+              name: {
+                type: 'string',
+                description: 'Type name (e.g., deals_won, activities_completed)',
+              },
+              params: {
+                type: 'object',
+                description: 'Additional parameters',
+                additionalProperties: true,
+              },
             },
             required: ['name'],
           },
@@ -50,8 +57,14 @@ Common use cases:
             description: 'Expected outcome configuration',
             properties: {
               target: { type: 'number', description: 'Target value to achieve' },
-              tracking_metric: { type: 'string', description: 'Metric to track (e.g., sum, count)' },
-              currency_id: { type: 'number', description: 'Currency ID if tracking monetary value' },
+              tracking_metric: {
+                type: 'string',
+                description: 'Metric to track (e.g., sum, count)',
+              },
+              currency_id: {
+                type: 'number',
+                description: 'Currency ID if tracking monetary value',
+              },
             },
             required: ['target', 'tracking_metric'],
           },

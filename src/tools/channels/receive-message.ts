@@ -127,7 +127,15 @@ Example:
           },
         },
       },
-      required: ['id', 'channel_id', 'sender_id', 'conversation_id', 'message', 'status', 'created_at'],
+      required: [
+        'id',
+        'channel_id',
+        'sender_id',
+        'conversation_id',
+        'message',
+        'status',
+        'created_at',
+      ],
     } as const,
     handler: async (params: unknown) => {
       const validated = ReceiveMessageSchema.parse(params);

@@ -89,7 +89,10 @@ Common use cases:
       },
       handler: async (args: unknown) => {
         const { id } = GetDealSchema.parse(args);
-        return client.get(`/deals/${id}/participantsChangelog`, undefined, { enabled: true, ttl: 300000 });
+        return client.get(`/deals/${id}/participantsChangelog`, undefined, {
+          enabled: true,
+          ttl: 300000,
+        });
       },
     },
   };

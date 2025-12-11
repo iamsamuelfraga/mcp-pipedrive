@@ -34,20 +34,29 @@ Common use cases:
           label_ids: {
             type: 'array',
             items: { type: 'string' },
-            description: 'Array of label UUIDs'
+            description: 'Array of label UUIDs',
           },
-          person_id: { type: 'number', description: 'ID of the person associated with this lead (null to clear)' },
-          organization_id: { type: 'number', description: 'ID of the organization associated with this lead (null to clear)' },
+          person_id: {
+            type: 'number',
+            description: 'ID of the person associated with this lead (null to clear)',
+          },
+          organization_id: {
+            type: 'number',
+            description: 'ID of the organization associated with this lead (null to clear)',
+          },
           is_archived: { type: 'boolean', description: 'Whether the lead is archived' },
           value: {
             type: 'object',
             properties: {
               amount: { type: 'number', description: 'Lead value amount' },
-              currency: { type: 'string', description: '3-letter currency code' }
+              currency: { type: 'string', description: '3-letter currency code' },
             },
-            description: 'Lead value with amount and currency (null to clear)'
+            description: 'Lead value with amount and currency (null to clear)',
           },
-          expected_close_date: { type: 'string', description: 'Expected close date in YYYY-MM-DD format' },
+          expected_close_date: {
+            type: 'string',
+            description: 'Expected close date in YYYY-MM-DD format',
+          },
           visible_to: {
             type: 'string',
             enum: ['1', '3', '5', '7'],

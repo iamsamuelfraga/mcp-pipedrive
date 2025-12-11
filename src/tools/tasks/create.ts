@@ -25,33 +25,33 @@ Common use cases:
         properties: {
           subject: {
             type: 'string',
-            description: 'Task subject/title'
+            description: 'Task subject/title',
           },
           project_id: {
             type: 'number',
-            description: 'ID of the project this task belongs to'
+            description: 'ID of the project this task belongs to',
           },
           assignee_id: {
             type: 'number',
-            description: 'ID of the user assigned to this task'
+            description: 'ID of the user assigned to this task',
           },
           parent_task_id: {
             type: 'number',
-            description: 'ID of the parent task if this is a subtask'
+            description: 'ID of the parent task if this is a subtask',
           },
           done: {
             type: 'number',
             enum: [0, 1],
             description: 'Whether the task is done (0 = not done, 1 = done)',
-            default: 0
+            default: 0,
           },
           due_date: {
             type: 'string',
-            description: 'Due date in YYYY-MM-DD format'
+            description: 'Due date in YYYY-MM-DD format',
           },
           description: {
             type: 'string',
-            description: 'Task description'
+            description: 'Task description',
           },
         },
         required: ['subject'],

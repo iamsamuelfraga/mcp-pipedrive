@@ -33,11 +33,17 @@ Common use cases:
           product_id: { type: 'number', description: 'ID of the product to add' },
           item_price: { type: 'number', description: 'Price at which this product will be added' },
           quantity: { type: 'number', description: 'Quantity of items (default: 1)' },
-          discount_percentage: { type: 'number', description: 'Discount percentage (0-100, default: 0)' },
+          discount_percentage: {
+            type: 'number',
+            description: 'Discount percentage (0-100, default: 0)',
+          },
           duration: { type: 'number', description: 'Duration for subscription products' },
           product_variation_id: { type: 'number', description: 'ID of the product variation' },
           comments: { type: 'string', description: 'Additional comments about the product' },
-          enabled_flag: { type: 'boolean', description: 'Whether the product is enabled (default: true)' },
+          enabled_flag: {
+            type: 'boolean',
+            description: 'Whether the product is enabled (default: true)',
+          },
         },
         required: ['id', 'product_id'],
       },
@@ -67,10 +73,16 @@ Common use cases:
         type: 'object' as const,
         properties: {
           id: { type: 'number', description: 'ID of the deal' },
-          product_attachment_id: { type: 'number', description: 'ID of the deal-product attachment to update' },
+          product_attachment_id: {
+            type: 'number',
+            description: 'ID of the deal-product attachment to update',
+          },
           item_price: { type: 'number', description: 'Updated price' },
           quantity: { type: 'number', description: 'Updated quantity' },
-          discount_percentage: { type: 'number', description: 'Updated discount percentage (0-100)' },
+          discount_percentage: {
+            type: 'number',
+            description: 'Updated discount percentage (0-100)',
+          },
           duration: { type: 'number', description: 'Updated duration' },
           comments: { type: 'string', description: 'Updated comments' },
           enabled_flag: { type: 'boolean', description: 'Whether the product is enabled' },
@@ -100,7 +112,10 @@ Common use cases:
         type: 'object' as const,
         properties: {
           id: { type: 'number', description: 'ID of the deal' },
-          product_attachment_id: { type: 'number', description: 'ID of the deal-product attachment to remove' },
+          product_attachment_id: {
+            type: 'number',
+            description: 'ID of the deal-product attachment to remove',
+          },
         },
         required: ['id', 'product_attachment_id'],
       },

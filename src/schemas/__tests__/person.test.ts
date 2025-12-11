@@ -81,7 +81,9 @@ describe('CreatePersonSchema', () => {
       name: 'John Doe',
       phone: [],
     };
-    expect(() => CreatePersonSchema.parse(invalid)).toThrow('At least one phone number is required');
+    expect(() => CreatePersonSchema.parse(invalid)).toThrow(
+      'At least one phone number is required'
+    );
   });
 
   it('should reject empty phone value', () => {
@@ -105,7 +107,9 @@ describe('CreatePersonSchema', () => {
       name: 'John Doe',
       marketing_status: 'opt-in',
     };
-    expect(() => CreatePersonSchema.parse(invalid)).toThrow('Marketing status must be one of: no_consent, unsubscribed, subscribed, archived');
+    expect(() => CreatePersonSchema.parse(invalid)).toThrow(
+      'Marketing status must be one of: no_consent, unsubscribed, subscribed, archived'
+    );
   });
 
   it('should reject extra fields in strict mode', () => {
@@ -235,22 +239,28 @@ describe('SearchPersonsSchema', () => {
 
   it('should reject search term less than 2 characters', () => {
     const invalid = { term: 'a' };
-    expect(() => SearchPersonsSchema.parse(invalid)).toThrow('Search term must be at least 2 characters');
+    expect(() => SearchPersonsSchema.parse(invalid)).toThrow(
+      'Search term must be at least 2 characters'
+    );
   });
 
   it('should reject search term exceeding 255 characters', () => {
     const invalid = { term: 'a'.repeat(256) };
-    expect(() => SearchPersonsSchema.parse(invalid)).toThrow('Search term cannot exceed 255 characters');
+    expect(() => SearchPersonsSchema.parse(invalid)).toThrow(
+      'Search term cannot exceed 255 characters'
+    );
   });
 
   it('should reject invalid fields enum', () => {
     const invalid = { term: 'Search', fields: 'address' };
-    expect(() => SearchPersonsSchema.parse(invalid)).toThrow('Fields must be one of: name, email, phone, notes, custom_fields, all');
+    expect(() => SearchPersonsSchema.parse(invalid)).toThrow(
+      'Fields must be one of: name, email, phone, notes, custom_fields, all'
+    );
   });
 
   it('should accept all valid field types', () => {
     const validFields = ['name', 'email', 'phone', 'notes', 'custom_fields', 'all'];
-    validFields.forEach(field => {
+    validFields.forEach((field) => {
       const valid = { term: 'Search', fields: field as any };
       expect(() => SearchPersonsSchema.parse(valid)).not.toThrow();
     });
@@ -316,10 +326,7 @@ describe('CreatePersonSchema - Email Edge Cases', () => {
   it('should reject duplicate invalid emails', () => {
     const invalid = {
       name: 'Test User',
-      email: [
-        { value: 'invalid-email-1' },
-        { value: 'invalid-email-2' },
-      ],
+      email: [{ value: 'invalid-email-1' }, { value: 'invalid-email-2' }],
     };
     expect(() => CreatePersonSchema.parse(invalid)).toThrow();
   });
@@ -327,10 +334,7 @@ describe('CreatePersonSchema - Email Edge Cases', () => {
   it('should handle complex email addresses', () => {
     const valid = {
       name: 'Test User',
-      email: [
-        { value: 'user+tag@example.co.uk' },
-        { value: 'first.last@sub.domain.com' },
-      ],
+      email: [{ value: 'user+tag@example.co.uk' }, { value: 'first.last@sub.domain.com' }],
     };
     expect(() => CreatePersonSchema.parse(valid)).not.toThrow();
   });

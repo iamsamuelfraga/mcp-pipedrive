@@ -80,7 +80,10 @@ describe('Leads Tools', () => {
           title: 'High Value Lead',
           person_id: 123,
           value: { amount: 50000, currency: 'USD' },
-          label_ids: ['550e8400-e29b-41d4-a716-446655440003', '550e8400-e29b-41d4-a716-446655440004'],
+          label_ids: [
+            '550e8400-e29b-41d4-a716-446655440003',
+            '550e8400-e29b-41d4-a716-446655440004',
+          ],
           expected_close_date: '2025-12-31',
         },
       };

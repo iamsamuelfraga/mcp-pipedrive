@@ -7,7 +7,10 @@ const UpdateOrganizationArgsSchema = z.object({
   id: z.number().describe('Organization ID'),
   name: z.string().optional().describe('Organization name'),
   owner_id: z.number().optional().describe('ID of the user who will be the owner'),
-  visible_to: z.enum(['1', '3', '5', '7']).optional().describe('Visibility: 1=Owner, 3=Company, 5=Followers, 7=Group'),
+  visible_to: z
+    .enum(['1', '3', '5', '7'])
+    .optional()
+    .describe('Visibility: 1=Owner, 3=Company, 5=Followers, 7=Group'),
   // Address fields
   address: z.string().optional().describe('Full address'),
   address_street_number: z.string().optional().describe('Street number'),
@@ -32,7 +35,8 @@ export function createUpdateOrganizationTool(client: PipedriveClient) {
         visible_to: {
           type: 'string',
           enum: ['1', '3', '5', '7'],
-          description: 'Visibility: 1=Owner only, 3=Entire company, 5=Owner\'s followers, 7=Owner and visibility group'
+          description:
+            "Visibility: 1=Owner only, 3=Entire company, 5=Owner's followers, 7=Owner and visibility group",
         },
         address: { type: 'string', description: 'Full address' },
         address_street_number: { type: 'string', description: 'Street number' },
@@ -53,11 +57,13 @@ export function createUpdateOrganizationTool(client: PipedriveClient) {
       if (parsed.owner_id !== undefined) body.owner_id = parsed.owner_id;
       if (parsed.visible_to !== undefined) body.visible_to = parsed.visible_to;
       if (parsed.address !== undefined) body.address = parsed.address;
-      if (parsed.address_street_number !== undefined) body.address_street_number = parsed.address_street_number;
+      if (parsed.address_street_number !== undefined)
+        body.address_street_number = parsed.address_street_number;
       if (parsed.address_route !== undefined) body.address_route = parsed.address_route;
       if (parsed.address_locality !== undefined) body.address_locality = parsed.address_locality;
       if (parsed.address_country !== undefined) body.address_country = parsed.address_country;
-      if (parsed.address_postal_code !== undefined) body.address_postal_code = parsed.address_postal_code;
+      if (parsed.address_postal_code !== undefined)
+        body.address_postal_code = parsed.address_postal_code;
 
       // Merge custom fields
       if (parsed.custom_fields) {

@@ -6,7 +6,10 @@ const ListProjectsArgsSchema = z.object({
   cursor: z.string().optional().describe('Pagination cursor'),
   limit: z.number().default(100).describe('Items per page (max 500)'),
   filter_id: z.number().optional().describe('Filter by filter ID'),
-  status: z.string().optional().describe('Comma-separated statuses (open, completed, canceled, deleted)'),
+  status: z
+    .string()
+    .optional()
+    .describe('Comma-separated statuses (open, completed, canceled, deleted)'),
   phase_id: z.number().optional().describe('Filter by phase ID'),
   include_archived: z.boolean().optional().describe('Include archived projects'),
 });
@@ -22,14 +25,18 @@ interface CursorPaginatedResponse<T> {
 export function createListProjectsTool(client: PipedriveClient) {
   return {
     name: 'projects/list',
-    description: 'List projects with cursor-based pagination. Returns projects with filtering options by status, phase, and archive state.',
+    description:
+      'List projects with cursor-based pagination. Returns projects with filtering options by status, phase, and archive state.',
     inputSchema: {
       type: 'object',
       properties: {
         cursor: { type: 'string', description: 'Pagination cursor' },
         limit: { type: 'number', description: 'Items per page (max 500)', default: 100 },
         filter_id: { type: 'number', description: 'Filter by filter ID' },
-        status: { type: 'string', description: 'Comma-separated statuses (open, completed, canceled, deleted)' },
+        status: {
+          type: 'string',
+          description: 'Comma-separated statuses (open, completed, canceled, deleted)',
+        },
         phase_id: { type: 'number', description: 'Filter by phase ID' },
         include_archived: { type: 'boolean', description: 'Include archived projects' },
       },

@@ -19,7 +19,8 @@ interface SingleResponse<T> {
 export function createGetProjectBoardsTool(client: PipedriveClient) {
   return {
     name: 'projects/boards/list',
-    description: 'Get all project boards that are not deleted. Returns boards ordered by their order number.',
+    description:
+      'Get all project boards that are not deleted. Returns boards ordered by their order number.',
     inputSchema: {
       type: 'object',
       properties: {},

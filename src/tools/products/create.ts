@@ -137,10 +137,7 @@ Example prices array:
         body.billing_frequency_cycles = validated.billing_frequency_cycles;
       }
 
-      const response = await client.post<PipedriveResponse<Product>>(
-        '/products',
-        body
-      );
+      const response = await client.post<PipedriveResponse<Product>>('/products', body);
 
       return {
         content: [

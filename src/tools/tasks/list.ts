@@ -25,28 +25,28 @@ Common use cases:
         properties: {
           cursor: {
             type: 'string',
-            description: 'Cursor for pagination'
+            description: 'Cursor for pagination',
           },
           limit: {
             type: 'number',
-            description: 'Number of items to return (max 500)'
+            description: 'Number of items to return (max 500)',
           },
           assignee_id: {
             type: 'number',
-            description: 'Filter by assignee ID'
+            description: 'Filter by assignee ID',
           },
           project_id: {
             type: 'number',
-            description: 'Filter by project ID'
+            description: 'Filter by project ID',
           },
           parent_task_id: {
             type: 'number',
-            description: 'Filter by parent task ID'
+            description: 'Filter by parent task ID',
           },
           done: {
             type: 'number',
             enum: [0, 1],
-            description: 'Filter by done status (0 = not done, 1 = done)'
+            description: 'Filter by done status (0 = not done, 1 = done)',
           },
         },
       },

@@ -8,10 +8,7 @@ export interface RetryOptions {
   retryableStatuses?: number[];
 }
 
-export async function withRetry<T>(
-  fn: () => Promise<T>,
-  options: RetryOptions = {}
-): Promise<T> {
+export async function withRetry<T>(fn: () => Promise<T>, options: RetryOptions = {}): Promise<T> {
   const {
     maxRetries = 3,
     initialDelay = 1000,
@@ -55,5 +52,8 @@ export async function withRetry<T>(
     }
   }
 
-  throw lastError!;
+  if (lastError) {
+    throw lastError;
+  }
+  throw new Error('Retry failed with no error captured');
 }

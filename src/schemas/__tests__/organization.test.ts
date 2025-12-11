@@ -46,12 +46,16 @@ describe('CreateOrganizationSchema', () => {
 
   it('should reject empty name', () => {
     const invalid = { name: '' };
-    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow('Name is required and cannot be empty');
+    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow(
+      'Name is required and cannot be empty'
+    );
   });
 
   it('should reject name exceeding 255 characters', () => {
     const invalid = { name: 'a'.repeat(256) };
-    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow('Name cannot exceed 255 characters');
+    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow(
+      'Name cannot exceed 255 characters'
+    );
   });
 
   it('should reject address exceeding 255 characters', () => {
@@ -59,7 +63,9 @@ describe('CreateOrganizationSchema', () => {
       name: 'Company',
       address: 'a'.repeat(256),
     };
-    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow('Address cannot exceed 255 characters');
+    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow(
+      'Address cannot exceed 255 characters'
+    );
   });
 
   it('should reject postal_code exceeding 50 characters', () => {
@@ -67,7 +73,9 @@ describe('CreateOrganizationSchema', () => {
       name: 'Company',
       address_postal_code: 'a'.repeat(51),
     };
-    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow('Postal code cannot exceed 50 characters');
+    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow(
+      'Postal code cannot exceed 50 characters'
+    );
   });
 
   it('should reject formatted_address exceeding 500 characters', () => {
@@ -75,7 +83,9 @@ describe('CreateOrganizationSchema', () => {
       name: 'Company',
       address_formatted_address: 'a'.repeat(501),
     };
-    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow('Formatted address cannot exceed 500 characters');
+    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow(
+      'Formatted address cannot exceed 500 characters'
+    );
   });
 
   it('should reject invalid visibility', () => {
@@ -159,7 +169,9 @@ describe('ListOrganizationsSchema', () => {
 
   it('should reject first_char with multiple characters', () => {
     const invalid = { first_char: 'AB' };
-    expect(() => ListOrganizationsSchema.parse(invalid)).toThrow('First char must be a single character');
+    expect(() => ListOrganizationsSchema.parse(invalid)).toThrow(
+      'First char must be a single character'
+    );
   });
 
   it('should reject first_char with number', () => {
@@ -210,22 +222,28 @@ describe('SearchOrganizationsSchema', () => {
 
   it('should reject search term less than 2 characters', () => {
     const invalid = { term: 'A' };
-    expect(() => SearchOrganizationsSchema.parse(invalid)).toThrow('Search term must be at least 2 characters');
+    expect(() => SearchOrganizationsSchema.parse(invalid)).toThrow(
+      'Search term must be at least 2 characters'
+    );
   });
 
   it('should reject search term exceeding 255 characters', () => {
     const invalid = { term: 'a'.repeat(256) };
-    expect(() => SearchOrganizationsSchema.parse(invalid)).toThrow('Search term cannot exceed 255 characters');
+    expect(() => SearchOrganizationsSchema.parse(invalid)).toThrow(
+      'Search term cannot exceed 255 characters'
+    );
   });
 
   it('should reject invalid fields enum', () => {
     const invalid = { term: 'Search', fields: 'email' };
-    expect(() => SearchOrganizationsSchema.parse(invalid)).toThrow('Fields must be one of: name, address, notes, custom_fields, all');
+    expect(() => SearchOrganizationsSchema.parse(invalid)).toThrow(
+      'Fields must be one of: name, address, notes, custom_fields, all'
+    );
   });
 
   it('should accept all valid field types', () => {
     const validFields = ['name', 'address', 'notes', 'custom_fields', 'all'];
-    validFields.forEach(field => {
+    validFields.forEach((field) => {
       const valid = { term: 'Search', fields: field as any };
       expect(() => SearchOrganizationsSchema.parse(valid)).not.toThrow();
     });
@@ -246,7 +264,9 @@ describe('MergeOrganizationsSchema', () => {
       id: 1,
       merge_with_id: 1,
     };
-    expect(() => MergeOrganizationsSchema.parse(invalid)).toThrow('Cannot merge an organization with itself');
+    expect(() => MergeOrganizationsSchema.parse(invalid)).toThrow(
+      'Cannot merge an organization with itself'
+    );
   });
 
   it('should reject missing id', () => {
@@ -280,12 +300,16 @@ describe('BulkDeleteOrganizationsSchema', () => {
 
   it('should reject IDs with spaces', () => {
     const invalid = { ids: '1, 2, 3' };
-    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow('IDs must be a comma-separated list of numbers');
+    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow(
+      'IDs must be a comma-separated list of numbers'
+    );
   });
 
   it('should reject IDs with letters', () => {
     const invalid = { ids: '1,2,abc' };
-    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow('IDs must be a comma-separated list of numbers');
+    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow(
+      'IDs must be a comma-separated list of numbers'
+    );
   });
 
   it('should reject empty string', () => {
@@ -295,12 +319,16 @@ describe('BulkDeleteOrganizationsSchema', () => {
 
   it('should reject IDs with trailing comma', () => {
     const invalid = { ids: '1,2,3,' };
-    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow('IDs must be a comma-separated list of numbers');
+    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow(
+      'IDs must be a comma-separated list of numbers'
+    );
   });
 
   it('should reject IDs with leading comma', () => {
     const invalid = { ids: ',1,2,3' };
-    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow('IDs must be a comma-separated list of numbers');
+    expect(() => BulkDeleteOrganizationsSchema.parse(invalid)).toThrow(
+      'IDs must be a comma-separated list of numbers'
+    );
   });
 });
 

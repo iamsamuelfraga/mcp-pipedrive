@@ -10,7 +10,7 @@ export class TTLCache<T> {
   private defaultTTL: number;
   private maxSize: number;
 
-  constructor(defaultTTL: number = 300000, maxSize: number = 500) {
+  constructor(defaultTTL = 300000, maxSize = 500) {
     this.defaultTTL = defaultTTL; // 5 minutes default
     this.maxSize = maxSize;
   }

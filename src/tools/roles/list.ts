@@ -22,7 +22,10 @@ Common use cases:
         type: 'object' as const,
         properties: {
           start: { type: 'number', description: 'Pagination start (default: 0)' },
-          limit: { type: 'number', description: 'Number of items to return (default: 100, max: 500)' },
+          limit: {
+            type: 'number',
+            description: 'Number of items to return (default: 100, max: 500)',
+          },
         },
       },
       handler: async (args: unknown) => {

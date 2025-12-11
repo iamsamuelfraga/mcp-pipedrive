@@ -1,5 +1,8 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
-import { GetOrganizationChangelogSchema, GetOrganizationFlowSchema } from '../../schemas/organization.js';
+import {
+  GetOrganizationChangelogSchema,
+  GetOrganizationFlowSchema,
+} from '../../schemas/organization.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 /**

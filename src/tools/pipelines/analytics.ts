@@ -49,7 +49,8 @@ Common use cases:
           },
           user_id: {
             type: 'number',
-            description: 'ID of user to fetch statistics for (optional, defaults to authorized user)',
+            description:
+              'ID of user to fetch statistics for (optional, defaults to authorized user)',
           },
         },
         required: ['id', 'start_date', 'end_date'],
@@ -106,7 +107,8 @@ Common use cases:
           },
           user_id: {
             type: 'number',
-            description: 'ID of user to fetch statistics for (optional, defaults to authorized user)',
+            description:
+              'ID of user to fetch statistics for (optional, defaults to authorized user)',
           },
         },
         required: ['id', 'start_date', 'end_date'],
@@ -157,7 +159,8 @@ Common use cases:
           },
           everyone: {
             type: 'number',
-            description: 'Set to 1 to return deals owned by everyone (ignores filter_id and user_id)',
+            description:
+              'Set to 1 to return deals owned by everyone (ignores filter_id and user_id)',
           },
           stage_id: {
             type: 'number',

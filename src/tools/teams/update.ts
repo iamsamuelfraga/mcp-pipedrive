@@ -21,9 +21,16 @@ export function createUpdateTeamTool(client: PipedriveClient) {
       properties: {
         id: { type: 'number', description: 'ID of the team to update' },
         name: { type: 'string', description: 'Team name' },
-        manager_id: { type: 'number', description: 'ID of the user who will be the manager of this team' },
+        manager_id: {
+          type: 'number',
+          description: 'ID of the user who will be the manager of this team',
+        },
         description: { type: 'string', description: 'Team description' },
-        users: { type: 'array', items: { type: 'number' }, description: 'Array of user IDs to add to the team' },
+        users: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Array of user IDs to add to the team',
+        },
         active_flag: { type: ['boolean', 'number'], description: 'Whether the team is active' },
       },
       required: ['id'],
@@ -32,10 +39,7 @@ export function createUpdateTeamTool(client: PipedriveClient) {
       const parsed = UpdateTeamArgsSchema.parse(args);
       const { id, ...updateData } = parsed;
 
-      const response = await client.put<PipedriveResponse<Team>>(
-        `/legacyTeams/${id}`,
-        updateData
-      );
+      const response = await client.put<PipedriveResponse<Team>>(`/legacyTeams/${id}`, updateData);
 
       return {
         content: [

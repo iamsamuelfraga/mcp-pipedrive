@@ -30,7 +30,10 @@ describe('Deals Tools', () => {
       const tool = tools['deals/create'];
       const result = await tool.handler({ title: 'Test Deal' });
 
-      expect(mockClient.post).toHaveBeenCalledWith('/deals', { title: 'Test Deal', status: 'open' });
+      expect(mockClient.post).toHaveBeenCalledWith('/deals', {
+        title: 'Test Deal',
+        status: 'open',
+      });
       expect(result).toEqual(mockResponse);
     });
 
@@ -89,9 +92,7 @@ describe('Deals Tools', () => {
       const tools = getCreateDealTool(mockClient);
       const tool = tools['deals/create'];
 
-      await expect(
-        tool.handler({ title: 'Test', value: -100 })
-      ).rejects.toThrow();
+      await expect(tool.handler({ title: 'Test', value: -100 })).rejects.toThrow();
       expect(mockClient.post).not.toHaveBeenCalled();
     });
 
@@ -99,9 +100,7 @@ describe('Deals Tools', () => {
       const tools = getCreateDealTool(mockClient);
       const tool = tools['deals/create'];
 
-      await expect(
-        tool.handler({ title: 'Test', probability: 150 })
-      ).rejects.toThrow();
+      await expect(tool.handler({ title: 'Test', probability: 150 })).rejects.toThrow();
       expect(mockClient.post).not.toHaveBeenCalled();
     });
 
@@ -109,9 +108,7 @@ describe('Deals Tools', () => {
       const tools = getCreateDealTool(mockClient);
       const tool = tools['deals/create'];
 
-      await expect(
-        tool.handler({ title: 'Test', visible_to: '10' })
-      ).rejects.toThrow();
+      await expect(tool.handler({ title: 'Test', visible_to: '10' })).rejects.toThrow();
       expect(mockClient.post).not.toHaveBeenCalled();
     });
   });
@@ -135,7 +132,10 @@ describe('Deals Tools', () => {
       const tool = tools['deals/get'];
       const result = await tool.handler({ id: 1 });
 
-      expect(mockClient.get).toHaveBeenCalledWith('/deals/1', undefined, { enabled: true, ttl: 300000 });
+      expect(mockClient.get).toHaveBeenCalledWith('/deals/1', undefined, {
+        enabled: true,
+        ttl: 300000,
+      });
       expect(result).toEqual(mockResponse);
     });
 

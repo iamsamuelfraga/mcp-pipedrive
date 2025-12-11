@@ -17,7 +17,8 @@ interface CursorPaginatedResponse<T> {
 export function createGetProjectActivitiesTool(client: PipedriveClient) {
   return {
     name: 'projects/activities/list',
-    description: 'Get all activities linked to a specific project. Returns activity details including type, due date, and completion status.',
+    description:
+      'Get all activities linked to a specific project. Returns activity details including type, due date, and completion status.',
     inputSchema: {
       type: 'object',
       properties: {

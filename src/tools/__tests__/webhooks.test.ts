@@ -92,9 +92,7 @@ describe('Webhooks Tools', () => {
     });
 
     it('should handle API errors', async () => {
-      mockClient.get.mockRejectedValue(
-        new Error('API Error: Unauthorized')
-      );
+      mockClient.get.mockRejectedValue(new Error('API Error: Unauthorized'));
 
       const tools = getListWebhooksTool(mockClient);
       const tool = tools['webhooks/list'];
@@ -109,11 +107,11 @@ describe('Webhooks Tools', () => {
       const invalidActions = ['create', 'modify', 'remove'];
 
       // This is a conceptual test - actual validation would be in the create webhook tool
-      validActions.forEach(action => {
+      validActions.forEach((action) => {
         expect(validActions).toContain(action);
       });
 
-      invalidActions.forEach(action => {
+      invalidActions.forEach((action) => {
         expect(validActions).not.toContain(action);
       });
     });
@@ -133,11 +131,11 @@ describe('Webhooks Tools', () => {
       ];
       const invalidObjects = ['contact', 'lead', 'opportunity'];
 
-      validObjects.forEach(object => {
+      validObjects.forEach((object) => {
         expect(validObjects).toContain(object);
       });
 
-      invalidObjects.forEach(object => {
+      invalidObjects.forEach((object) => {
         expect(validObjects).not.toContain(object);
       });
     });
@@ -152,7 +150,7 @@ describe('Webhooks Tools', () => {
         { action: 'added', object: '*' },
       ];
 
-      validCombinations.forEach(combo => {
+      validCombinations.forEach((combo) => {
         expect(combo).toHaveProperty('action');
         expect(combo).toHaveProperty('object');
         expect(typeof combo.action).toBe('string');
@@ -174,11 +172,11 @@ describe('Webhooks Tools', () => {
         '',
       ];
 
-      validUrls.forEach(url => {
+      validUrls.forEach((url) => {
         expect(url).toMatch(/^https:\/\/.+/);
       });
 
-      invalidUrls.forEach(url => {
+      invalidUrls.forEach((url) => {
         expect(url).not.toMatch(/^https:\/\/.+/);
       });
     });

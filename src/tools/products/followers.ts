@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import {
   AddProductFollowerSchema,
   GetProductFollowersSchema,
-  RemoveProductFollowerSchema
+  RemoveProductFollowerSchema,
 } from '../../schemas/product.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
@@ -107,10 +107,9 @@ Note: Users can only be added as followers if they have access to the product.`,
     handler: async (params: unknown) => {
       const validated = AddProductFollowerSchema.parse(params);
 
-      const response = await client.post<PipedriveResponse<{ user_id: number; id: number; product_id: number }>>(
-        `/products/${validated.id}/followers`,
-        { user_id: validated.user_id }
-      );
+      const response = await client.post<
+        PipedriveResponse<{ user_id: number; id: number; product_id: number }>
+      >(`/products/${validated.id}/followers`, { user_id: validated.user_id });
 
       return {
         content: [

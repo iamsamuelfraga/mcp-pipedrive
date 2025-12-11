@@ -44,12 +44,9 @@ describe('Files Tools', () => {
       });
 
       expect(fs.readFile).toHaveBeenCalledWith('/path/to/test.pdf');
-      expect(mockClient.uploadFile).toHaveBeenCalledWith(
-        '/files',
-        mockFileBuffer,
-        'test.pdf',
-        { deal_id: 123 }
-      );
+      expect(mockClient.uploadFile).toHaveBeenCalledWith('/files', mockFileBuffer, 'test.pdf', {
+        deal_id: 123,
+      });
       expect(result).toEqual(mockResponse);
     });
 
@@ -77,12 +74,9 @@ describe('Files Tools', () => {
         person_id: 456,
       });
 
-      expect(mockClient.uploadFile).toHaveBeenCalledWith(
-        '/files',
-        mockFileBuffer,
-        'photo.jpg',
-        { person_id: 456 }
-      );
+      expect(mockClient.uploadFile).toHaveBeenCalledWith('/files', mockFileBuffer, 'photo.jpg', {
+        person_id: 456,
+      });
     });
 
     it('should upload file to multiple entities', async () => {
@@ -153,9 +147,7 @@ describe('Files Tools', () => {
       const tools = getUploadFileTool(mockClient);
       const tool = tools['files/upload'];
 
-      await expect(
-        tool.handler({ deal_id: 123 })
-      ).rejects.toThrow();
+      await expect(tool.handler({ deal_id: 123 })).rejects.toThrow();
       expect(fs.readFile).not.toHaveBeenCalled();
       expect(mockClient.uploadFile).not.toHaveBeenCalled();
     });
@@ -164,9 +156,7 @@ describe('Files Tools', () => {
       const tools = getUploadFileTool(mockClient);
       const tool = tools['files/upload'];
 
-      await expect(
-        tool.handler({ file_path: '/path/to/file.pdf' })
-      ).rejects.toThrow();
+      await expect(tool.handler({ file_path: '/path/to/file.pdf' })).rejects.toThrow();
       expect(mockClient.uploadFile).not.toHaveBeenCalled();
     });
 
@@ -176,25 +166,23 @@ describe('Files Tools', () => {
       const tools = getUploadFileTool(mockClient);
       const tool = tools['files/upload'];
 
-      await expect(
-        tool.handler({ file_path: '/nonexistent.pdf', deal_id: 123 })
-      ).rejects.toThrow('File not found');
+      await expect(tool.handler({ file_path: '/nonexistent.pdf', deal_id: 123 })).rejects.toThrow(
+        'File not found'
+      );
       expect(mockClient.uploadFile).not.toHaveBeenCalled();
     });
 
     it('should handle upload API errors', async () => {
       const mockFileBuffer = Buffer.from('content');
       (fs.readFile as any).mockResolvedValue(mockFileBuffer);
-      mockClient.uploadFile.mockRejectedValue(
-        new Error('API Error: Upload failed')
-      );
+      mockClient.uploadFile.mockRejectedValue(new Error('API Error: Upload failed'));
 
       const tools = getUploadFileTool(mockClient);
       const tool = tools['files/upload'];
 
-      await expect(
-        tool.handler({ file_path: '/path/to/file.pdf', deal_id: 123 })
-      ).rejects.toThrow('API Error: Upload failed');
+      await expect(tool.handler({ file_path: '/path/to/file.pdf', deal_id: 123 })).rejects.toThrow(
+        'API Error: Upload failed'
+      );
     });
   });
 
@@ -270,13 +258,9 @@ describe('Files Tools', () => {
       const tools = getRemoteFileTool(mockClient);
       const tool = tools['files/create_remote_link'];
 
-      await expect(
-        tool.handler({ item_type: 'deal' })
-      ).rejects.toThrow();
+      await expect(tool.handler({ item_type: 'deal' })).rejects.toThrow();
 
-      await expect(
-        tool.handler({ item_type: 'deal', item_id: 123 })
-      ).rejects.toThrow();
+      await expect(tool.handler({ item_type: 'deal', item_id: 123 })).rejects.toThrow();
 
       await expect(
         tool.handler({

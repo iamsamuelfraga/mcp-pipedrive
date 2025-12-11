@@ -60,11 +60,24 @@ Important notes:
           event_action: {
             type: 'string',
             enum: ['added', 'updated', 'deleted', 'merged', '*'],
-            description: 'Action that triggers the webhook: added, updated, deleted, merged, or * (all) (required)',
+            description:
+              'Action that triggers the webhook: added, updated, deleted, merged, or * (all) (required)',
           },
           event_object: {
             type: 'string',
-            enum: ['activity', 'activityType', 'deal', 'note', 'organization', 'person', 'pipeline', 'product', 'stage', 'user', '*'],
+            enum: [
+              'activity',
+              'activityType',
+              'deal',
+              'note',
+              'organization',
+              'person',
+              'pipeline',
+              'product',
+              'stage',
+              'user',
+              '*',
+            ],
             description: 'Object type that triggers the webhook (required)',
           },
           user_id: {

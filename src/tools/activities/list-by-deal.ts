@@ -5,7 +5,10 @@ import type { PaginatedResponse } from '../../utils/pagination.js';
 
 const ListActivitiesByDealArgsSchema = z.object({
   deal_id: z.number().describe('Deal ID to filter activities by'),
-  done: z.boolean().optional().describe('Filter by done status (true for done, false for not done)'),
+  done: z
+    .boolean()
+    .optional()
+    .describe('Filter by done status (true for done, false for not done)'),
   start: z.number().default(0).describe('Pagination start'),
   limit: z.number().default(100).describe('Items per page'),
 });
@@ -18,7 +21,10 @@ export function createListActivitiesByDealTool(client: PipedriveClient) {
       type: 'object',
       properties: {
         deal_id: { type: 'number', description: 'Deal ID to filter activities by' },
-        done: { type: 'boolean', description: 'Filter by done status (true for done, false for not done)' },
+        done: {
+          type: 'boolean',
+          description: 'Filter by done status (true for done, false for not done)',
+        },
         start: { type: 'number', description: 'Pagination start', default: 0 },
         limit: { type: 'number', description: 'Items per page', default: 100 },
       },
@@ -35,11 +41,10 @@ export function createListActivitiesByDealTool(client: PipedriveClient) {
 
       if (parsed.done !== undefined) params.done = parsed.done ? 1 : 0;
 
-      const response = await client.get<PaginatedResponse<Activity>>(
-        '/activities',
-        params,
-        { enabled: true, ttl: 30000 }
-      );
+      const response = await client.get<PaginatedResponse<Activity>>('/activities', params, {
+        enabled: true,
+        ttl: 30000,
+      });
 
       return {
         content: [

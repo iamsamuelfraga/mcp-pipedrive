@@ -5,7 +5,10 @@ import type { PaginatedResponse } from '../../utils/pagination.js';
 
 const SearchOrganizationsArgsSchema = z.object({
   term: z.string().describe('Search term'),
-  fields: z.string().optional().describe('Comma-separated field names to search (e.g., "name,address")'),
+  fields: z
+    .string()
+    .optional()
+    .describe('Comma-separated field names to search (e.g., "name,address")'),
   exact_match: z.boolean().optional().describe('When true, only full exact matches are returned'),
   start: z.number().default(0).describe('Pagination start'),
   limit: z.number().default(100).describe('Items per page'),
@@ -19,8 +22,14 @@ export function createSearchOrganizationsTool(client: PipedriveClient) {
       type: 'object',
       properties: {
         term: { type: 'string', description: 'Search term' },
-        fields: { type: 'string', description: 'Comma-separated field names to search (e.g., "name,address")' },
-        exact_match: { type: 'boolean', description: 'When true, only full exact matches are returned' },
+        fields: {
+          type: 'string',
+          description: 'Comma-separated field names to search (e.g., "name,address")',
+        },
+        exact_match: {
+          type: 'boolean',
+          description: 'When true, only full exact matches are returned',
+        },
         start: { type: 'number', description: 'Pagination start', default: 0 },
         limit: { type: 'number', description: 'Items per page', default: 100 },
       },

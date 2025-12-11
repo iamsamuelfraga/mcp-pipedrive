@@ -23,19 +23,19 @@ Common use cases:
         properties: {
           id: {
             type: 'number',
-            description: 'ID of the user to update'
+            description: 'ID of the user to update',
           },
           name: {
             type: 'string',
-            description: 'Name of the user'
+            description: 'Name of the user',
           },
           email: {
             type: 'string',
-            description: 'Email address of the user'
+            description: 'Email address of the user',
           },
           active_flag: {
             type: 'boolean',
-            description: 'Whether the user is active'
+            description: 'Whether the user is active',
           },
         },
         required: ['id'],

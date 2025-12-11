@@ -94,9 +94,7 @@ describe('Projects Tools', () => {
       await expect(tool.handler({ title: 'Test' })).rejects.toThrow();
       await expect(tool.handler({ board_id: 1 })).rejects.toThrow();
       await expect(tool.handler({ phase_id: 1 })).rejects.toThrow();
-      await expect(
-        tool.handler({ title: 'Test', board_id: 1 })
-      ).rejects.toThrow();
+      await expect(tool.handler({ title: 'Test', board_id: 1 })).rejects.toThrow();
       expect(mockClient.post).not.toHaveBeenCalled();
     });
 

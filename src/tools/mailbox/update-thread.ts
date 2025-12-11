@@ -7,9 +7,18 @@ const UpdateMailThreadArgsSchema = z.object({
   id: z.number().describe('ID of the mail thread'),
   deal_id: z.number().optional().describe('ID of the deal this thread will be associated with'),
   lead_id: z.string().optional().describe('ID of the lead this thread will be associated with'),
-  shared_flag: z.union([z.boolean(), z.number()]).optional().describe('Whether the mail thread is shared with other users'),
-  read_flag: z.union([z.boolean(), z.number()]).optional().describe('Whether the mail thread is read'),
-  archived_flag: z.union([z.boolean(), z.number()]).optional().describe('Whether the mail thread is archived'),
+  shared_flag: z
+    .union([z.boolean(), z.number()])
+    .optional()
+    .describe('Whether the mail thread is shared with other users'),
+  read_flag: z
+    .union([z.boolean(), z.number()])
+    .optional()
+    .describe('Whether the mail thread is read'),
+  archived_flag: z
+    .union([z.boolean(), z.number()])
+    .optional()
+    .describe('Whether the mail thread is archived'),
 });
 
 export function createUpdateMailThreadTool(client: PipedriveClient) {
@@ -20,11 +29,23 @@ export function createUpdateMailThreadTool(client: PipedriveClient) {
       type: 'object',
       properties: {
         id: { type: 'number', description: 'ID of the mail thread' },
-        deal_id: { type: 'number', description: 'ID of the deal this thread will be associated with' },
-        lead_id: { type: 'string', description: 'ID of the lead this thread will be associated with' },
-        shared_flag: { type: ['boolean', 'number'], description: 'Whether the mail thread is shared with other users' },
+        deal_id: {
+          type: 'number',
+          description: 'ID of the deal this thread will be associated with',
+        },
+        lead_id: {
+          type: 'string',
+          description: 'ID of the lead this thread will be associated with',
+        },
+        shared_flag: {
+          type: ['boolean', 'number'],
+          description: 'Whether the mail thread is shared with other users',
+        },
         read_flag: { type: ['boolean', 'number'], description: 'Whether the mail thread is read' },
-        archived_flag: { type: ['boolean', 'number'], description: 'Whether the mail thread is archived' },
+        archived_flag: {
+          type: ['boolean', 'number'],
+          description: 'Whether the mail thread is archived',
+        },
       },
       required: ['id'],
     },

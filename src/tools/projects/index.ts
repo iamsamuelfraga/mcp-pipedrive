@@ -11,7 +11,7 @@ import { createGetProjectActivitiesTool } from './activities.js';
 import {
   createGetProjectPlanTool,
   createUpdateProjectPlanActivityTool,
-  createUpdateProjectPlanTaskTool
+  createUpdateProjectPlanTaskTool,
 } from './plan.js';
 import { createGetProjectGroupsTool } from './groups.js';
 import { createGetProjectBoardsTool, createGetProjectBoardTool } from './boards.js';

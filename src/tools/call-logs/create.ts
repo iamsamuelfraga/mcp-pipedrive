@@ -25,59 +25,59 @@ Common use cases:
         properties: {
           to_phone_number: {
             type: 'string',
-            description: 'Phone number called'
+            description: 'Phone number called',
           },
           outcome: {
             type: 'string',
-            description: 'Call outcome (e.g., connected, no_answer, busy, voicemail)'
+            description: 'Call outcome (e.g., connected, no_answer, busy, voicemail)',
           },
           start_time: {
             type: 'string',
-            description: 'Call start time in ISO 8601 format'
+            description: 'Call start time in ISO 8601 format',
           },
           end_time: {
             type: 'string',
-            description: 'Call end time in ISO 8601 format'
+            description: 'Call end time in ISO 8601 format',
           },
           user_id: {
             type: 'number',
-            description: 'ID of the user who made the call'
+            description: 'ID of the user who made the call',
           },
           activity_id: {
             type: 'number',
-            description: 'ID of the associated activity'
+            description: 'ID of the associated activity',
           },
           subject: {
             type: 'string',
-            description: 'Call subject/title'
+            description: 'Call subject/title',
           },
           duration: {
             type: 'string',
-            description: 'Call duration in seconds (e.g., "120")'
+            description: 'Call duration in seconds (e.g., "120")',
           },
           from_phone_number: {
             type: 'string',
-            description: 'Phone number that made the call'
+            description: 'Phone number that made the call',
           },
           person_id: {
             type: 'number',
-            description: 'ID of the person associated with the call'
+            description: 'ID of the person associated with the call',
           },
           org_id: {
             type: 'number',
-            description: 'ID of the organization associated with the call'
+            description: 'ID of the organization associated with the call',
           },
           deal_id: {
             type: 'number',
-            description: 'ID of the deal associated with the call'
+            description: 'ID of the deal associated with the call',
           },
           lead_id: {
             type: 'string',
-            description: 'UUID of the lead associated with the call'
+            description: 'UUID of the lead associated with the call',
           },
           note: {
             type: 'string',
-            description: 'Additional notes about the call'
+            description: 'Additional notes about the call',
           },
         },
         required: ['to_phone_number', 'outcome', 'start_time', 'end_time'],

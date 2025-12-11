@@ -24,23 +24,24 @@ Common use cases:
         properties: {
           id: {
             type: 'number',
-            description: 'ID of the activity type to update'
+            description: 'ID of the activity type to update',
           },
           name: {
             type: 'string',
-            description: 'Activity type name'
+            description: 'Activity type name',
           },
           icon_key: {
             type: 'string',
-            description: 'Icon identifier (e.g., task, call, meeting, deadline, email, lunch, camera)'
+            description:
+              'Icon identifier (e.g., task, call, meeting, deadline, email, lunch, camera)',
           },
           color: {
             type: 'string',
-            description: 'Color as 6-character hex code without # (e.g., "FF5733")'
+            description: 'Color as 6-character hex code without # (e.g., "FF5733")',
           },
           order_nr: {
             type: 'number',
-            description: 'Order number for display sorting'
+            description: 'Order number for display sorting',
           },
         },
         required: ['id'],

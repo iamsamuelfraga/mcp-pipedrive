@@ -14,7 +14,8 @@ interface SingleResponse<T> {
 export function createGetProjectTool(client: PipedriveClient) {
   return {
     name: 'projects/get',
-    description: 'Get details of a specific project by ID. Returns complete project information including custom fields.',
+    description:
+      'Get details of a specific project by ID. Returns complete project information including custom fields.',
     inputSchema: {
       type: 'object',
       properties: {

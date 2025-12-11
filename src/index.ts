@@ -1,10 +1,7 @@
 #!/usr/bin/env node
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 import { PipedriveClient } from './pipedrive-client.js';
 import { logger } from './utils/logger.js';
@@ -89,11 +86,34 @@ const READ_ONLY = process.env.PIPEDRIVE_READ_ONLY === 'true';
 const enabledToolsets = process.env.PIPEDRIVE_TOOLSETS
   ? process.env.PIPEDRIVE_TOOLSETS.split(',').map((t) => t.trim())
   : [
-      'deals', 'persons', 'organizations', 'activities', 'files', 'search',
-      'pipelines', 'notes', 'fields', 'system', 'products', 'leads', 'users',
-      'roles', 'webhooks', 'filters', 'projects', 'project_templates', 'goals', 'tasks',
-      'activity_types', 'call_logs', 'mailbox', 'teams', 'org_relationships',
-      'permission_sets', 'channels', 'meetings'
+      'deals',
+      'persons',
+      'organizations',
+      'activities',
+      'files',
+      'search',
+      'pipelines',
+      'notes',
+      'fields',
+      'system',
+      'products',
+      'leads',
+      'users',
+      'roles',
+      'webhooks',
+      'filters',
+      'projects',
+      'project_templates',
+      'goals',
+      'tasks',
+      'activity_types',
+      'call_logs',
+      'mailbox',
+      'teams',
+      'org_relationships',
+      'permission_sets',
+      'channels',
+      'meetings',
     ];
 
 // Helper function to convert array of tools to object

@@ -13,10 +13,7 @@ export type ValidationResult<T> =
  * @param data - The data to validate
  * @returns A validation result object
  */
-export function validate<T>(
-  schema: z.ZodSchema<T>,
-  data: unknown
-): ValidationResult<T> {
+export function validate<T>(schema: z.ZodSchema<T>, data: unknown): ValidationResult<T> {
   const result = schema.safeParse(data);
 
   if (result.success) {
@@ -33,10 +30,7 @@ export function validate<T>(
  * @returns The validated data
  * @throws ZodError if validation fails
  */
-export function validateStrict<T>(
-  schema: z.ZodSchema<T>,
-  data: unknown
-): T {
+export function validateStrict<T>(schema: z.ZodSchema<T>, data: unknown): T {
   return schema.parse(data);
 }
 
@@ -60,10 +54,7 @@ export function formatZodError(error: z.ZodError): string {
  * @param data - The data to validate
  * @returns null if valid, error message string if invalid
  */
-export function validateWithMessage<T>(
-  schema: z.ZodSchema<T>,
-  data: unknown
-): string | null {
+export function validateWithMessage<T>(schema: z.ZodSchema<T>, data: unknown): string | null {
   const result = validate(schema, data);
 
   if (!result.success) {

@@ -82,13 +82,15 @@ describe('BillingFrequencySchema', () => {
       'semi-annually',
       'annually',
     ];
-    validFrequencies.forEach(freq => {
+    validFrequencies.forEach((freq) => {
       expect(() => BillingFrequencySchema.parse(freq)).not.toThrow();
     });
   });
 
   it('should reject invalid billing frequency', () => {
-    expect(() => BillingFrequencySchema.parse('daily')).toThrow('Billing frequency must be one of: one-time, weekly, monthly, quarterly, semi-annually, annually');
+    expect(() => BillingFrequencySchema.parse('daily')).toThrow(
+      'Billing frequency must be one of: one-time, weekly, monthly, quarterly, semi-annually, annually'
+    );
   });
 });
 
@@ -126,7 +128,7 @@ describe('CreateProductSchema', () => {
 
   it('should accept product with various units', () => {
     const units = ['pcs', 'kg', 'hours', 'licenses', 'meters'];
-    units.forEach(unit => {
+    units.forEach((unit) => {
       const valid = { name: 'Product', unit };
       expect(() => CreateProductSchema.parse(valid)).not.toThrow();
     });
@@ -134,7 +136,9 @@ describe('CreateProductSchema', () => {
 
   it('should reject empty name', () => {
     const invalid = { name: '' };
-    expect(() => CreateProductSchema.parse(invalid)).toThrow('Name is required and cannot be empty');
+    expect(() => CreateProductSchema.parse(invalid)).toThrow(
+      'Name is required and cannot be empty'
+    );
   });
 
   it('should reject name exceeding 255 characters', () => {
@@ -201,7 +205,9 @@ describe('CreateProductSchema', () => {
       name: 'Product',
       billing_frequency_cycles: 0,
     };
-    expect(() => CreateProductSchema.parse(invalid)).toThrow('Billing frequency cycles must be positive');
+    expect(() => CreateProductSchema.parse(invalid)).toThrow(
+      'Billing frequency cycles must be positive'
+    );
   });
 
   it('should reject negative billing_frequency_cycles', () => {
@@ -209,7 +215,9 @@ describe('CreateProductSchema', () => {
       name: 'Product',
       billing_frequency_cycles: -1,
     };
-    expect(() => CreateProductSchema.parse(invalid)).toThrow('Billing frequency cycles must be positive');
+    expect(() => CreateProductSchema.parse(invalid)).toThrow(
+      'Billing frequency cycles must be positive'
+    );
   });
 
   it('should reject non-integer billing_frequency_cycles', () => {
@@ -217,7 +225,9 @@ describe('CreateProductSchema', () => {
       name: 'Product',
       billing_frequency_cycles: 12.5,
     };
-    expect(() => CreateProductSchema.parse(invalid)).toThrow('Billing frequency cycles must be an integer');
+    expect(() => CreateProductSchema.parse(invalid)).toThrow(
+      'Billing frequency cycles must be an integer'
+    );
   });
 
   it('should accept null billing_frequency_cycles', () => {
@@ -310,7 +320,9 @@ describe('ListProductsSchema', () => {
 
   it('should reject first_char with multiple characters', () => {
     const invalid = { first_char: 'AB' };
-    expect(() => ListProductsSchema.parse(invalid)).toThrow('First char must be a single character');
+    expect(() => ListProductsSchema.parse(invalid)).toThrow(
+      'First char must be a single character'
+    );
   });
 
   it('should reject first_char with number', () => {
@@ -358,12 +370,16 @@ describe('SearchProductsSchema', () => {
 
   it('should reject empty search term', () => {
     const invalid = { term: '' };
-    expect(() => SearchProductsSchema.parse(invalid)).toThrow('Search term must be at least 1 character');
+    expect(() => SearchProductsSchema.parse(invalid)).toThrow(
+      'Search term must be at least 1 character'
+    );
   });
 
   it('should reject search term exceeding 255 characters', () => {
     const invalid = { term: 'a'.repeat(256) };
-    expect(() => SearchProductsSchema.parse(invalid)).toThrow('Search term cannot exceed 255 characters');
+    expect(() => SearchProductsSchema.parse(invalid)).toThrow(
+      'Search term cannot exceed 255 characters'
+    );
   });
 
   it('should reject negative start', () => {
@@ -412,9 +428,7 @@ describe('CreateProductSchema - Complex Price Scenarios', () => {
       name: 'SaaS Product',
       billing_frequency: 'monthly',
       billing_frequency_cycles: 12,
-      prices: [
-        { price: 49.99, currency: 'USD' },
-      ],
+      prices: [{ price: 49.99, currency: 'USD' }],
     };
     expect(() => CreateProductSchema.parse(valid)).not.toThrow();
   });
@@ -423,9 +437,7 @@ describe('CreateProductSchema - Complex Price Scenarios', () => {
     const valid = {
       name: 'One-time Service',
       billing_frequency: 'one-time',
-      prices: [
-        { price: 500, currency: 'USD' },
-      ],
+      prices: [{ price: 500, currency: 'USD' }],
     };
     expect(() => CreateProductSchema.parse(valid)).not.toThrow();
   });

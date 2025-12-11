@@ -32,7 +32,8 @@ The search is case-insensitive and supports partial matches.`,
         },
         fields: {
           type: 'string',
-          description: 'Fields to search in: name, email, phone, notes, custom_fields, or all (default: all)',
+          description:
+            'Fields to search in: name, email, phone, notes, custom_fields, or all (default: all)',
           enum: ['name', 'email', 'phone', 'notes', 'custom_fields', 'all'],
         },
         exact_match: {

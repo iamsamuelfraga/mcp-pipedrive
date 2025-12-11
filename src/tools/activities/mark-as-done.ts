@@ -10,7 +10,8 @@ const MarkActivityAsDoneArgsSchema = z.object({
 export function createMarkActivityAsDoneTool(client: PipedriveClient) {
   return {
     name: 'activities/mark_as_done',
-    description: 'Mark an activity as done. This is a convenience tool that updates the activity with done: true.',
+    description:
+      'Mark an activity as done. This is a convenience tool that updates the activity with done: true.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -21,12 +22,9 @@ export function createMarkActivityAsDoneTool(client: PipedriveClient) {
     handler: async (args: unknown) => {
       const parsed = MarkActivityAsDoneArgsSchema.parse(args);
 
-      const response = await client.put<PipedriveResponse<Activity>>(
-        `/activities/${parsed.id}`,
-        {
-          done: true,
-        }
-      );
+      const response = await client.put<PipedriveResponse<Activity>>(`/activities/${parsed.id}`, {
+        done: true,
+      });
 
       return {
         content: [

@@ -50,7 +50,8 @@ Example email/phone arrays:
         },
         email: {
           type: 'array',
-          description: 'Email addresses array. Example: [{"value": "john@company.com", "primary": true, "label": "work"}]',
+          description:
+            'Email addresses array. Example: [{"value": "john@company.com", "primary": true, "label": "work"}]',
           items: {
             type: 'object',
             properties: {
@@ -72,7 +73,8 @@ Example email/phone arrays:
         },
         phone: {
           type: 'array',
-          description: 'Phone numbers array. Example: [{"value": "+1234567890", "primary": true, "label": "mobile"}]',
+          description:
+            'Phone numbers array. Example: [{"value": "+1234567890", "primary": true, "label": "mobile"}]',
           items: {
             type: 'object',
             properties: {
@@ -94,7 +96,8 @@ Example email/phone arrays:
         },
         visible_to: {
           type: 'string',
-          description: 'Visibility: 1 (owner only), 3 (entire company), 5 (owner\'s followers), 7 (visibility group)',
+          description:
+            "Visibility: 1 (owner only), 3 (entire company), 5 (owner's followers), 7 (visibility group)",
           enum: ['1', '3', '5', '7'],
         },
         marketing_status: {
@@ -124,10 +127,7 @@ Example email/phone arrays:
       if (validated.marketing_status) body.marketing_status = validated.marketing_status;
       if (validated.add_time) body.add_time = validated.add_time;
 
-      const response = await client.post<PipedriveResponse<Person>>(
-        '/persons',
-        body
-      );
+      const response = await client.post<PipedriveResponse<Person>>('/persons', body);
 
       return {
         content: [

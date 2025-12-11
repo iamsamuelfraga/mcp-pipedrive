@@ -196,12 +196,7 @@ describe('PipedriveError', () => {
 
     it('should handle error with all fields', () => {
       const details = { reason: 'test' };
-      const error = new PipedriveError(
-        'Complete error',
-        500,
-        '/api/test',
-        details
-      );
+      const error = new PipedriveError('Complete error', 500, '/api/test', details);
       const message = error.toUserFriendlyMessage();
 
       expect(message).toContain('Error: Complete error');

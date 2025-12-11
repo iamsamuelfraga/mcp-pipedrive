@@ -35,12 +35,12 @@ Example:
       properties: {
         cursor: {
           type: 'string',
-          description: 'For pagination, the marker representing the first item on the next page'
+          description: 'For pagination, the marker representing the first item on the next page',
         },
         limit: {
           type: 'number',
           description: 'Number of items to return per page (default: 100, max: 500)',
-          default: 100
+          default: 100,
         },
       },
     },

@@ -27,7 +27,8 @@ Common use cases:
         properties: {
           id: {
             type: 'string',
-            description: 'Unique identifier linking a user to the installed integration (UUID format)'
+            description:
+              'Unique identifier linking a user to the installed integration (UUID format)',
           },
         },
         required: ['id'],

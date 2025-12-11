@@ -21,7 +21,7 @@ Common use cases:
         properties: {
           id: {
             type: 'number',
-            description: 'ID of the task to delete'
+            description: 'ID of the task to delete',
           },
         },
         required: ['id'],

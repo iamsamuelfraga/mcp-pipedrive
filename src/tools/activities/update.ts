@@ -18,7 +18,10 @@ const ActivityAttendeeSchema = z.object({
 const UpdateActivityArgsSchema = z.object({
   id: z.number().describe('Activity ID'),
   subject: z.string().optional().describe('Activity subject'),
-  type: z.enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch']).optional().describe('Activity type'),
+  type: z
+    .enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch'])
+    .optional()
+    .describe('Activity type'),
   due_date: z.string().optional().describe('Due date in YYYY-MM-DD format'),
   due_time: z.string().optional().describe('Due time in HH:MM format'),
   duration: z.string().optional().describe('Duration in HH:MM format'),
@@ -50,7 +53,7 @@ export function createUpdateActivityTool(client: PipedriveClient) {
         type: {
           type: 'string',
           enum: ['call', 'meeting', 'task', 'deadline', 'email', 'lunch'],
-          description: 'Activity type'
+          description: 'Activity type',
         },
         due_date: { type: 'string', description: 'Due date in YYYY-MM-DD format' },
         due_time: { type: 'string', description: 'Due time in HH:MM format' },
@@ -75,7 +78,7 @@ export function createUpdateActivityTool(client: PipedriveClient) {
             },
             required: ['person_id'],
           },
-          description: 'Array of participants'
+          description: 'Array of participants',
         },
         attendees: {
           type: 'array',
@@ -85,11 +88,14 @@ export function createUpdateActivityTool(client: PipedriveClient) {
               email_address: { type: 'string', description: 'Email address of attendee' },
               name: { type: 'string', description: 'Name of attendee' },
               user_id: { type: 'number', description: 'User ID if attendee is a Pipedrive user' },
-              person_id: { type: 'number', description: 'Person ID if attendee is a Pipedrive person' },
+              person_id: {
+                type: 'number',
+                description: 'Person ID if attendee is a Pipedrive person',
+              },
             },
             required: ['email_address'],
           },
-          description: 'Array of attendees'
+          description: 'Array of attendees',
         },
         done: { type: 'boolean', description: 'Mark as done' },
         custom_fields: { type: 'object', description: 'Custom fields as key-value pairs' },
@@ -114,7 +120,8 @@ export function createUpdateActivityTool(client: PipedriveClient) {
       if (parsed.lead_id !== undefined) body.lead_id = parsed.lead_id;
       if (parsed.note !== undefined) body.note = parsed.note;
       if (parsed.location !== undefined) body.location = parsed.location;
-      if (parsed.public_description !== undefined) body.public_description = parsed.public_description;
+      if (parsed.public_description !== undefined)
+        body.public_description = parsed.public_description;
       if (parsed.busy_flag !== undefined) body.busy_flag = parsed.busy_flag;
       if (parsed.participants !== undefined) body.participants = parsed.participants;
       if (parsed.attendees !== undefined) body.attendees = parsed.attendees;

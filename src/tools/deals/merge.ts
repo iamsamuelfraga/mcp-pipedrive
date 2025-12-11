@@ -27,7 +27,10 @@ Warning: This operation is irreversible. The source deal (id) will be permanentl
         type: 'object' as const,
         properties: {
           id: { type: 'number', description: 'ID of the deal to merge (will be deleted)' },
-          merge_with_id: { type: 'number', description: 'ID of the deal to merge with (will be kept)' },
+          merge_with_id: {
+            type: 'number',
+            description: 'ID of the deal to merge with (will be kept)',
+          },
         },
         required: ['id', 'merge_with_id'],
       },

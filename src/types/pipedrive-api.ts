@@ -628,13 +628,13 @@ export interface FilterConditionLeaf {
   object: string;
   field_id: string;
   operator: string;
-  value?: string | number | boolean | null | Array<string | number>;
+  value?: string | number | boolean | null | (string | number)[];
   extra_value?: string | number;
 }
 
 export interface FilterConditionGroup {
   glue: 'and' | 'or';
-  conditions: Array<FilterConditionLeaf | FilterConditionGroup | null>;
+  conditions: (FilterConditionLeaf | FilterConditionGroup | null)[];
 }
 
 export interface Filter {
@@ -658,10 +658,10 @@ export interface FilterHelper {
   field_type: string;
   helper_type: string;
   input_type: string;
-  options?: Array<{
+  options?: {
     id: string | number;
     label: string;
-  }>;
+  }[];
 }
 
 // Project Types

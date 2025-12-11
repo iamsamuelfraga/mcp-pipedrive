@@ -12,13 +12,15 @@ import {
 describe('FilterTypeSchema', () => {
   it('should accept valid filter types', () => {
     const validTypes = ['deals', 'org', 'people', 'products', 'activities'];
-    validTypes.forEach(type => {
+    validTypes.forEach((type) => {
       expect(() => FilterTypeSchema.parse(type)).not.toThrow();
     });
   });
 
   it('should reject invalid filter type', () => {
-    expect(() => FilterTypeSchema.parse('leads')).toThrow('Type must be one of: deals, org, people, products, activities');
+    expect(() => FilterTypeSchema.parse('leads')).toThrow(
+      'Type must be one of: deals, org, people, products, activities'
+    );
   });
 
   it('should be case-sensitive', () => {
@@ -42,7 +44,7 @@ describe('FilterOperatorSchema', () => {
       'IN',
       'NOT IN',
     ];
-    validOperators.forEach(op => {
+    validOperators.forEach((op) => {
       expect(() => FilterOperatorSchema.parse(op)).not.toThrow();
     });
   });
@@ -314,7 +316,7 @@ describe('CreateFilterSchema', () => {
 
   it('should accept filter for different types', () => {
     const types = ['deals', 'org', 'people', 'products', 'activities'];
-    types.forEach(type => {
+    types.forEach((type) => {
       const valid = {
         name: `${type} filter`,
         conditions: {
@@ -461,7 +463,7 @@ describe('ListFiltersSchema', () => {
 
   it('should accept all valid types', () => {
     const types = ['deals', 'org', 'people', 'products', 'activities'];
-    types.forEach(type => {
+    types.forEach((type) => {
       const valid = { type: type as any };
       expect(() => ListFiltersSchema.parse(valid)).not.toThrow();
     });

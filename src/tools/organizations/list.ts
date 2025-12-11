@@ -15,7 +15,8 @@ const ListOrganizationsArgsSchema = z.object({
 export function createListOrganizationsTool(client: PipedriveClient) {
   return {
     name: 'organizations/list',
-    description: 'List organizations with pagination support. Returns paginated list of organizations with filtering options.',
+    description:
+      'List organizations with pagination support. Returns paginated list of organizations with filtering options.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -40,11 +41,10 @@ export function createListOrganizationsTool(client: PipedriveClient) {
       if (parsed.first_char !== undefined) params.first_char = parsed.first_char;
       if (parsed.sort !== undefined) params.sort = parsed.sort;
 
-      const response = await client.get<PaginatedResponse<Organization>>(
-        '/organizations',
-        params,
-        { enabled: true, ttl: 60000 }
-      );
+      const response = await client.get<PaginatedResponse<Organization>>('/organizations', params, {
+        enabled: true,
+        ttl: 60000,
+      });
 
       return {
         content: [

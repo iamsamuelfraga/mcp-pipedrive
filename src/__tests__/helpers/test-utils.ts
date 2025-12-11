@@ -146,9 +146,7 @@ export const randomEmail = (): string => {
  * Generate a random date between start and end
  */
 export const randomDate = (start: Date, end: Date): Date => {
-  return new Date(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime())
-  );
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 };
 
 /**

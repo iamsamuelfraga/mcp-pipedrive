@@ -62,10 +62,7 @@ export const createErrorResponse = (
  */
 export const mockDealResponse = createSuccessResponse(mockDeal);
 export const mockDealsResponse = createSuccessResponse(mockDeals, mockPagination);
-export const mockDealsResponseWithMore = createSuccessResponse(
-  mockDeals,
-  mockPaginationWithMore
-);
+export const mockDealsResponseWithMore = createSuccessResponse(mockDeals, mockPaginationWithMore);
 
 export const mockDealCreateResponse = createSuccessResponse({
   ...mockDeal,
@@ -113,10 +110,7 @@ export const mockPersonDeleteResponse = createSuccessResponse({
  * Organization responses
  */
 export const mockOrganizationResponse = createSuccessResponse(mockOrganization);
-export const mockOrganizationsResponse = createSuccessResponse(
-  mockOrganizations,
-  mockPagination
-);
+export const mockOrganizationsResponse = createSuccessResponse(mockOrganizations, mockPagination);
 export const mockOrganizationsResponseWithMore = createSuccessResponse(
   mockOrganizations,
   mockPaginationWithMore
@@ -142,10 +136,7 @@ export const mockOrganizationDeleteResponse = createSuccessResponse({
  * Activity responses
  */
 export const mockActivityResponse = createSuccessResponse(mockActivity);
-export const mockActivitiesResponse = createSuccessResponse(
-  mockActivities,
-  mockPagination
-);
+export const mockActivitiesResponse = createSuccessResponse(mockActivities, mockPagination);
 export const mockActivitiesResponseWithMore = createSuccessResponse(
   mockActivities,
   mockPaginationWithMore

@@ -28,8 +28,14 @@ Common use cases:
           value: { type: 'number', description: 'Deal value' },
           currency: { type: 'string', description: '3-letter currency code (e.g., USD, EUR)' },
           user_id: { type: 'number', description: 'ID of the user who will own this deal' },
-          person_id: { type: 'number', description: 'ID of the person this deal is associated with' },
-          org_id: { type: 'number', description: 'ID of the organization this deal is associated with' },
+          person_id: {
+            type: 'number',
+            description: 'ID of the person this deal is associated with',
+          },
+          org_id: {
+            type: 'number',
+            description: 'ID of the organization this deal is associated with',
+          },
           pipeline_id: { type: 'number', description: 'ID of the pipeline this deal will be in' },
           stage_id: { type: 'number', description: 'ID of the stage this deal will be in' },
           status: {
@@ -37,13 +43,17 @@ Common use cases:
             enum: ['open', 'won', 'lost'],
             description: 'Deal status (default: open)',
           },
-          expected_close_date: { type: 'string', description: 'Expected close date in YYYY-MM-DD format' },
+          expected_close_date: {
+            type: 'string',
+            description: 'Expected close date in YYYY-MM-DD format',
+          },
           probability: { type: 'number', description: 'Deal success probability (0-100)' },
           lost_reason: { type: 'string', description: 'Reason why the deal was lost' },
           visible_to: {
             type: 'string',
             enum: ['1', '3', '5', '7'],
-            description: 'Visibility: 1=Owner, 3=Owner\'s group, 5=Owner\'s group and sub-groups, 7=Entire company',
+            description:
+              "Visibility: 1=Owner, 3=Owner's group, 5=Owner's group and sub-groups, 7=Entire company",
           },
           add_time: { type: 'string', description: 'Creation time in ISO 8601 format' },
         },

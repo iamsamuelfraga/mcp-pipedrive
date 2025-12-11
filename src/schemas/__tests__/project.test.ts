@@ -9,13 +9,15 @@ import {
 describe('ProjectStatusSchema', () => {
   it('should accept valid project statuses', () => {
     const validStatuses = ['open', 'completed', 'canceled', 'deleted'];
-    validStatuses.forEach(status => {
+    validStatuses.forEach((status) => {
       expect(() => ProjectStatusSchema.parse(status)).not.toThrow();
     });
   });
 
   it('should reject invalid status', () => {
-    expect(() => ProjectStatusSchema.parse('in_progress')).toThrow('Status must be one of: open, completed, canceled, deleted');
+    expect(() => ProjectStatusSchema.parse('in_progress')).toThrow(
+      'Status must be one of: open, completed, canceled, deleted'
+    );
   });
 
   it('should be case-sensitive', () => {
@@ -58,7 +60,9 @@ describe('CreateProjectSchema', () => {
       board_id: 1,
       phase_id: 5,
     };
-    expect(() => CreateProjectSchema.parse(invalid)).toThrow('Title is required and cannot be empty');
+    expect(() => CreateProjectSchema.parse(invalid)).toThrow(
+      'Title is required and cannot be empty'
+    );
   });
 
   it('should reject title exceeding 255 characters', () => {
@@ -77,7 +81,9 @@ describe('CreateProjectSchema', () => {
       phase_id: 5,
       description: 'a'.repeat(2001),
     };
-    expect(() => CreateProjectSchema.parse(invalid)).toThrow('Description cannot exceed 2000 characters');
+    expect(() => CreateProjectSchema.parse(invalid)).toThrow(
+      'Description cannot exceed 2000 characters'
+    );
   });
 
   it('should accept description at 2000 characters', () => {
@@ -131,7 +137,9 @@ describe('CreateProjectSchema', () => {
       phase_id: 5,
       status: 'pending',
     };
-    expect(() => CreateProjectSchema.parse(invalid)).toThrow('Status must be one of: open, completed, canceled, deleted');
+    expect(() => CreateProjectSchema.parse(invalid)).toThrow(
+      'Status must be one of: open, completed, canceled, deleted'
+    );
   });
 
   it('should reject invalid start_date format', () => {
@@ -258,7 +266,9 @@ describe('UpdateProjectSchema', () => {
       id: 1,
       description: 'a'.repeat(2001),
     };
-    expect(() => UpdateProjectSchema.parse(invalid)).toThrow('Description cannot exceed 2000 characters');
+    expect(() => UpdateProjectSchema.parse(invalid)).toThrow(
+      'Description cannot exceed 2000 characters'
+    );
   });
 
   it('should reject invalid status', () => {

@@ -10,7 +10,7 @@ import { getListProductFilesTool } from './files.js';
 import {
   getAddProductFollowerTool,
   getListProductFollowersTool,
-  getDeleteProductFollowerTool
+  getDeleteProductFollowerTool,
 } from './followers.js';
 import { getProductPermittedUsersTool } from './permitted-users.js';
 

@@ -23,7 +23,11 @@ Common use cases:
       inputSchema: {
         type: 'object' as const,
         properties: {
-          app: { type: 'string', description: 'The app to filter the permission sets by (e.g., sales, global, account_settings)' },
+          app: {
+            type: 'string',
+            description:
+              'The app to filter the permission sets by (e.g., sales, global, account_settings)',
+          },
         },
       },
       handler: async (args: unknown) => {

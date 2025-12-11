@@ -11,13 +11,15 @@ import {
 describe('ActivityTypeSchema', () => {
   it('should accept valid activity types', () => {
     const validTypes = ['call', 'meeting', 'task', 'deadline', 'email', 'lunch'];
-    validTypes.forEach(type => {
+    validTypes.forEach((type) => {
       expect(() => ActivityTypeSchema.parse(type)).not.toThrow();
     });
   });
 
   it('should reject invalid activity type', () => {
-    expect(() => ActivityTypeSchema.parse('conference')).toThrow('Activity type must be one of: call, meeting, task, deadline, email, lunch');
+    expect(() => ActivityTypeSchema.parse('conference')).toThrow(
+      'Activity type must be one of: call, meeting, task, deadline, email, lunch'
+    );
   });
 });
 
@@ -98,7 +100,9 @@ describe('CreateActivitySchema', () => {
       due_date: '2024-12-15',
       deal_id: 1,
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('Subject is required and cannot be empty');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'Subject is required and cannot be empty'
+    );
   });
 
   it('should reject subject exceeding 255 characters', () => {
@@ -108,7 +112,9 @@ describe('CreateActivitySchema', () => {
       due_date: '2024-12-15',
       deal_id: 1,
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('Subject cannot exceed 255 characters');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'Subject cannot exceed 255 characters'
+    );
   });
 
   it('should reject invalid due_date format', () => {
@@ -129,7 +135,9 @@ describe('CreateActivitySchema', () => {
       due_time: '2:30 PM',
       deal_id: 1,
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('Due time must be in HH:MM format (24-hour)');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'Due time must be in HH:MM format (24-hour)'
+    );
   });
 
   it('should accept valid due_time format', () => {
@@ -151,7 +159,9 @@ describe('CreateActivitySchema', () => {
       due_time: '25:00',
       deal_id: 1,
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('Due time must be in HH:MM format (24-hour)');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'Due time must be in HH:MM format (24-hour)'
+    );
   });
 
   it('should reject invalid duration format', () => {
@@ -184,7 +194,9 @@ describe('CreateActivitySchema', () => {
       note: 'a'.repeat(65536),
       deal_id: 1,
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('Note cannot exceed 65535 characters');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'Note cannot exceed 65535 characters'
+    );
   });
 
   it('should reject public_description exceeding 1000 characters', () => {
@@ -195,7 +207,9 @@ describe('CreateActivitySchema', () => {
       public_description: 'a'.repeat(1001),
       deal_id: 1,
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('Public description cannot exceed 1000 characters');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'Public description cannot exceed 1000 characters'
+    );
   });
 
   it('should reject activity without any association', () => {
@@ -204,7 +218,9 @@ describe('CreateActivitySchema', () => {
       type: 'task',
       due_date: '2024-12-15',
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('At least one of deal_id, person_id, or org_id must be provided');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'At least one of deal_id, person_id, or org_id must be provided'
+    );
   });
 
   it('should reject location exceeding 255 characters', () => {
@@ -215,7 +231,9 @@ describe('CreateActivitySchema', () => {
       location: 'a'.repeat(256),
       deal_id: 1,
     };
-    expect(() => CreateActivitySchema.parse(invalid)).toThrow('Location cannot exceed 255 characters');
+    expect(() => CreateActivitySchema.parse(invalid)).toThrow(
+      'Location cannot exceed 255 characters'
+    );
   });
 
   it('should reject invalid email in attendees', () => {
@@ -305,7 +323,9 @@ describe('ListActivitiesSchema', () => {
       start_date: '2024-12-31',
       end_date: '2024-01-01',
     };
-    expect(() => ListActivitiesSchema.parse(invalid)).toThrow('Start date must be before or equal to end date');
+    expect(() => ListActivitiesSchema.parse(invalid)).toThrow(
+      'Start date must be before or equal to end date'
+    );
   });
 
   it('should accept when start_date equals end_date', () => {
@@ -342,14 +362,18 @@ describe('BulkDeleteActivitiesSchema', () => {
 
   it('should reject empty IDs array', () => {
     const invalid = { ids: [] };
-    expect(() => BulkDeleteActivitiesSchema.parse(invalid)).toThrow('At least one activity ID is required');
+    expect(() => BulkDeleteActivitiesSchema.parse(invalid)).toThrow(
+      'At least one activity ID is required'
+    );
   });
 
   it('should reject more than 100 IDs', () => {
     const invalid = {
       ids: Array.from({ length: 101 }, (_, i) => i + 1),
     };
-    expect(() => BulkDeleteActivitiesSchema.parse(invalid)).toThrow('Cannot delete more than 100 activities at once');
+    expect(() => BulkDeleteActivitiesSchema.parse(invalid)).toThrow(
+      'Cannot delete more than 100 activities at once'
+    );
   });
 
   it('should accept exactly 100 IDs', () => {
@@ -380,7 +404,9 @@ describe('BulkUpdateActivitiesSchema', () => {
       ids: [],
       done: true,
     };
-    expect(() => BulkUpdateActivitiesSchema.parse(invalid)).toThrow('At least one activity ID is required');
+    expect(() => BulkUpdateActivitiesSchema.parse(invalid)).toThrow(
+      'At least one activity ID is required'
+    );
   });
 
   it('should reject more than 100 IDs', () => {
@@ -388,7 +414,9 @@ describe('BulkUpdateActivitiesSchema', () => {
       ids: Array.from({ length: 101 }, (_, i) => i + 1),
       done: true,
     };
-    expect(() => BulkUpdateActivitiesSchema.parse(invalid)).toThrow('Cannot update more than 100 activities at once');
+    expect(() => BulkUpdateActivitiesSchema.parse(invalid)).toThrow(
+      'Cannot update more than 100 activities at once'
+    );
   });
 
   it('should accept update with only type change', () => {
@@ -433,7 +461,7 @@ describe('CreateActivitySchema - Time Format Edge Cases', () => {
 
   it('should accept various duration formats', () => {
     const durations = ['00:15', '01:00', '02:30', '10:45'];
-    durations.forEach(duration => {
+    durations.forEach((duration) => {
       const valid = {
         subject: 'Task',
         type: 'task',

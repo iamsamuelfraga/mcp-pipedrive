@@ -15,7 +15,7 @@ describe('LeadIdSchema', () => {
       'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
       '550e8400-e29b-41d4-a716-446655440000',
     ];
-    validUUIDs.forEach(uuid => {
+    validUUIDs.forEach((uuid) => {
       expect(() => LeadIdSchema.parse(uuid)).not.toThrow();
     });
   });
@@ -94,10 +94,7 @@ describe('CreateLeadSchema', () => {
     const valid = {
       title: 'Complete Lead',
       owner_id: 1,
-      label_ids: [
-        '123e4567-e89b-12d3-a456-426614174000',
-        'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
-      ],
+      label_ids: ['123e4567-e89b-12d3-a456-426614174000', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11'],
       person_id: 10,
       organization_id: 20,
       value: {
@@ -268,13 +265,8 @@ describe('ListLeadsSchema', () => {
   });
 
   it('should accept various sort formats', () => {
-    const validSorts = [
-      'title ASC',
-      'value DESC',
-      'created_at ASC, updated_at DESC',
-      'title',
-    ];
-    validSorts.forEach(sort => {
+    const validSorts = ['title ASC', 'value DESC', 'created_at ASC, updated_at DESC', 'title'];
+    validSorts.forEach((sort) => {
       const valid = { sort };
       expect(() => ListLeadsSchema.parse(valid)).not.toThrow();
     });
@@ -317,12 +309,16 @@ describe('SearchLeadsSchema', () => {
 
   it('should reject search term less than 2 characters', () => {
     const invalid = { term: 'a' };
-    expect(() => SearchLeadsSchema.parse(invalid)).toThrow('Search term must be at least 2 characters');
+    expect(() => SearchLeadsSchema.parse(invalid)).toThrow(
+      'Search term must be at least 2 characters'
+    );
   });
 
   it('should reject search term exceeding 255 characters', () => {
     const invalid = { term: 'a'.repeat(256) };
-    expect(() => SearchLeadsSchema.parse(invalid)).toThrow('Search term cannot exceed 255 characters');
+    expect(() => SearchLeadsSchema.parse(invalid)).toThrow(
+      'Search term cannot exceed 255 characters'
+    );
   });
 
   it('should accept various field combinations', () => {
@@ -360,10 +356,7 @@ describe('CreateLeadSchema - UUID Validation', () => {
   it('should reject mixed valid and invalid UUIDs', () => {
     const invalid = {
       title: 'Lead',
-      label_ids: [
-        '123e4567-e89b-12d3-a456-426614174000',
-        'not-a-uuid',
-      ],
+      label_ids: ['123e4567-e89b-12d3-a456-426614174000', 'not-a-uuid'],
     };
     expect(() => CreateLeadSchema.parse(invalid)).toThrow('Label ID must be a valid UUID');
   });

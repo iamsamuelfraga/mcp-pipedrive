@@ -138,12 +138,15 @@ describe('MCP Server Integration', () => {
     it('should load all 28 tool categories', () => {
       // Helper function to convert array of tools to object
       function arrayToToolsObject(tools: any[]): Record<string, any> {
-        return tools.reduce((acc, tool) => {
-          if (tool.name) {
-            acc[tool.name] = tool;
-          }
-          return acc;
-        }, {} as Record<string, any>);
+        return tools.reduce(
+          (acc, tool) => {
+            if (tool.name) {
+              acc[tool.name] = tool;
+            }
+            return acc;
+          },
+          {} as Record<string, any>
+        );
       }
 
       const allTools = {
@@ -239,12 +242,15 @@ describe('MCP Server Integration', () => {
 
     it('should categorize tools by namespace', () => {
       function arrayToToolsObject(tools: any[]): Record<string, any> {
-        return tools.reduce((acc, tool) => {
-          if (tool.name) {
-            acc[tool.name] = tool;
-          }
-          return acc;
-        }, {} as Record<string, any>);
+        return tools.reduce(
+          (acc, tool) => {
+            if (tool.name) {
+              acc[tool.name] = tool;
+            }
+            return acc;
+          },
+          {} as Record<string, any>
+        );
       }
 
       const allTools = {
@@ -352,17 +358,18 @@ describe('MCP Server Integration', () => {
     it('should filter tools by PIPEDRIVE_TOOLSETS', () => {
       process.env.PIPEDRIVE_TOOLSETS = 'deals,persons';
 
-      const enabledToolsets = process.env.PIPEDRIVE_TOOLSETS
-        .split(',')
-        .map((t) => t.trim());
+      const enabledToolsets = process.env.PIPEDRIVE_TOOLSETS.split(',').map((t) => t.trim());
 
       function arrayToToolsObject(tools: any[]): Record<string, any> {
-        return tools.reduce((acc, tool) => {
-          if (tool.name) {
-            acc[tool.name] = tool;
-          }
-          return acc;
-        }, {} as Record<string, any>);
+        return tools.reduce(
+          (acc, tool) => {
+            if (tool.name) {
+              acc[tool.name] = tool;
+            }
+            return acc;
+          },
+          {} as Record<string, any>
+        );
       }
 
       const allTools = {
@@ -395,11 +402,34 @@ describe('MCP Server Integration', () => {
       delete process.env.PIPEDRIVE_TOOLSETS;
 
       const enabledToolsets = [
-        'deals', 'persons', 'organizations', 'activities', 'files', 'search',
-        'pipelines', 'notes', 'fields', 'system', 'products', 'leads', 'users',
-        'roles', 'webhooks', 'filters', 'projects', 'project_templates', 'goals', 'tasks',
-        'activity_types', 'call_logs', 'mailbox', 'teams', 'org_relationships',
-        'permission_sets', 'channels', 'meetings',
+        'deals',
+        'persons',
+        'organizations',
+        'activities',
+        'files',
+        'search',
+        'pipelines',
+        'notes',
+        'fields',
+        'system',
+        'products',
+        'leads',
+        'users',
+        'roles',
+        'webhooks',
+        'filters',
+        'projects',
+        'project_templates',
+        'goals',
+        'tasks',
+        'activity_types',
+        'call_logs',
+        'mailbox',
+        'teams',
+        'org_relationships',
+        'permission_sets',
+        'channels',
+        'meetings',
       ];
 
       expect(enabledToolsets.length).toBe(28);
@@ -449,12 +479,15 @@ describe('MCP Server Integration', () => {
       const READ_ONLY = process.env.PIPEDRIVE_READ_ONLY === 'true';
 
       function arrayToToolsObject(tools: any[]): Record<string, any> {
-        return tools.reduce((acc, tool) => {
-          if (tool.name) {
-            acc[tool.name] = tool;
-          }
-          return acc;
-        }, {} as Record<string, any>);
+        return tools.reduce(
+          (acc, tool) => {
+            if (tool.name) {
+              acc[tool.name] = tool;
+            }
+            return acc;
+          },
+          {} as Record<string, any>
+        );
       }
 
       const allTools = {
@@ -504,17 +537,18 @@ describe('MCP Server Integration', () => {
       process.env.PIPEDRIVE_TOOLSETS = 'deals,persons';
 
       const READ_ONLY = process.env.PIPEDRIVE_READ_ONLY === 'true';
-      const enabledToolsets = process.env.PIPEDRIVE_TOOLSETS
-        .split(',')
-        .map((t) => t.trim());
+      const enabledToolsets = process.env.PIPEDRIVE_TOOLSETS.split(',').map((t) => t.trim());
 
       function arrayToToolsObject(tools: any[]): Record<string, any> {
-        return tools.reduce((acc, tool) => {
-          if (tool.name) {
-            acc[tool.name] = tool;
-          }
-          return acc;
-        }, {} as Record<string, any>);
+        return tools.reduce(
+          (acc, tool) => {
+            if (tool.name) {
+              acc[tool.name] = tool;
+            }
+            return acc;
+          },
+          {} as Record<string, any>
+        );
       }
 
       const allTools = {
@@ -627,12 +661,15 @@ describe('MCP Server Integration', () => {
   describe('Tool Count Verification', () => {
     it('should have correct number of tools per category', () => {
       function arrayToToolsObject(tools: any[]): Record<string, any> {
-        return tools.reduce((acc, tool) => {
-          if (tool.name) {
-            acc[tool.name] = tool;
-          }
-          return acc;
-        }, {} as Record<string, any>);
+        return tools.reduce(
+          (acc, tool) => {
+            if (tool.name) {
+              acc[tool.name] = tool;
+            }
+            return acc;
+          },
+          {} as Record<string, any>
+        );
       }
 
       const toolsByCategory = {
@@ -660,7 +697,9 @@ describe('MCP Server Integration', () => {
         call_logs: Object.keys(getCallLogTools(client)).length,
         mailbox: Object.keys(arrayToToolsObject(getMailboxTools(client))).length,
         teams: Object.keys(arrayToToolsObject(getTeamsTools(client))).length,
-        org_relationships: Object.keys(arrayToToolsObject(getOrganizationRelationshipsTools(client))).length,
+        org_relationships: Object.keys(
+          arrayToToolsObject(getOrganizationRelationshipsTools(client))
+        ).length,
         permission_sets: Object.keys(getPermissionSetTools(client)).length,
         channels: Object.keys(getChannelTools(client)).length,
         meetings: Object.keys(getMeetingTools(client)).length,

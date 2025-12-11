@@ -21,7 +21,7 @@ Common use cases:
         properties: {
           id: {
             type: 'string',
-            description: 'ID of the goal to delete'
+            description: 'ID of the goal to delete',
           },
         },
         required: ['id'],

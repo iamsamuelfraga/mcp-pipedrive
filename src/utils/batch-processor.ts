@@ -4,7 +4,7 @@ export class BatchProcessor<TInput, TOutput> {
   private batchSize: number;
   private batchDelay: number;
 
-  constructor(batchSize: number = 100, batchDelay: number = 50) {
+  constructor(batchSize = 100, batchDelay = 50) {
     this.batchSize = batchSize;
     this.batchDelay = batchDelay;
   }

@@ -42,10 +42,9 @@ Example:
       // Convert array to comma-separated string for query param
       const idsParam = parsed.ids.join(',');
 
-      const response = await client.delete<PipedriveResponse<{ id: number }[]>>(
-        '/activities',
-        { ids: idsParam }
-      );
+      const response = await client.delete<PipedriveResponse<{ id: number }[]>>('/activities', {
+        ids: idsParam,
+      });
 
       return {
         content: [

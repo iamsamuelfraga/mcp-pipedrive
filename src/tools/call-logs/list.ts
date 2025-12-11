@@ -25,11 +25,11 @@ Common use cases:
           start: {
             type: 'number',
             description: 'Pagination start',
-            default: 0
+            default: 0,
           },
           limit: {
             type: 'number',
-            description: 'Number of items to return (max 50)'
+            description: 'Number of items to return (max 50)',
           },
         },
       },

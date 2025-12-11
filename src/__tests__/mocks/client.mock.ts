@@ -65,10 +65,7 @@ export const createMockPaginatedResponse = <T>(
 /**
  * Mock error response
  */
-export const createMockErrorResponse = (
-  message = 'API Error',
-  statusCode = 400
-) => {
+export const createMockErrorResponse = (message = 'API Error', statusCode = 400) => {
   const error = new Error(message) as Error & {
     statusCode?: number;
     endpoint?: string;
@@ -106,10 +103,7 @@ export const setupMockClientWithDefaults = () => {
 /**
  * Mock cache options
  */
-export const createMockCacheOptions = (
-  enabled = true,
-  ttl = 300000
-): CacheOptions => ({
+export const createMockCacheOptions = (enabled = true, ttl = 300000): CacheOptions => ({
   enabled,
   ttl,
 });

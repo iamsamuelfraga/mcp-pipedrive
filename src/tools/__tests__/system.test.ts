@@ -111,11 +111,10 @@ describe('System Tools', () => {
       const tool = tools['system/health_check'];
       const result = await tool.handler();
 
-      expect(mockClient.get).toHaveBeenCalledWith(
-        '/users/me',
-        undefined,
-        { enabled: true, ttl: 60000 }
-      );
+      expect(mockClient.get).toHaveBeenCalledWith('/users/me', undefined, {
+        enabled: true,
+        ttl: 60000,
+      });
       expect(result).toHaveProperty('healthy', true);
       expect(result).toHaveProperty('user');
       expect(result).toHaveProperty('timestamp');
@@ -146,11 +145,10 @@ describe('System Tools', () => {
 
       await tool.handler();
 
-      expect(mockClient.get).toHaveBeenCalledWith(
-        '/users/me',
-        undefined,
-        { enabled: true, ttl: 60000 }
-      );
+      expect(mockClient.get).toHaveBeenCalledWith('/users/me', undefined, {
+        enabled: true,
+        ttl: 60000,
+      });
     });
   });
 

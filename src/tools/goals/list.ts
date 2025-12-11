@@ -23,40 +23,40 @@ Common use cases:
         properties: {
           'type.name': {
             type: 'string',
-            description: 'Filter by goal type name'
+            description: 'Filter by goal type name',
           },
           title: {
             type: 'string',
-            description: 'Filter by goal title'
+            description: 'Filter by goal title',
           },
           is_active: {
             type: 'boolean',
-            description: 'Filter by active status'
+            description: 'Filter by active status',
           },
           'assignee.id': {
             type: 'number',
-            description: 'Filter by assignee ID'
+            description: 'Filter by assignee ID',
           },
           'assignee.type': {
             type: 'string',
             enum: ['person', 'team'],
-            description: 'Filter by assignee type'
+            description: 'Filter by assignee type',
           },
           'expected_outcome.target': {
             type: 'number',
-            description: 'Filter by target value'
+            description: 'Filter by target value',
           },
           'expected_outcome.tracking_metric': {
             type: 'string',
-            description: 'Filter by tracking metric'
+            description: 'Filter by tracking metric',
           },
           'period.start': {
             type: 'string',
-            description: 'Filter by period start date (YYYY-MM-DD)'
+            description: 'Filter by period start date (YYYY-MM-DD)',
           },
           'period.end': {
             type: 'string',
-            description: 'Filter by period end date (YYYY-MM-DD)'
+            description: 'Filter by period end date (YYYY-MM-DD)',
           },
         },
       },

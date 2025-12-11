@@ -37,7 +37,10 @@ Common use cases:
             enum: ['open', 'won', 'lost'],
             description: 'Deal status',
           },
-          expected_close_date: { type: 'string', description: 'Expected close date in YYYY-MM-DD format' },
+          expected_close_date: {
+            type: 'string',
+            description: 'Expected close date in YYYY-MM-DD format',
+          },
           probability: { type: 'number', description: 'Deal success probability (0-100)' },
           lost_reason: { type: 'string', description: 'Reason why the deal was lost' },
           visible_to: {

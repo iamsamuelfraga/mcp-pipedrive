@@ -25,7 +25,10 @@ Common use cases:
         type: 'object' as const,
         properties: {
           id: { type: 'number', description: 'ID of the note to update' },
-          content: { type: 'string', description: 'New note content (supports HTML, max 65000 chars)' },
+          content: {
+            type: 'string',
+            description: 'New note content (supports HTML, max 65000 chars)',
+          },
           deal_id: { type: 'number', description: 'New deal ID to attach to' },
           person_id: { type: 'number', description: 'New person ID to attach to' },
           org_id: { type: 'number', description: 'New organization ID to attach to' },

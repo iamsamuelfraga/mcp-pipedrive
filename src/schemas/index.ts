@@ -22,13 +22,5 @@ export * from './project-template.js';
 export * from './permission-set.js';
 
 // Search schemas (export separately to avoid conflicts)
-export type {
-  UniversalSearchInput,
-  SearchByFieldInput,
-  SearchItemType,
-} from './search.js';
-export {
-  UniversalSearchSchema,
-  SearchByFieldSchema,
-  SearchItemTypeSchema,
-} from './search.js';
+export type { UniversalSearchInput, SearchByFieldInput, SearchItemType } from './search.js';
+export { UniversalSearchSchema, SearchByFieldSchema, SearchItemTypeSchema } from './search.js';

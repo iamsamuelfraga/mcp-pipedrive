@@ -12,11 +12,9 @@ export interface PaginatedResponse<T> {
 }
 
 export class PaginationHelper<T> {
-  constructor(
-    private fetcher: (start: number, limit: number) => Promise<PaginatedResponse<T>>
-  ) {}
+  constructor(private fetcher: (start: number, limit: number) => Promise<PaginatedResponse<T>>) {}
 
-  async *iterate(limit: number = 100): AsyncGenerator<T[], void, unknown> {
+  async *iterate(limit = 100): AsyncGenerator<T[], void, unknown> {
     let start = 0;
     let hasMore = true;
 
@@ -35,7 +33,7 @@ export class PaginationHelper<T> {
     }
   }
 
-  async fetchAll(limit: number = 100, maxItems?: number): Promise<T[]> {
+  async fetchAll(limit = 100, maxItems?: number): Promise<T[]> {
     const allItems: T[] = [];
 
     for await (const items of this.iterate(limit)) {
@@ -49,7 +47,7 @@ export class PaginationHelper<T> {
     return allItems;
   }
 
-  async fetchPage(start: number = 0, limit: number = 100): Promise<PaginatedResponse<T>> {
+  async fetchPage(start = 0, limit = 100): Promise<PaginatedResponse<T>> {
     return this.fetcher(start, limit);
   }
 }

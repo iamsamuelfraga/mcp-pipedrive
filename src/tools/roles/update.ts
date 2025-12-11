@@ -22,15 +22,15 @@ Common use cases:
         properties: {
           id: {
             type: 'number',
-            description: 'ID of the role to update'
+            description: 'ID of the role to update',
           },
           name: {
             type: 'string',
-            description: 'Name of the role'
+            description: 'Name of the role',
           },
           parent_role_id: {
             type: 'number',
-            description: 'ID of the parent role'
+            description: 'ID of the parent role',
           },
         },
         required: ['id'],

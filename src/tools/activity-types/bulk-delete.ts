@@ -22,7 +22,7 @@ Common use cases:
         properties: {
           ids: {
             type: 'string',
-            description: 'Comma-separated activity type IDs to delete (e.g., "1,2,3")'
+            description: 'Comma-separated activity type IDs to delete (e.g., "1,2,3")',
           },
         },
         required: ['ids'],

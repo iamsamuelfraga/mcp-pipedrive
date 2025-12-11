@@ -22,11 +22,11 @@ Common use cases:
         properties: {
           name: {
             type: 'string',
-            description: 'Name of the role'
+            description: 'Name of the role',
           },
           parent_role_id: {
             type: 'number',
-            description: 'ID of the parent role (optional, for hierarchy)'
+            description: 'ID of the parent role (optional, for hierarchy)',
           },
         },
         required: ['name'],

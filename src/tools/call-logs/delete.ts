@@ -23,7 +23,7 @@ Common use cases:
         properties: {
           id: {
             type: 'string',
-            description: 'ID of the call log to delete'
+            description: 'ID of the call log to delete',
           },
         },
         required: ['id'],

@@ -27,7 +27,11 @@ Common use cases:
         properties: {
           term: { type: 'string', description: 'Search term (min 2 chars)' },
           fields: { type: 'string', description: 'Comma-separated field names to search' },
-          exact_match: { type: 'boolean', description: 'Perform exact match search', default: false },
+          exact_match: {
+            type: 'boolean',
+            description: 'Perform exact match search',
+            default: false,
+          },
           person_id: { type: 'number', description: 'Filter by associated person ID' },
           org_id: { type: 'number', description: 'Filter by associated organization ID' },
           status: {

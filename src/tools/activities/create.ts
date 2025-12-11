@@ -17,7 +17,9 @@ const ActivityAttendeeSchema = z.object({
 
 const CreateActivityArgsSchema = z.object({
   subject: z.string().describe('Activity subject (required)'),
-  type: z.enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch']).describe('Activity type (required)'),
+  type: z
+    .enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch'])
+    .describe('Activity type (required)'),
   due_date: z.string().describe('Due date in YYYY-MM-DD format (required)'),
   due_time: z.string().optional().describe('Due time in HH:MM format (optional)'),
   duration: z.string().optional().describe('Duration in HH:MM format (optional)'),
@@ -40,7 +42,8 @@ const CreateActivityArgsSchema = z.object({
 export function createCreateActivityTool(client: PipedriveClient) {
   return {
     name: 'activities/create',
-    description: 'Create a new activity. Subject, type, and due_date are required. Can link to deals, persons, organizations, projects, or leads.',
+    description:
+      'Create a new activity. Subject, type, and due_date are required. Can link to deals, persons, organizations, projects, or leads.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -48,7 +51,7 @@ export function createCreateActivityTool(client: PipedriveClient) {
         type: {
           type: 'string',
           enum: ['call', 'meeting', 'task', 'deadline', 'email', 'lunch'],
-          description: 'Activity type (required)'
+          description: 'Activity type (required)',
         },
         due_date: { type: 'string', description: 'Due date in YYYY-MM-DD format (required)' },
         due_time: { type: 'string', description: 'Due time in HH:MM format (optional)' },
@@ -73,7 +76,7 @@ export function createCreateActivityTool(client: PipedriveClient) {
             },
             required: ['person_id'],
           },
-          description: 'Array of participants'
+          description: 'Array of participants',
         },
         attendees: {
           type: 'array',
@@ -83,11 +86,14 @@ export function createCreateActivityTool(client: PipedriveClient) {
               email_address: { type: 'string', description: 'Email address of attendee' },
               name: { type: 'string', description: 'Name of attendee' },
               user_id: { type: 'number', description: 'User ID if attendee is a Pipedrive user' },
-              person_id: { type: 'number', description: 'Person ID if attendee is a Pipedrive person' },
+              person_id: {
+                type: 'number',
+                description: 'Person ID if attendee is a Pipedrive person',
+              },
             },
             required: ['email_address'],
           },
-          description: 'Array of attendees'
+          description: 'Array of attendees',
         },
         done: { type: 'boolean', description: 'Mark as done' },
         custom_fields: { type: 'object', description: 'Custom fields as key-value pairs' },
@@ -113,7 +119,8 @@ export function createCreateActivityTool(client: PipedriveClient) {
       if (parsed.lead_id !== undefined) body.lead_id = parsed.lead_id;
       if (parsed.note !== undefined) body.note = parsed.note;
       if (parsed.location !== undefined) body.location = parsed.location;
-      if (parsed.public_description !== undefined) body.public_description = parsed.public_description;
+      if (parsed.public_description !== undefined)
+        body.public_description = parsed.public_description;
       if (parsed.busy_flag !== undefined) body.busy_flag = parsed.busy_flag;
       if (parsed.participants !== undefined) body.participants = parsed.participants;
       if (parsed.attendees !== undefined) body.attendees = parsed.attendees;
@@ -124,10 +131,7 @@ export function createCreateActivityTool(client: PipedriveClient) {
         Object.assign(body, parsed.custom_fields);
       }
 
-      const response = await client.post<PipedriveResponse<Activity>>(
-        '/activities',
-        body
-      );
+      const response = await client.post<PipedriveResponse<Activity>>('/activities', body);
 
       return {
         content: [

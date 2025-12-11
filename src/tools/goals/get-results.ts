@@ -23,15 +23,15 @@ Common use cases:
         properties: {
           id: {
             type: 'string',
-            description: 'ID of the goal'
+            description: 'ID of the goal',
           },
           'period.start': {
             type: 'string',
-            description: 'Period start date (YYYY-MM-DD)'
+            description: 'Period start date (YYYY-MM-DD)',
           },
           'period.end': {
             type: 'string',
-            description: 'Period end date (YYYY-MM-DD)'
+            description: 'Period end date (YYYY-MM-DD)',
           },
         },
         required: ['id', 'period.start', 'period.end'],

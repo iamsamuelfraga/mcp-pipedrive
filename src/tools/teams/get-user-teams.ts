@@ -6,7 +6,10 @@ import type { Team } from '../../types/pipedrive-api.js';
 const GetUserTeamsArgsSchema = z.object({
   id: z.number().describe('ID of the user'),
   order_by: z.string().optional().describe('The field name to sort returned teams by'),
-  skip_users: z.union([z.boolean(), z.number()]).optional().describe('When enabled, the teams will not include IDs of member users'),
+  skip_users: z
+    .union([z.boolean(), z.number()])
+    .optional()
+    .describe('When enabled, the teams will not include IDs of member users'),
 });
 
 export function createGetUserTeamsTool(client: PipedriveClient) {
@@ -18,7 +21,10 @@ export function createGetUserTeamsTool(client: PipedriveClient) {
       properties: {
         id: { type: 'number', description: 'ID of the user' },
         order_by: { type: 'string', description: 'The field name to sort returned teams by' },
-        skip_users: { type: ['boolean', 'number'], description: 'When enabled, the teams will not include IDs of member users' },
+        skip_users: {
+          type: ['boolean', 'number'],
+          description: 'When enabled, the teams will not include IDs of member users',
+        },
       },
       required: ['id'],
     },

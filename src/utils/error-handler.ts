@@ -18,9 +18,7 @@ export class PipedriveError extends Error {
         '\nAuthentication failed. Please check your PIPEDRIVE_API_TOKEN environment variable.'
       );
     } else if (this.statusCode === 403) {
-      parts.push(
-        '\nAccess denied. Your API token may not have permission for this operation.'
-      );
+      parts.push('\nAccess denied. Your API token may not have permission for this operation.');
     } else if (this.statusCode === 404) {
       parts.push('\nResource not found. The requested item may have been deleted.');
     } else if (this.statusCode === 429) {
@@ -41,7 +39,10 @@ export class PipedriveError extends Error {
   }
 }
 
-export function handleToolError(error: unknown): { content: Array<{ type: string; text: string }>; isError: true } {
+export function handleToolError(error: unknown): {
+  content: { type: string; text: string }[];
+  isError: true;
+} {
   if (error instanceof PipedriveError) {
     return {
       content: [{ type: 'text', text: error.toUserFriendlyMessage() }],

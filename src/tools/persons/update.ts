@@ -45,7 +45,8 @@ Note: When updating email/phone arrays, provide the complete array (it replaces 
         },
         email: {
           type: 'array',
-          description: 'Email addresses array (replaces existing). Example: [{"value": "john@company.com", "primary": true, "label": "work"}]',
+          description:
+            'Email addresses array (replaces existing). Example: [{"value": "john@company.com", "primary": true, "label": "work"}]',
           items: {
             type: 'object',
             properties: {
@@ -67,7 +68,8 @@ Note: When updating email/phone arrays, provide the complete array (it replaces 
         },
         phone: {
           type: 'array',
-          description: 'Phone numbers array (replaces existing). Example: [{"value": "+1234567890", "primary": true, "label": "mobile"}]',
+          description:
+            'Phone numbers array (replaces existing). Example: [{"value": "+1234567890", "primary": true, "label": "mobile"}]',
           items: {
             type: 'object',
             properties: {
@@ -89,7 +91,8 @@ Note: When updating email/phone arrays, provide the complete array (it replaces 
         },
         visible_to: {
           type: 'string',
-          description: 'Visibility: 1 (owner only), 3 (entire company), 5 (owner\'s followers), 7 (visibility group)',
+          description:
+            "Visibility: 1 (owner only), 3 (entire company), 5 (owner's followers), 7 (visibility group)",
           enum: ['1', '3', '5', '7'],
         },
         marketing_status: {
@@ -111,7 +114,8 @@ Note: When updating email/phone arrays, provide the complete array (it replaces 
       if (validated.email !== undefined) body.email = validated.email;
       if (validated.phone !== undefined) body.phone = validated.phone;
       if (validated.visible_to !== undefined) body.visible_to = validated.visible_to;
-      if (validated.marketing_status !== undefined) body.marketing_status = validated.marketing_status;
+      if (validated.marketing_status !== undefined)
+        body.marketing_status = validated.marketing_status;
 
       const response = await client.put<PipedriveResponse<Person>>(
         `/persons/${validated.id}`,

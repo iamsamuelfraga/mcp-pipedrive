@@ -5,7 +5,10 @@ import type { Team } from '../../types/pipedrive-api.js';
 
 const GetAllTeamsArgsSchema = z.object({
   order_by: z.string().optional().describe('The field name to sort returned teams by'),
-  skip_users: z.union([z.boolean(), z.number()]).optional().describe('When enabled, the teams will not include IDs of member users'),
+  skip_users: z
+    .union([z.boolean(), z.number()])
+    .optional()
+    .describe('When enabled, the teams will not include IDs of member users'),
 });
 
 export function createGetAllTeamsTool(client: PipedriveClient) {
@@ -16,7 +19,10 @@ export function createGetAllTeamsTool(client: PipedriveClient) {
       type: 'object',
       properties: {
         order_by: { type: 'string', description: 'The field name to sort returned teams by' },
-        skip_users: { type: ['boolean', 'number'], description: 'When enabled, the teams will not include IDs of member users' },
+        skip_users: {
+          type: ['boolean', 'number'],
+          description: 'When enabled, the teams will not include IDs of member users',
+        },
       },
     },
     handler: async (args: unknown) => {
@@ -30,11 +36,10 @@ export function createGetAllTeamsTool(client: PipedriveClient) {
         params.skip_users = parsed.skip_users;
       }
 
-      const response = await client.get<PipedriveResponse<Team[]>>(
-        '/legacyTeams',
-        params,
-        { enabled: true, ttl: 60000 }
-      );
+      const response = await client.get<PipedriveResponse<Team[]>>('/legacyTeams', params, {
+        enabled: true,
+        ttl: 60000,
+      });
 
       return {
         content: [

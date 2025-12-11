@@ -17,8 +17,5 @@ import { createGetProjectTemplateTool } from './get.js';
  * @returns Array containing all project template tools
  */
 export function getProjectTemplateTools(client: PipedriveClient) {
-  return [
-    createListProjectTemplatesTool(client),
-    createGetProjectTemplateTool(client),
-  ];
+  return [createListProjectTemplatesTool(client), createGetProjectTemplateTool(client)];
 }

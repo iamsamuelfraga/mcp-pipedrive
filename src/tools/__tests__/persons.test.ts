@@ -71,9 +71,7 @@ describe('Persons Tools', () => {
         data: {
           id: 3,
           name: 'Bob Johnson',
-          phone: [
-            { value: '+1-555-0123', primary: true, label: 'mobile' },
-          ],
+          phone: [{ value: '+1-555-0123', primary: true, label: 'mobile' }],
         },
       };
 
@@ -84,9 +82,7 @@ describe('Persons Tools', () => {
 
       const personData = {
         name: 'Bob Johnson',
-        phone: [
-          { value: '+1-555-0123', primary: true, label: 'mobile' },
-        ],
+        phone: [{ value: '+1-555-0123', primary: true, label: 'mobile' }],
       };
 
       const result = await tool(personData);
@@ -154,10 +150,10 @@ describe('Persons Tools', () => {
 
       const result = await tool(updateData);
 
-      expect(mockClient.put).toHaveBeenCalledWith(
-        '/persons/1',
-        { name: 'Updated Name', email: [{ value: 'new@email.com', primary: true }] }
-      );
+      expect(mockClient.put).toHaveBeenCalledWith('/persons/1', {
+        name: 'Updated Name',
+        email: [{ value: 'new@email.com', primary: true }],
+      });
       expect(result.content[0].text).toContain('Updated Name');
     });
 
@@ -175,9 +171,7 @@ describe('Persons Tools', () => {
       const tools = getUpdatePersonTool(mockClient);
       const tool = tools.handler;
 
-      await expect(
-        tool({ id: 999, name: 'Test' })
-      ).rejects.toThrow('API Error: Person not found');
+      await expect(tool({ id: 999, name: 'Test' })).rejects.toThrow('API Error: Person not found');
     });
   });
 });

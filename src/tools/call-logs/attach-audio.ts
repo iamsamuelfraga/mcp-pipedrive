@@ -24,11 +24,11 @@ Common use cases:
         properties: {
           id: {
             type: 'string',
-            description: 'ID of the call log to attach audio to'
+            description: 'ID of the call log to attach audio to',
           },
           file_path: {
             type: 'string',
-            description: 'Path to the audio file to attach'
+            description: 'Path to the audio file to attach',
           },
         },
         required: ['id', 'file_path'],

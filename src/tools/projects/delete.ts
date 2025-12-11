@@ -15,7 +15,8 @@ interface DeleteResponse {
 export function createDeleteProjectTool(client: PipedriveClient) {
   return {
     name: 'projects/delete',
-    description: 'Delete a project by marking it as deleted. This does not permanently remove the project.',
+    description:
+      'Delete a project by marking it as deleted. This does not permanently remove the project.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -26,9 +27,7 @@ export function createDeleteProjectTool(client: PipedriveClient) {
     handler: async (args: unknown) => {
       const parsed = DeleteProjectArgsSchema.parse(args);
 
-      const response = await client.delete<DeleteResponse>(
-        `/projects/${parsed.id}`
-      );
+      const response = await client.delete<DeleteResponse>(`/projects/${parsed.id}`);
 
       return {
         content: [

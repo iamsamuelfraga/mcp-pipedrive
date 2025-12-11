@@ -18,19 +18,23 @@ export function createCreateTeamTool(client: PipedriveClient) {
       type: 'object',
       properties: {
         name: { type: 'string', description: 'Team name' },
-        manager_id: { type: 'number', description: 'ID of the user who will be the manager of this team' },
+        manager_id: {
+          type: 'number',
+          description: 'ID of the user who will be the manager of this team',
+        },
         description: { type: 'string', description: 'Team description' },
-        users: { type: 'array', items: { type: 'number' }, description: 'Array of user IDs to add to the team' },
+        users: {
+          type: 'array',
+          items: { type: 'number' },
+          description: 'Array of user IDs to add to the team',
+        },
       },
       required: ['name', 'manager_id'],
     },
     handler: async (args: unknown) => {
       const parsed = CreateTeamArgsSchema.parse(args);
 
-      const response = await client.post<PipedriveResponse<Team>>(
-        '/legacyTeams',
-        parsed
-      );
+      const response = await client.post<PipedriveResponse<Team>>('/legacyTeams', parsed);
 
       return {
         content: [

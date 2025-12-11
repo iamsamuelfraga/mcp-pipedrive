@@ -199,7 +199,12 @@ describe('Filters Tools', () => {
                 glue: 'and',
                 conditions: [
                   {
-                    object: type === 'org' ? 'organization' : type === 'people' ? 'person' : type.slice(0, -1),
+                    object:
+                      type === 'org'
+                        ? 'organization'
+                        : type === 'people'
+                          ? 'person'
+                          : type.slice(0, -1),
                     field_id: 'name',
                     operator: 'LIKE',
                     value: 'Test',
@@ -225,9 +230,7 @@ describe('Filters Tools', () => {
 
       await expect(tool.handler({ name: 'Test' })).rejects.toThrow();
       await expect(tool.handler({ type: 'deals' })).rejects.toThrow();
-      await expect(
-        tool.handler({ name: 'Test', type: 'deals' })
-      ).rejects.toThrow(); // Missing conditions
+      await expect(tool.handler({ name: 'Test', type: 'deals' })).rejects.toThrow(); // Missing conditions
       expect(mockClient.post).not.toHaveBeenCalled();
     });
 
@@ -246,22 +249,33 @@ describe('Filters Tools', () => {
     });
 
     it('should test various operators', () => {
-      const validOperators = ['=', '!=', '<', '>', '<=', '>=', 'LIKE', 'IN', 'IS NULL', 'IS NOT NULL'];
+      const validOperators = [
+        '=',
+        '!=',
+        '<',
+        '>',
+        '<=',
+        '>=',
+        'LIKE',
+        'IN',
+        'IS NULL',
+        'IS NOT NULL',
+      ];
 
-      validOperators.forEach(operator => {
+      validOperators.forEach((operator) => {
         expect(typeof operator).toBe('string');
         expect(operator.length).toBeGreaterThan(0);
       });
 
       // Test condition structure with different operators
-      const conditions = validOperators.map(operator => ({
+      const conditions = validOperators.map((operator) => ({
         object: 'deal',
         field_id: 'value',
         operator,
         value: operator.includes('NULL') ? undefined : 1000,
       }));
 
-      conditions.forEach(condition => {
+      conditions.forEach((condition) => {
         expect(condition).toHaveProperty('object');
         expect(condition).toHaveProperty('field_id');
         expect(condition).toHaveProperty('operator');
@@ -282,9 +296,7 @@ describe('Filters Tools', () => {
           },
           {
             glue: 'or',
-            conditions: [
-              { object: 'deal', field_id: 'probability', operator: '>', value: 50 },
-            ],
+            conditions: [{ object: 'deal', field_id: 'probability', operator: '>', value: 50 }],
           },
         ],
       };

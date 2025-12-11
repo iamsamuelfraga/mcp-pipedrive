@@ -5,7 +5,10 @@ import type { Team } from '../../types/pipedrive-api.js';
 
 const GetTeamArgsSchema = z.object({
   id: z.number().describe('ID of the team'),
-  skip_users: z.union([z.boolean(), z.number()]).optional().describe('When enabled, the team will not include IDs of member users'),
+  skip_users: z
+    .union([z.boolean(), z.number()])
+    .optional()
+    .describe('When enabled, the team will not include IDs of member users'),
 });
 
 export function createGetTeamTool(client: PipedriveClient) {
@@ -16,7 +19,10 @@ export function createGetTeamTool(client: PipedriveClient) {
       type: 'object',
       properties: {
         id: { type: 'number', description: 'ID of the team' },
-        skip_users: { type: ['boolean', 'number'], description: 'When enabled, the team will not include IDs of member users' },
+        skip_users: {
+          type: ['boolean', 'number'],
+          description: 'When enabled, the team will not include IDs of member users',
+        },
       },
       required: ['id'],
     },

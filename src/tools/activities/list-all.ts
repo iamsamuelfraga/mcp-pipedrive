@@ -4,8 +4,14 @@ import type { Activity } from '../../types/pipedrive-api.js';
 
 const ListAllActivitiesArgsSchema = z.object({
   user_id: z.number().optional().describe('Filter by user ID'),
-  type: z.enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch']).optional().describe('Activity type'),
-  done: z.boolean().optional().describe('Filter by done status (true for done, false for not done)'),
+  type: z
+    .enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch'])
+    .optional()
+    .describe('Activity type'),
+  done: z
+    .boolean()
+    .optional()
+    .describe('Filter by done status (true for done, false for not done)'),
   start_date: z.string().optional().describe('Start date filter (YYYY-MM-DD)'),
   end_date: z.string().optional().describe('End date filter (YYYY-MM-DD)'),
   max_items: z.number().optional().describe('Maximum number of items to fetch'),
@@ -14,7 +20,8 @@ const ListAllActivitiesArgsSchema = z.object({
 export function createListAllActivitiesTool(client: PipedriveClient) {
   return {
     name: 'activities/list_all_auto',
-    description: 'Automatically fetch all activities across all pages. Use this when you need complete data without manual pagination.',
+    description:
+      'Automatically fetch all activities across all pages. Use this when you need complete data without manual pagination.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -22,9 +29,12 @@ export function createListAllActivitiesTool(client: PipedriveClient) {
         type: {
           type: 'string',
           enum: ['call', 'meeting', 'task', 'deadline', 'email', 'lunch'],
-          description: 'Activity type'
+          description: 'Activity type',
         },
-        done: { type: 'boolean', description: 'Filter by done status (true for done, false for not done)' },
+        done: {
+          type: 'boolean',
+          description: 'Filter by done status (true for done, false for not done)',
+        },
         start_date: { type: 'string', description: 'Start date filter (YYYY-MM-DD)' },
         end_date: { type: 'string', description: 'End date filter (YYYY-MM-DD)' },
         max_items: { type: 'number', description: 'Maximum number of items to fetch' },

@@ -17,7 +17,7 @@ export class MetricsCollector {
     errorsByEndpoint: new Map<string, number>(),
   };
 
-  recordRequest(endpoint: string, duration: number, error: boolean = false): void {
+  recordRequest(endpoint: string, duration: number, error = false): void {
     this.metrics.requestCount++;
     this.metrics.totalDuration += duration;
 
@@ -37,13 +37,9 @@ export class MetricsCollector {
       errorCount: this.metrics.errorCount,
       totalDuration: this.metrics.totalDuration,
       averageDuration:
-        this.metrics.requestCount > 0
-          ? this.metrics.totalDuration / this.metrics.requestCount
-          : 0,
+        this.metrics.requestCount > 0 ? this.metrics.totalDuration / this.metrics.requestCount : 0,
       errorRate:
-        this.metrics.requestCount > 0
-          ? this.metrics.errorCount / this.metrics.requestCount
-          : 0,
+        this.metrics.requestCount > 0 ? this.metrics.errorCount / this.metrics.requestCount : 0,
       requestsByEndpoint: Object.fromEntries(this.metrics.requestsByEndpoint),
       errorsByEndpoint: Object.fromEntries(this.metrics.errorsByEndpoint),
     };

@@ -52,6 +52,4 @@ export type MarketingStatus = 'no_consent' | 'unsubscribed' | 'subscribed' | 'ar
 
 export type DealStatus = 'open' | 'won' | 'lost' | 'deleted';
 
-export interface CustomFields {
-  [key: string]: string | number | boolean | null | undefined;
-}
+export type CustomFields = Record<string, string | number | boolean | null | undefined>;

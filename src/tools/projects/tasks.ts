@@ -17,7 +17,8 @@ interface CursorPaginatedResponse<T> {
 export function createGetProjectTasksTool(client: PipedriveClient) {
   return {
     name: 'projects/tasks/list',
-    description: 'Get all tasks linked to a specific project. Returns task details including assignee and completion status.',
+    description:
+      'Get all tasks linked to a specific project. Returns task details including assignee and completion status.',
     inputSchema: {
       type: 'object',
       properties: {

@@ -22,15 +22,15 @@ Common use cases:
         properties: {
           name: {
             type: 'string',
-            description: 'Name of the user'
+            description: 'Name of the user',
           },
           email: {
             type: 'string',
-            description: 'Email address of the user (must be unique)'
+            description: 'Email address of the user (must be unique)',
           },
           active_flag: {
             type: 'boolean',
-            description: 'Whether the user is active (default: true)'
+            description: 'Whether the user is active (default: true)',
           },
         },
         required: ['name', 'email'],

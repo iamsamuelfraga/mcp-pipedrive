@@ -123,9 +123,7 @@ describe('Products Tools', () => {
       const tools = getCreateProductTool(mockClient);
       const tool = tools.handler;
 
-      await expect(
-        tool({ name: 'Test', tax: 150 })
-      ).rejects.toThrow();
+      await expect(tool({ name: 'Test', tax: 150 })).rejects.toThrow();
       expect(mockClient.post).not.toHaveBeenCalled();
     });
 
@@ -133,9 +131,7 @@ describe('Products Tools', () => {
       const tools = getCreateProductTool(mockClient);
       const tool = tools.handler;
 
-      await expect(
-        tool({ name: 'Test', billing_frequency: 'invalid' })
-      ).rejects.toThrow();
+      await expect(tool({ name: 'Test', billing_frequency: 'invalid' })).rejects.toThrow();
       expect(mockClient.post).not.toHaveBeenCalled();
     });
   });

@@ -66,13 +66,11 @@ Example:
       };
 
       if (validated.avatar_url) body.avatar_url = validated.avatar_url;
-      if (validated.template_support !== undefined) body.template_support = validated.template_support;
+      if (validated.template_support !== undefined)
+        body.template_support = validated.template_support;
       if (validated.provider_type) body.provider_type = validated.provider_type;
 
-      const response = await client.post<PipedriveResponse<Channel>>(
-        '/channels',
-        body
-      );
+      const response = await client.post<PipedriveResponse<Channel>>('/channels', body);
 
       return {
         content: [

@@ -31,27 +31,37 @@ Common use cases:
           label_ids: {
             type: 'array',
             items: { type: 'string' },
-            description: 'Array of label UUIDs'
+            description: 'Array of label UUIDs',
           },
-          person_id: { type: 'number', description: 'ID of the person this lead is associated with' },
-          organization_id: { type: 'number', description: 'ID of the organization this lead is associated with' },
+          person_id: {
+            type: 'number',
+            description: 'ID of the person this lead is associated with',
+          },
+          organization_id: {
+            type: 'number',
+            description: 'ID of the organization this lead is associated with',
+          },
           value: {
             type: 'object',
             properties: {
               amount: { type: 'number', description: 'Lead value amount' },
-              currency: { type: 'string', description: '3-letter currency code (e.g., USD, EUR)' }
+              currency: { type: 'string', description: '3-letter currency code (e.g., USD, EUR)' },
             },
-            description: 'Lead value with amount and currency'
+            description: 'Lead value with amount and currency',
           },
-          expected_close_date: { type: 'string', description: 'Expected close date in YYYY-MM-DD format' },
+          expected_close_date: {
+            type: 'string',
+            description: 'Expected close date in YYYY-MM-DD format',
+          },
           visible_to: {
             type: 'string',
             enum: ['1', '3', '5', '7'],
-            description: 'Visibility: 1=Owner, 3=Owner\'s group, 5=Owner\'s group and sub-groups, 7=Entire company',
+            description:
+              "Visibility: 1=Owner, 3=Owner's group, 5=Owner's group and sub-groups, 7=Entire company",
           },
           was_seen: {
             type: 'boolean',
-            description: 'Whether the lead was seen'
+            description: 'Whether the lead was seen',
           },
           origin_id: { type: 'string', description: 'Origin ID for tracking' },
           channel: { type: 'number', description: 'Channel ID' },

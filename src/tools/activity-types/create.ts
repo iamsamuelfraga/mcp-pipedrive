@@ -24,15 +24,16 @@ Common use cases:
         properties: {
           name: {
             type: 'string',
-            description: 'Activity type name (e.g., "Video Call", "Site Visit")'
+            description: 'Activity type name (e.g., "Video Call", "Site Visit")',
           },
           icon_key: {
             type: 'string',
-            description: 'Icon identifier (e.g., task, call, meeting, deadline, email, lunch, camera)'
+            description:
+              'Icon identifier (e.g., task, call, meeting, deadline, email, lunch, camera)',
           },
           color: {
             type: 'string',
-            description: 'Color as 6-character hex code without # (e.g., "FF5733")'
+            description: 'Color as 6-character hex code without # (e.g., "FF5733")',
           },
         },
         required: ['name', 'icon_key'],

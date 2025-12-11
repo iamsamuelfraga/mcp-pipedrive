@@ -22,11 +22,11 @@ Common use cases:
         properties: {
           id: {
             type: 'string',
-            description: 'ID of the goal to update'
+            description: 'ID of the goal to update',
           },
           title: {
             type: 'string',
-            description: 'Goal title'
+            description: 'Goal title',
           },
           type: {
             type: 'object',

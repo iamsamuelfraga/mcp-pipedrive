@@ -43,19 +43,20 @@ Common use cases:
         properties: {
           since_timestamp: {
             type: 'string',
-            description: 'The timestamp in UTC. Format: YYYY-MM-DD HH:MM:SS or ISO 8601'
+            description: 'The timestamp in UTC. Format: YYYY-MM-DD HH:MM:SS or ISO 8601',
           },
           items: {
             type: 'string',
-            description: 'Multiple selection of item types to include (comma-separated, e.g., "deal,person,organization")'
+            description:
+              'Multiple selection of item types to include (comma-separated, e.g., "deal,person,organization")',
           },
           start: {
             type: 'number',
-            description: 'Pagination start (default: 0)'
+            description: 'Pagination start (default: 0)',
           },
           limit: {
             type: 'number',
-            description: 'Items shown per page'
+            description: 'Items shown per page',
           },
         },
         required: ['since_timestamp'],

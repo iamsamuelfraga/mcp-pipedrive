@@ -9,13 +9,15 @@ import {
 describe('EventActionSchema', () => {
   it('should accept valid event actions', () => {
     const validActions = ['added', 'updated', 'deleted', 'merged', '*'];
-    validActions.forEach(action => {
+    validActions.forEach((action) => {
       expect(() => EventActionSchema.parse(action)).not.toThrow();
     });
   });
 
   it('should reject invalid event action', () => {
-    expect(() => EventActionSchema.parse('modified')).toThrow('Event action must be one of: added, updated, deleted, merged, or * (all)');
+    expect(() => EventActionSchema.parse('modified')).toThrow(
+      'Event action must be one of: added, updated, deleted, merged, or * (all)'
+    );
   });
 
   it('should reject empty string', () => {
@@ -38,13 +40,15 @@ describe('EventObjectSchema', () => {
       'user',
       '*',
     ];
-    validObjects.forEach(obj => {
+    validObjects.forEach((obj) => {
       expect(() => EventObjectSchema.parse(obj)).not.toThrow();
     });
   });
 
   it('should reject invalid event object', () => {
-    expect(() => EventObjectSchema.parse('lead')).toThrow('Event object must be one of: activity, activityType, deal, note, organization, person, pipeline, product, stage, user, or * (all)');
+    expect(() => EventObjectSchema.parse('lead')).toThrow(
+      'Event object must be one of: activity, activityType, deal, note, organization, person, pipeline, product, stage, user, or * (all)'
+    );
   });
 
   it('should be case-sensitive', () => {
@@ -121,7 +125,9 @@ describe('CreateWebhookSchema', () => {
       event_action: 'added',
       event_object: 'deal',
     };
-    expect(() => CreateWebhookSchema.parse(invalid)).toThrow('Subscription URL must be a valid URL');
+    expect(() => CreateWebhookSchema.parse(invalid)).toThrow(
+      'Subscription URL must be a valid URL'
+    );
   });
 
   it('should reject empty subscription_url', () => {
@@ -158,7 +164,9 @@ describe('CreateWebhookSchema', () => {
       event_object: 'deal',
       http_auth_user: 'admin',
     };
-    expect(() => CreateWebhookSchema.parse(invalid)).toThrow('Both http_auth_user and http_auth_password must be provided together');
+    expect(() => CreateWebhookSchema.parse(invalid)).toThrow(
+      'Both http_auth_user and http_auth_password must be provided together'
+    );
   });
 
   it('should reject http_auth_password without http_auth_user', () => {
@@ -168,7 +176,9 @@ describe('CreateWebhookSchema', () => {
       event_object: 'deal',
       http_auth_password: 'secret123',
     };
-    expect(() => CreateWebhookSchema.parse(invalid)).toThrow('Both http_auth_user and http_auth_password must be provided together');
+    expect(() => CreateWebhookSchema.parse(invalid)).toThrow(
+      'Both http_auth_user and http_auth_password must be provided together'
+    );
   });
 
   it('should accept both http_auth fields together', () => {
@@ -268,7 +278,7 @@ describe('CreateWebhookSchema - URL Formats', () => {
       'https://example.com/webhook#fragment',
       'http://localhost:3000/webhook',
     ];
-    validUrls.forEach(url => {
+    validUrls.forEach((url) => {
       const valid = {
         subscription_url: url,
         event_action: 'added',
@@ -291,7 +301,7 @@ describe('CreateWebhookSchema - URL Formats', () => {
 describe('CreateWebhookSchema - Event Combinations', () => {
   it('should accept all action types with deal object', () => {
     const actions = ['added', 'updated', 'deleted', 'merged', '*'];
-    actions.forEach(action => {
+    actions.forEach((action) => {
       const valid = {
         subscription_url: 'https://example.com/webhook',
         event_action: action as any,
@@ -315,7 +325,7 @@ describe('CreateWebhookSchema - Event Combinations', () => {
       'user',
       '*',
     ];
-    objects.forEach(obj => {
+    objects.forEach((obj) => {
       const valid = {
         subscription_url: 'https://example.com/webhook',
         event_action: 'added',

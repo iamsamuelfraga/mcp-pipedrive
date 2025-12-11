@@ -5,7 +5,10 @@ import type { PaginatedResponse } from '../../utils/pagination.js';
 
 const ListOrganizationDealsArgsSchema = z.object({
   id: z.number().describe('Organization ID'),
-  status: z.enum(['open', 'won', 'lost', 'deleted', 'all_not_deleted']).optional().describe('Deal status filter'),
+  status: z
+    .enum(['open', 'won', 'lost', 'deleted', 'all_not_deleted'])
+    .optional()
+    .describe('Deal status filter'),
   start: z.number().default(0).describe('Pagination start'),
   limit: z.number().default(100).describe('Items per page'),
 });
@@ -21,7 +24,7 @@ export function createListOrganizationDealsTool(client: PipedriveClient) {
         status: {
           type: 'string',
           enum: ['open', 'won', 'lost', 'deleted', 'all_not_deleted'],
-          description: 'Deal status filter'
+          description: 'Deal status filter',
         },
         start: { type: 'number', description: 'Pagination start', default: 0 },
         limit: { type: 'number', description: 'Items per page', default: 100 },

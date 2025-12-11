@@ -33,7 +33,8 @@ interface SingleResponse<T> {
 export function createGetProjectPlanTool(client: PipedriveClient) {
   return {
     name: 'projects/plan/get',
-    description: 'Get project plan showing all tasks and activities with their phases and groups. Returns plan structure.',
+    description:
+      'Get project plan showing all tasks and activities with their phases and groups. Returns plan structure.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -65,7 +66,8 @@ export function createGetProjectPlanTool(client: PipedriveClient) {
 export function createUpdateProjectPlanActivityTool(client: PipedriveClient) {
   return {
     name: 'projects/plan/activities/update',
-    description: 'Update an activity phase or group in a project plan. Allows moving activities between phases and groups.',
+    description:
+      'Update an activity phase or group in a project plan. Allows moving activities between phases and groups.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -100,7 +102,8 @@ export function createUpdateProjectPlanActivityTool(client: PipedriveClient) {
 export function createUpdateProjectPlanTaskTool(client: PipedriveClient) {
   return {
     name: 'projects/plan/tasks/update',
-    description: 'Update a task phase or group in a project plan. Allows moving tasks between phases and groups.',
+    description:
+      'Update a task phase or group in a project plan. Allows moving tasks between phases and groups.',
     inputSchema: {
       type: 'object',
       properties: {

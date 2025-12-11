@@ -55,7 +55,7 @@ Common use cases:
           id: { type: 'number', description: 'ID of the role' },
           setting_key: { type: 'string', description: 'Key of the setting' },
           value: {
-            description: 'Value of the setting (string, number, or boolean)'
+            description: 'Value of the setting (string, number, or boolean)',
           },
         },
         required: ['id', 'setting_key', 'value'],
@@ -85,7 +85,7 @@ Common use cases:
           id: { type: 'number', description: 'ID of the role' },
           setting_key: { type: 'string', description: 'Key of the setting' },
           value: {
-            description: 'New value of the setting (string, number, or boolean)'
+            description: 'New value of the setting (string, number, or boolean)',
           },
         },
         required: ['id', 'setting_key', 'value'],
