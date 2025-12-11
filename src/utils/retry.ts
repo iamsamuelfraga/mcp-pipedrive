@@ -17,7 +17,7 @@ export async function withRetry<T>(fn: () => Promise<T>, options: RetryOptions =
     retryableStatuses = [408, 429, 500, 502, 503, 504],
   } = options;
 
-  let lastError: Error;
+  let lastError: Error | undefined;
   let delay = initialDelay;
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
