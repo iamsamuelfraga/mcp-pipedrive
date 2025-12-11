@@ -1,0 +1,68 @@
+{
+  "name": "mcp-pipedrive",
+  "description": "Model Context Protocol server for Pipedrive CRM - The most complete and robust Pipedrive MCP implementation with 254 tools covering all major Pipedrive entities",
+  "version": "1.0.3",
+  "homepage": "https://github.com/iamsamuelfraga/mcp-pipedrive",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamsamuelfraga/mcp-pipedrive.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Samuel Fraga",
+    "url": "https://github.com/iamsamuelfraga"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "pipedrive",
+    "crm",
+    "sales",
+    "ai",
+    "llm",
+    "claude",
+    "anthropic"
+  ],
+  "categories": [
+    "crm",
+    "sales",
+    "business"
+  ],
+  "runtime": {
+    "type": "node",
+    "install": "npm install -g @iamsamuelfraga/mcp-pipedrive",
+    "command": "mcp-pipedrive",
+    "env": {
+      "PIPEDRIVE_API_TOKEN": {
+        "description": "Your Pipedrive API token (found in Settings → Personal Preferences → API)",
+        "required": true
+      },
+      "PIPEDRIVE_COMPANY_DOMAIN": {
+        "description": "Your Pipedrive company domain (e.g., 'mycompany' if your URL is mycompany.pipedrive.com)",
+        "required": true
+      },
+      "PIPEDRIVE_TOOLSETS": {
+        "description": "Comma-separated list of toolsets to enable (e.g., 'deals,persons,organizations'). Leave empty to enable all toolsets.",
+        "required": false
+      },
+      "PIPEDRIVE_READ_ONLY": {
+        "description": "Set to 'true' to enable read-only mode (blocks all write operations)",
+        "required": false,
+        "default": "false"
+      }
+    }
+  },
+  "features": [
+    "254 MCP tools covering all major Pipedrive entities",
+    "Full CRUD operations for deals, persons, organizations, activities",
+    "Advanced search and filter capabilities",
+    "Pipeline and stage management",
+    "Product, note, and file handling",
+    "Project and goal tracking",
+    "Webhook and integration support",
+    "Read-only mode for safe exploration",
+    "Comprehensive error handling and logging",
+    "Rate limiting and retry mechanisms",
+    "TypeScript support with full type definitions"
+  ]
+}
