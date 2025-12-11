@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.5...v1.1.6) (2025-12-11)
+
+
+### Bug Fixes
+
+* add allow-deprecated-schema flag for MCP registry publish ([33e248f](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/33e248ffd0a8bf71925252e161d9d89bdd392fcf))
+
 ## [1.1.5](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.4...v1.1.5) (2025-12-11)
 
 
