@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.2...v1.0.3) (2025-12-11)
+
+
+### Bug Fixes
+
+* configure npm package for public access ([95263ae](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/95263aee46db8e6c2fc655fa557cde93e8ac827d))
+
 ## [1.0.2](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.1...v1.0.2) (2025-12-11)
 
 
