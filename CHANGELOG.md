@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.4...v1.1.5) (2025-12-11)
+
+
+### Bug Fixes
+
+* remove deprecated $schema field from server.json ([f8e3453](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/f8e34538df06ecb41fc8faafb86c37898f2cdc67))
+
 ## [1.1.4](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.3...v1.1.4) (2025-12-11)
 
 
