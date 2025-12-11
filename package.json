@@ -1,6 +1,6 @@
 {
   "name": "@iamsamuelfraga/mcp-pipedrive",
-  "version": "0.0.0-development",
+  "version": "1.0.0",
   "description": "Model Context Protocol server for Pipedrive CRM - The most complete and robust Pipedrive MCP implementation",
   "type": "module",
   "bin": {
