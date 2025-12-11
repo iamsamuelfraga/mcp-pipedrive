@@ -1,3 +1,39 @@
+# [2.0.0](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.6...v2.0.0) (2025-12-11)
+
+
+* feat!: standardize tool naming convention to use underscores ([2233ed6](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/2233ed6fadd93a364c5dbb56145477133d395e15))
+
+
+### BREAKING CHANGES
+
+* All tool names now use underscores instead of forward slashes to comply with MCP naming standards and align with mcp-holded pattern.
+
+Migration guide:
+- deals/create → deals_create
+- persons/get → persons_get
+- organizations/list → organizations_list
+- activities/mark_as_done → activities_mark_as_done
+- projects/activities/list → projects_activities_list
+- etc.
+
+This affects all 250+ tools across all categories:
+- Deals, Persons, Organizations, Activities
+- Files, Search, Pipelines, Notes, Fields, System
+- Products, Leads, Users, Roles, Webhooks, Filters
+- Projects, Goals, Tasks, Activity-types, Call-logs
+- Mailbox, Teams, Org-relationships, Permission-sets
+- Channels, Meetings, Project-templates
+
+Rationale:
+- MCP tool naming pattern requires ^[a-zA-Z0-9_-]{1,64}$
+- Forward slashes in tool names caused validation errors
+- Aligns with proven mcp-holded implementation
+- Improves consistency across all tool categories
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+
+Co-Authored-By: Claude <noreply@anthropic.com>
+
 ## [1.1.6](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.1.5...v1.1.6) (2025-12-11)
 
 
