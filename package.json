@@ -1,0 +1,88 @@
+{
+  "name": "@iamsamuelfraga/mcp-pipedrive",
+  "version": "0.0.0-development",
+  "description": "Model Context Protocol server for Pipedrive CRM - The most complete and robust Pipedrive MCP implementation",
+  "type": "module",
+  "bin": {
+    "mcp-pipedrive": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "test:ui": "vitest --ui",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\"",
+    "type-check": "tsc --noEmit",
+    "prepare": "husky",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "pipedrive",
+    "crm",
+    "sales",
+    "ai",
+    "llm",
+    "claude",
+    "anthropic"
+  ],
+  "author": "Samuel Fraga",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iamsamuelfraga/mcp-pipedrive.git"
+  },
+  "bugs": {
+    "url": "https://github.com/iamsamuelfraga/mcp-pipedrive/issues"
+  },
+  "homepage": "https://github.com/iamsamuelfraga/mcp-pipedrive#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "bottleneck": "^2.19.5",
+    "winston": "^3.11.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.6",
+    "@semantic-release/npm": "^12.0.2",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.47.0",
+    "@typescript-eslint/parser": "^8.47.0",
+    "@vitest/coverage-v8": "^1.6.1",
+    "@vitest/ui": "^1.6.1",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.6.2",
+    "semantic-release": "^24.2.9",
+    "typescript": "^5.3.0",
+    "typescript-eslint": "^8.47.0",
+    "vitest": "^1.6.1"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  }
+}
