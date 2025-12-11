@@ -1,3 +1,11 @@
+## [1.0.1](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.0...v1.0.1) (2025-12-11)
+
+
+### Bug Fixes
+
+* initialize lastError variable properly ([13b14df](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/13b14df915816646c39d00c1ee2f415e33e5f0a4))
+* resolve linting issues and format code ([29a3f87](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/29a3f87a890f63bc9821516ed0921b5502388978))
+
 # 1.0.0 (2025-12-11)
 
 
