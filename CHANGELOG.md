@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.1...v1.0.2) (2025-12-11)
+
+
+### Bug Fixes
+
+* skip retry tests temporarily for CI compatibility ([f3e9af5](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/f3e9af5cdfea80a320545ea00e73274138ffd0fd))
+
 ## [1.0.1](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v1.0.0...v1.0.1) (2025-12-11)
 
 
