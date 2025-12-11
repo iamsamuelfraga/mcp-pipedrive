@@ -1,7 +1,8 @@
 {
-  "name": "mcp-pipedrive",
-  "description": "Model Context Protocol server for Pipedrive CRM - The most complete and robust Pipedrive MCP implementation with 254 tools covering all major Pipedrive entities",
-  "version": "1.0.3",
+  "$schema": "https://registry.modelcontextprotocol.io/schema/server.json",
+  "name": "io.github.iamsamuelfraga/mcp-pipedrive",
+  "description": "Complete Pipedrive CRM integration with 254 MCP tools for deals, contacts, and pipelines",
+  "version": "1.1.0",
   "homepage": "https://github.com/iamsamuelfraga/mcp-pipedrive",
   "repository": {
     "type": "git",
