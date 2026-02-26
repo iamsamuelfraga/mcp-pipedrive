@@ -1,0 +1,182 @@
+﻿name: CD - Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deploy even if CI checks are skipped'
+        required: false
+        default: 'false'
+        type: boolean
+      skip_health_check:
+        description: 'Skip health check after deploy'
+        required: false
+        default: 'false'
+        type: boolean
+
+env:
+  DEPLOY_PATH: /root/mcp-pipedrive
+  SERVICE_NAME: mcp-pipedrive
+  HEALTH_PORT: 8020
+  NODE_VERSION: '22'
+
+jobs:
+  # ============================================
+  # Validate Secrets & Prerequisites
+  # ============================================
+  validate:
+    name: Validate Prerequisites
+    runs-on: ubuntu-latest
+    outputs:
+      can_deploy: ${{ steps.check.outputs.can_deploy }}
+    steps:
+      - name: Check required secrets
+        id: check
+        run: |
+          MISSING=""
+          [ -z "${{ secrets.VPS_HOST }}" ] && MISSING="$MISSING VPS_HOST"
+          [ -z "${{ secrets.VPS_USER }}" ] && MISSING="$MISSING VPS_USER"
+          [ -z "${{ secrets.VPS_SSH_PRIVATE_KEY }}" ] && MISSING="$MISSING VPS_SSH_PRIVATE_KEY"
+          [ -z "${{ secrets.VPS_SSH_KNOWN_HOSTS }}" ] && MISSING="$MISSING VPS_SSH_KNOWN_HOSTS"
+          if [ -n "$MISSING" ]; then
+            echo "Missing required secrets:$MISSING"
+            echo "can_deploy=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          echo "All required secrets present"
+          echo "can_deploy=true" >> $GITHUB_OUTPUT
+
+  # ============================================
+  # Run CI (typecheck + tests)
+  # ============================================
+  ci-check:
+    name: CI Checks
+    uses: ./.github/workflows/ci.yml
+    needs: validate
+    if: needs.validate.outputs.can_deploy == 'true'
+
+  # ============================================
+  # Deploy to VPS
+  # ============================================
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    needs: [validate, ci-check]
+    if: needs.validate.outputs.can_deploy == 'true'
+    environment:
+      name: production
+      url: https://ai.scorise.com
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.VPS_SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Package application
+        run: |
+          tar -czf deploy.tar.gz \
+            src/ \
+            package.json \
+            package-lock.json \
+            tsconfig.json \
+            Dockerfile \
+            docker-compose.yml \
+            .dockerignore
+          echo "Package size: $(du -sh deploy.tar.gz | cut -f1)"
+
+      - name: Upload to VPS
+        run: |
+          scp -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            deploy.tar.gz \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:${{ env.DEPLOY_PATH }}/deploy.tar.gz"
+
+      - name: Deploy on VPS
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" << 'ENDSSH'
+          set -e
+          cd ${{ env.DEPLOY_PATH }}
+
+          echo "==> Extracting deployment package..."
+          tar -xzf deploy.tar.gz
+          rm -f deploy.tar.gz
+
+          echo "==> Building Docker image..."
+          docker build -t ${{ env.SERVICE_NAME }}:latest -f Dockerfile .
+          docker tag ${{ env.SERVICE_NAME }}:latest ${{ env.SERVICE_NAME }}:$(date +%Y%m%d-%H%M%S)
+
+          echo "==> Stopping existing container..."
+          docker stop ${{ env.SERVICE_NAME }} 2>/dev/null || true
+          docker rm ${{ env.SERVICE_NAME }} 2>/dev/null || true
+
+          echo "==> Starting updated container..."
+          docker compose up -d --no-build
+
+          echo "==> Deployment complete"
+          ENDSSH
+
+      - name: Health check
+        if: inputs.skip_health_check != 'true'
+        run: |
+          echo "Waiting for service to start..."
+          sleep 15
+          for i in $(seq 1 6); do
+            RESULT=$(ssh -i ~/.ssh/deploy_key \
+              -o StrictHostKeyChecking=no \
+              "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+              "curl -sf http://localhost:${{ env.HEALTH_PORT }}/health && echo OK || echo FAIL" 2>/dev/null)
+            echo "Attempt $i: $RESULT"
+            if echo "$RESULT" | grep -q "OK"; then
+              echo "Health check passed"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Health check failed after all attempts"
+          exit 1
+
+      - name: Cleanup SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+  # ============================================
+  # Deployment Summary
+  # ============================================
+  notify:
+    name: Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [validate, ci-check, deploy]
+    if: always()
+    steps:
+      - name: Write deployment summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Stage | Result |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Validate | ${{ needs.validate.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| CI Checks | ${{ needs.ci-check.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Deploy | ${{ needs.deploy.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.deploy.result }}" == "success" ]; then
+            echo "**Deployment successful** - mcp-pipedrive is running on port ${{ env.HEALTH_PORT }}" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ needs.deploy.result }}" == "skipped" ]; then
+            echo "**Deployment skipped** - CI checks failed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Deployment failed** - check logs above" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Branch: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Triggered by: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY

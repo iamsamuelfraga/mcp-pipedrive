@@ -1,0 +1,49 @@
+﻿name: ESLint CI
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - 'src/**'
+      - 'eslint.config.js'
+      - '.eslintignore'
+      - 'package.json'
+      - 'tsconfig.json'
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - 'src/**'
+      - 'eslint.config.js'
+      - '.eslintignore'
+      - 'package.json'
+      - 'tsconfig.json'
+
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npx eslint src/ --ext .ts --max-warnings 0
+        continue-on-error: true
+
+      - name: Run TypeScript check
+        run: npx tsc --noEmit
+
+      - name: Run Prettier check
+        run: npx prettier --check "src/**/*.ts"
+        continue-on-error: true

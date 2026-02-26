@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.git/
+.husky/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+docker-compose*.yml
+Dockerfile*
+*.md
+*.postman_collection.json

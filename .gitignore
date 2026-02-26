@@ -6,6 +6,7 @@ pnpm-lock.yaml
 # Build output
 dist/
 *.tsbuildinfo
+deploy-vps-pipedrive.ps1
 
 # Testing
 coverage/

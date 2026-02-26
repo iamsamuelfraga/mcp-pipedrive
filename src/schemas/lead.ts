@@ -104,6 +104,34 @@ export const ListLeadsSchema = PaginationSchema.extend({
     .string()
     .optional()
     .describe('Field names and sorting mode (e.g., "title ASC, value DESC")'),
+  archived_status: z
+    .enum(['archived', 'not_archived', 'all'])
+    .optional()
+    .describe('Filter leads by archived status (default: not_archived)'),
+  search_title: z
+    .string()
+    .optional()
+    .describe('Search leads by title/name (partial matches supported)'),
+  days_back: z
+    .number()
+    .optional()
+    .describe('Number of days back to fetch leads based on add_time (default: 365, ignored if date_from/date_to specified)'),
+  date_from: z
+    .string()
+    .optional()
+    .describe('Start date for filtering leads by add_time (format: YYYY-MM-DD)'),
+  date_to: z
+    .string()
+    .optional()
+    .describe('End date for filtering leads by add_time (format: YYYY-MM-DD)'),
+  min_value: z
+    .number()
+    .optional()
+    .describe('Minimum lead value filter'),
+  max_value: z
+    .number()
+    .optional()
+    .describe('Maximum lead value filter'),
 }).strict();
 
 export type ListLeadsInput = z.infer<typeof ListLeadsSchema>;

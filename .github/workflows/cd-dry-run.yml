@@ -1,0 +1,173 @@
+﻿name: CD Dry Run - Validate Deployment
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  DEPLOY_PATH: /root/mcp-pipedrive
+  SERVICE_NAME: mcp-pipedrive
+  HEALTH_PORT: 8020
+  LIBRECHAT_NETWORK: librechat_librechat-net
+
+jobs:
+  # ============================================
+  # Run CI checks first
+  # ============================================
+  ci-check:
+    name: CI Checks
+    uses: ./.github/workflows/ci.yml
+
+  # ============================================
+  # Validate Secrets
+  # ============================================
+  validate-secrets:
+    name: Validate Secrets
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check required secrets
+        run: |
+          MISSING=""
+          [ -z "${{ secrets.VPS_HOST }}" ] && MISSING="$MISSING VPS_HOST"
+          [ -z "${{ secrets.VPS_USER }}" ] && MISSING="$MISSING VPS_USER"
+          [ -z "${{ secrets.VPS_SSH_PRIVATE_KEY }}" ] && MISSING="$MISSING VPS_SSH_PRIVATE_KEY"
+          [ -z "${{ secrets.VPS_SSH_KNOWN_HOSTS }}" ] && MISSING="$MISSING VPS_SSH_KNOWN_HOSTS"
+          if [ -n "$MISSING" ]; then
+            echo "Missing required secrets:$MISSING"
+            exit 1
+          fi
+          echo "All required secrets present"
+
+  # ============================================
+  # Validate VPS Environment
+  # ============================================
+  validate-vps:
+    name: Validate VPS Environment
+    runs-on: ubuntu-latest
+    needs: validate-secrets
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          echo "${{ secrets.VPS_SSH_KNOWN_HOSTS }}" >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Test SSH connectivity
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            -o ConnectTimeout=10 \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "echo 'SSH connection successful'"
+
+      - name: Check deploy directory exists
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" << 'ENDSSH'
+          if [ -d "${{ env.DEPLOY_PATH }}" ]; then
+            echo "Deploy directory exists: ${{ env.DEPLOY_PATH }}"
+            ls -la "${{ env.DEPLOY_PATH }}"
+          else
+            echo "WARNING: Deploy directory does not exist: ${{ env.DEPLOY_PATH }}"
+            echo "It will be created during deployment"
+          fi
+          ENDSSH
+
+      - name: Check Docker network exists
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" << 'ENDSSH'
+          if docker network inspect "${{ env.LIBRECHAT_NETWORK }}" > /dev/null 2>&1; then
+            echo "Docker network '${{ env.LIBRECHAT_NETWORK }}' exists"
+            docker network inspect "${{ env.LIBRECHAT_NETWORK }}" --format '{{ .Name }}: Driver={{ .Driver }}, Containers={{ len .Containers }}'
+          else
+            echo "ERROR: Docker network '${{ env.LIBRECHAT_NETWORK }}' does not exist!"
+            echo "Available networks:"
+            docker network ls
+            exit 1
+          fi
+          ENDSSH
+
+      - name: Check Docker service
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" \
+            "docker version --format 'Docker version: {{.Server.Version}}'"
+
+      - name: Check current container status
+        run: |
+          ssh -i ~/.ssh/deploy_key \
+            -o StrictHostKeyChecking=no \
+            "${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}" << 'ENDSSH'
+          echo "=== Current container status ==="
+          docker ps -a --filter "name=${{ env.SERVICE_NAME }}" --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+          echo ""
+          echo "=== Disk space ==="
+          df -h /
+          ENDSSH
+
+      - name: Validate compose config locally
+        run: |
+          cat > .env << 'EOF'
+          PORT=8020
+          MCP_PORT=8020
+          LIBRECHAT_NETWORK=bridge
+          EOF
+          docker compose -f docker-compose.yml config --quiet
+          echo "docker-compose.yml is valid"
+
+      - name: Simulate package step
+        run: |
+          tar -czf deploy-test.tar.gz \
+            src/ \
+            package.json \
+            package-lock.json \
+            tsconfig.json \
+            Dockerfile \
+            docker-compose.yml \
+            .dockerignore
+          echo "Package size: $(du -sh deploy-test.tar.gz | cut -f1)"
+          echo "Package contents:"
+          tar -tzf deploy-test.tar.gz | head -30
+          rm -f deploy-test.tar.gz
+
+      - name: Cleanup SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
+
+  # ============================================
+  # Dry Run Summary
+  # ============================================
+  summary:
+    name: Dry Run Summary
+    runs-on: ubuntu-latest
+    needs: [ci-check, validate-secrets, validate-vps]
+    if: always()
+    steps:
+      - name: Write summary
+        run: |
+          echo "## CD Dry Run Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Result |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| CI Checks | ${{ needs.ci-check.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Secrets Valid | ${{ needs.validate-secrets.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| VPS Environment | ${{ needs.validate-vps.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ needs.validate-vps.result }}" == "success" ] && [ "${{ needs.ci-check.result }}" == "success" ]; then
+            echo "**Ready to deploy** - all checks passed" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Not ready to deploy** - see failed checks above" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "> This was a dry run. No changes were made to the VPS." >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,50 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# mcp-pipedrive — SSE transport for LibreChat
+#
+# The Pipedrive API token is set PER USER in the LibreChat UI
+# (Settings → API Keys → add key named "PIPEDRIVE_API_TOKEN").
+# LibreChat forwards it as the x-pipedrive-token request header.
+#
+# librechat.yaml snippet:
+#
+#   mcpServers:
+#     pipedrive:
+#       type: sse
+#       url: http://mcp-pipedrive:8020/sse
+#       headers:
+#         x-pipedrive-token: "${PIPEDRIVE_API_TOKEN}"   # injected from user keys
+#
+# ─────────────────────────────────────────────────────────────────────────────
+services:
+  mcp-pipedrive:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: mcp-pipedrive:latest
+    container_name: mcp-pipedrive
+    environment:
+      - PORT=8020
+      # PIPEDRIVE_API_TOKEN is intentionally omitted here — it is supplied
+      # per-user via the LibreChat UI and passed as the x-pipedrive-token header.
+      # Uncomment the line below only if you want a shared fallback token:
+      # - PIPEDRIVE_API_TOKEN=${PIPEDRIVE_API_TOKEN}
+      # - PIPEDRIVE_READ_ONLY=false
+      # - PIPEDRIVE_TOOLSETS=deals,leads,persons,organizations
+      # - LOG_LEVEL=info
+    ports:
+      - "${MCP_PORT:-8020}:8020"   # expose on host for debugging; remove in prod
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8020/health',(r)=>{process.exit(r.statusCode===200?0:1)})"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    networks:
+      - librechat-net
+
+networks:
+  librechat-net:
+    external: true   # attach to LibreChat's existing Docker network
+    name: ${LIBRECHAT_NETWORK:-librechat_librechat-net}
