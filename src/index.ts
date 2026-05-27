@@ -7,6 +7,7 @@ import { PipedriveClient } from './pipedrive-client.js';
 import { logger } from './utils/logger.js';
 import { handleToolError } from './utils/error-handler.js';
 import { metricsCollector } from './utils/metrics.js';
+import { DEFAULT_TOOLSETS, findToolset } from './utils/toolset-filter.js';
 
 // Import all tool functions
 import { getDealTools } from './tools/deals/index.js';
@@ -85,36 +86,7 @@ const READ_ONLY = process.env.PIPEDRIVE_READ_ONLY === 'true';
 // Toolset filtering
 const enabledToolsets = process.env.PIPEDRIVE_TOOLSETS
   ? process.env.PIPEDRIVE_TOOLSETS.split(',').map((t) => t.trim())
-  : [
-      'deals',
-      'persons',
-      'organizations',
-      'activities',
-      'files',
-      'search',
-      'pipelines',
-      'notes',
-      'fields',
-      'system',
-      'products',
-      'leads',
-      'users',
-      'roles',
-      'webhooks',
-      'filters',
-      'projects',
-      'project_templates',
-      'goals',
-      'tasks',
-      'activity_types',
-      'call_logs',
-      'mailbox',
-      'teams',
-      'org_relationships',
-      'permission_sets',
-      'channels',
-      'meetings',
-    ];
+  : [...DEFAULT_TOOLSETS];
 
 // Helper function to convert array of tools to object
 function arrayToToolsObject(tools: Tool[]): Record<string, Tool> {
@@ -190,9 +162,9 @@ function isWriteOperation(toolName: string): boolean {
 // Filter by toolset and read-only mode
 const tools = Object.fromEntries(
   Object.entries(allTools).filter(([name, _tool]) => {
-    const toolset = name.split(/[/_]/)[0];
-    if (!enabledToolsets.includes(toolset)) {
-      logger.debug('Toolset disabled, skipping tool', { tool: name, toolset });
+    const toolset = findToolset(name, enabledToolsets);
+    if (!toolset) {
+      logger.debug('Toolset disabled, skipping tool', { tool: name });
       return false;
     }
 
@@ -295,7 +267,7 @@ async function main() {
   // Log available tools by category
   const toolsByCategory: Record<string, number> = {};
   Object.keys(tools).forEach((name) => {
-    const category = name.split(/[/_]/)[0];
+    const category = findToolset(name, enabledToolsets) ?? name;
     toolsByCategory[category] = (toolsByCategory[category] || 0) + 1;
   });
 
