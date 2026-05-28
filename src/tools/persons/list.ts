@@ -131,10 +131,10 @@ Supports the same filters as persons_list:
     handler: async (params: unknown) => {
       const validated = z
         .object({
-          user_id: z.number().int().positive().optional(),
-          org_id: z.number().int().positive().optional(),
+          user_id: z.coerce.number().int().positive().optional(),
+          org_id: z.coerce.number().int().positive().optional(),
           first_char: z.string().length(1).optional(),
-          filter_id: z.number().int().positive().optional(),
+          filter_id: z.coerce.number().int().positive().optional(),
           sort: z.string().optional(),
         })
         .parse(params);

@@ -5,8 +5,8 @@ import type { MailThread } from '../../types/pipedrive-api.js';
 
 const GetMailThreadsArgsSchema = z.object({
   folder: z.enum(['inbox', 'drafts', 'sent', 'archive']).describe('The type of folder to fetch'),
-  start: z.number().optional().describe('Pagination start'),
-  limit: z.number().optional().describe('Items shown per page'),
+  start: z.coerce.number().optional().describe('Pagination start'),
+  limit: z.coerce.number().optional().describe('Items shown per page'),
 });
 
 export function createGetMailThreadsTool(client: PipedriveClient) {

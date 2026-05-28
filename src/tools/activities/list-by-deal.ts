@@ -4,13 +4,13 @@ import type { Activity } from '../../types/pipedrive-api.js';
 import type { PaginatedResponse } from '../../utils/pagination.js';
 
 const ListActivitiesByDealArgsSchema = z.object({
-  deal_id: z.number().describe('Deal ID to filter activities by'),
+  deal_id: z.coerce.number().describe('Deal ID to filter activities by'),
   done: z
     .boolean()
     .optional()
     .describe('Filter by done status (true for done, false for not done)'),
-  start: z.number().default(0).describe('Pagination start'),
-  limit: z.number().default(100).describe('Items per page'),
+  start: z.coerce.number().default(0).describe('Pagination start'),
+  limit: z.coerce.number().default(100).describe('Items per page'),
 });
 
 export function createListActivitiesByDealTool(client: PipedriveClient) {

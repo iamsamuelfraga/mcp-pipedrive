@@ -28,7 +28,7 @@ export const GoalAssigneeSchema = z.object({
  * Schema for expected outcome
  */
 export const ExpectedOutcomeSchema = z.object({
-  target: z.number().positive('Target must be positive').describe('Target value to achieve'),
+  target: z.coerce.number().positive('Target must be positive').describe('Target value to achieve'),
   tracking_metric: z
     .string()
     .min(1, 'Tracking metric is required')
@@ -127,7 +127,7 @@ export const ListGoalsSchema = z
     is_active: z.boolean().optional().describe('Filter by active status'),
     'assignee.id': OptionalIdSchema.describe('Filter by assignee ID'),
     'assignee.type': z.enum(['person', 'team']).optional().describe('Filter by assignee type'),
-    'expected_outcome.target': z.number().optional().describe('Filter by target value'),
+    'expected_outcome.target': z.coerce.number().optional().describe('Filter by target value'),
     'expected_outcome.tracking_metric': z.string().optional().describe('Filter by tracking metric'),
     'period.start': DateStringSchema.optional().describe('Filter by period start date'),
     'period.end': DateStringSchema.optional().describe('Filter by period end date'),

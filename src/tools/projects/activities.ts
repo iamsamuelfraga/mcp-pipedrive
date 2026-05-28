@@ -3,7 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { Activity } from '../../types/pipedrive-api.js';
 
 const GetProjectActivitiesArgsSchema = z.object({
-  id: z.number().positive().describe('Project ID'),
+  id: z.coerce.number().positive().describe('Project ID'),
 });
 
 interface CursorPaginatedResponse<T> {

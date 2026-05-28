@@ -5,9 +5,11 @@ import type { OrganizationRelationship } from '../../types/pipedrive-api.js';
 
 const CreateOrganizationRelationshipArgsSchema = z.object({
   type: z.string().describe('The type of the relationship (e.g., parent, daughter, related)'),
-  rel_owner_org_id: z.number().describe('The owner organization ID'),
-  rel_linked_org_id: z.number().describe('The linked organization ID'),
-  org_id: z.number().describe('The ID of the base organization for the returned calculated values'),
+  rel_owner_org_id: z.coerce.number().describe('The owner organization ID'),
+  rel_linked_org_id: z.coerce.number().describe('The linked organization ID'),
+  org_id: z.coerce
+    .number()
+    .describe('The ID of the base organization for the returned calculated values'),
 });
 
 export function createCreateOrganizationRelationshipTool(client: PipedriveClient) {

@@ -4,19 +4,22 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { MailThread } from '../../types/pipedrive-api.js';
 
 const UpdateMailThreadArgsSchema = z.object({
-  id: z.number().describe('ID of the mail thread'),
-  deal_id: z.number().optional().describe('ID of the deal this thread will be associated with'),
+  id: z.coerce.number().describe('ID of the mail thread'),
+  deal_id: z.coerce
+    .number()
+    .optional()
+    .describe('ID of the deal this thread will be associated with'),
   lead_id: z.string().optional().describe('ID of the lead this thread will be associated with'),
   shared_flag: z
-    .union([z.boolean(), z.number()])
+    .union([z.boolean(), z.coerce.number()])
     .optional()
     .describe('Whether the mail thread is shared with other users'),
   read_flag: z
-    .union([z.boolean(), z.number()])
+    .union([z.boolean(), z.coerce.number()])
     .optional()
     .describe('Whether the mail thread is read'),
   archived_flag: z
-    .union([z.boolean(), z.number()])
+    .union([z.boolean(), z.coerce.number()])
     .optional()
     .describe('Whether the mail thread is archived'),
 });

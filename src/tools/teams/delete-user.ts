@@ -3,8 +3,8 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const DeleteUserFromTeamArgsSchema = z.object({
-  id: z.number().describe('ID of the team'),
-  user_id: z.number().describe('ID of the user to remove from the team'),
+  id: z.coerce.number().describe('ID of the team'),
+  user_id: z.coerce.number().describe('ID of the user to remove from the team'),
 });
 
 export function createDeleteUserFromTeamTool(client: PipedriveClient) {

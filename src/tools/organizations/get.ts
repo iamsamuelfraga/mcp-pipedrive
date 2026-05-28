@@ -4,7 +4,7 @@ import type { Organization } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const GetOrganizationArgsSchema = z.object({
-  id: z.number().describe('Organization ID'),
+  id: z.coerce.number().describe('Organization ID'),
 });
 
 export function createGetOrganizationTool(client: PipedriveClient) {

@@ -1,16 +1,20 @@
 import { z } from 'zod';
 
 /**
- * Pagination schema for list operations
+ * Pagination schema for list operations.
+ *
+ * `start` and `limit` accept string-encoded numbers ("0", "50") because several
+ * MCP clients — including LLM tool-callers — serialize numeric tool arguments
+ * as strings. After coercion the standard integer/range constraints still apply.
  */
 export const PaginationSchema = z.object({
-  start: z
+  start: z.coerce
     .number()
     .int('Start must be an integer')
     .nonnegative('Start must be non-negative')
     .default(0)
     .describe('Pagination start'),
-  limit: z
+  limit: z.coerce
     .number()
     .int('Limit must be an integer')
     .positive('Limit must be positive')
@@ -122,9 +126,14 @@ export const CurrencySchema = z
 export type Currency = z.infer<typeof CurrencySchema>;
 
 /**
- * ID schema for various entity IDs
+ * ID schema for various entity IDs.
+ *
+ * Uses `z.coerce.number()` so that string-encoded IDs ("123") are accepted in
+ * addition to native numbers. Many MCP clients — and most LLM tool-callers —
+ * serialize numeric arguments as strings, which a strict `z.number()` would
+ * reject. Post-coercion the value still must be a positive integer.
  */
-export const IdSchema = z
+export const IdSchema = z.coerce
   .number()
   .int('ID must be an integer')
   .positive('ID must be positive')
@@ -161,7 +170,7 @@ export type DateTimeString = z.infer<typeof DateTimeStringSchema>;
  * Boolean-like schema that accepts multiple formats
  */
 export const BooleanLikeSchema = z
-  .union([z.boolean(), z.enum(['0', '1']), z.number().int().min(0).max(1)])
+  .union([z.boolean(), z.enum(['0', '1']), z.coerce.number().int().min(0).max(1)])
   .transform((val) => {
     if (typeof val === 'boolean') return val;
     if (val === '1' || val === 1) return true;

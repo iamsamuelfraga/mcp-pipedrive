@@ -4,7 +4,7 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { MailThread } from '../../types/pipedrive-api.js';
 
 const GetMailThreadArgsSchema = z.object({
-  id: z.number().describe('ID of the mail thread'),
+  id: z.coerce.number().describe('ID of the mail thread'),
 });
 
 export function createGetMailThreadTool(client: PipedriveClient) {

@@ -4,13 +4,13 @@ import type { Project } from '../../types/pipedrive-api.js';
 
 const ListProjectsArgsSchema = z.object({
   cursor: z.string().optional().describe('Pagination cursor'),
-  limit: z.number().default(100).describe('Items per page (max 500)'),
-  filter_id: z.number().optional().describe('Filter by filter ID'),
+  limit: z.coerce.number().default(100).describe('Items per page (max 500)'),
+  filter_id: z.coerce.number().optional().describe('Filter by filter ID'),
   status: z
     .string()
     .optional()
     .describe('Comma-separated statuses (open, completed, canceled, deleted)'),
-  phase_id: z.number().optional().describe('Filter by phase ID'),
+  phase_id: z.coerce.number().optional().describe('Filter by phase ID'),
   include_archived: z.boolean().optional().describe('Include archived projects'),
 });
 

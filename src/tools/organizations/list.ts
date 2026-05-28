@@ -4,11 +4,11 @@ import type { Organization } from '../../types/pipedrive-api.js';
 import type { PaginatedResponse } from '../../utils/pagination.js';
 
 const ListOrganizationsArgsSchema = z.object({
-  user_id: z.number().optional().describe('Filter by user ID'),
-  filter_id: z.number().optional().describe('Filter by filter ID'),
+  user_id: z.coerce.number().optional().describe('Filter by user ID'),
+  filter_id: z.coerce.number().optional().describe('Filter by filter ID'),
   first_char: z.string().optional().describe('Filter by first character of name'),
-  start: z.number().default(0).describe('Pagination start'),
-  limit: z.number().default(100).describe('Items per page (max 500)'),
+  start: z.coerce.number().default(0).describe('Pagination start'),
+  limit: z.coerce.number().default(100).describe('Items per page (max 500)'),
   sort: z.string().optional().describe('Field to sort by'),
 });
 

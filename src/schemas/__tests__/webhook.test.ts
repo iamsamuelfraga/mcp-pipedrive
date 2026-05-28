@@ -262,9 +262,9 @@ describe('DeleteWebhookSchema', () => {
     expect(() => DeleteWebhookSchema.parse(invalid3)).toThrow();
   });
 
-  it('should reject string ID', () => {
-    const invalid = { id: '1' };
-    expect(() => DeleteWebhookSchema.parse(invalid)).toThrow();
+  it('should coerce string-encoded ID (issue #26)', () => {
+    const result = DeleteWebhookSchema.parse({ id: '1' });
+    expect(result.id).toBe(1);
   });
 });
 

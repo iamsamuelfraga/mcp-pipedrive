@@ -3,10 +3,10 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { Organization } from '../../types/pipedrive-api.js';
 
 const ListAllOrganizationsArgsSchema = z.object({
-  user_id: z.number().optional().describe('Filter by user ID'),
-  filter_id: z.number().optional().describe('Filter by filter ID'),
+  user_id: z.coerce.number().optional().describe('Filter by user ID'),
+  filter_id: z.coerce.number().optional().describe('Filter by filter ID'),
   first_char: z.string().optional().describe('Filter by first character of name'),
-  max_items: z.number().optional().describe('Maximum number of items to fetch'),
+  max_items: z.coerce.number().optional().describe('Maximum number of items to fetch'),
 });
 
 export function createListAllOrganizationsTool(client: PipedriveClient) {

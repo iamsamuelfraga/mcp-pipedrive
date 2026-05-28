@@ -123,7 +123,8 @@ describe('Example Test Infrastructure Usage', () => {
       const startTime = Date.now();
       await wait(100);
       const elapsed = Date.now() - startTime;
-      expect(elapsed).toBeGreaterThanOrEqual(100);
+      // Allow small jitter from CI scheduling — setTimeout is not millisecond-precise
+      expect(elapsed).toBeGreaterThanOrEqual(95);
     });
   });
 

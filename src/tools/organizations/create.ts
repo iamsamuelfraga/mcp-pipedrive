@@ -5,7 +5,7 @@ import type { PipedriveResponse } from '../../types/common.js';
 
 const CreateOrganizationArgsSchema = z.object({
   name: z.string().describe('Organization name (required)'),
-  owner_id: z.number().optional().describe('ID of the user who will be the owner'),
+  owner_id: z.coerce.number().optional().describe('ID of the user who will be the owner'),
   visible_to: z
     .enum(['1', '3', '5', '7'])
     .optional()

@@ -4,9 +4,9 @@ import type { Organization } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const UpdateOrganizationArgsSchema = z.object({
-  id: z.number().describe('Organization ID'),
+  id: z.coerce.number().describe('Organization ID'),
   name: z.string().optional().describe('Organization name'),
-  owner_id: z.number().optional().describe('ID of the user who will be the owner'),
+  owner_id: z.coerce.number().optional().describe('ID of the user who will be the owner'),
   visible_to: z
     .enum(['1', '3', '5', '7'])
     .optional()

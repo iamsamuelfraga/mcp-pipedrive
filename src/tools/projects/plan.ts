@@ -3,21 +3,21 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { ProjectPlanItem } from '../../types/pipedrive-api.js';
 
 const GetProjectPlanArgsSchema = z.object({
-  id: z.number().positive().describe('Project ID'),
+  id: z.coerce.number().positive().describe('Project ID'),
 });
 
 const UpdateProjectPlanActivityArgsSchema = z.object({
-  id: z.number().positive().describe('Project ID'),
-  activity_id: z.number().positive().describe('Activity ID'),
-  phase_id: z.number().optional().describe('Phase ID'),
-  group_id: z.number().optional().describe('Group ID'),
+  id: z.coerce.number().positive().describe('Project ID'),
+  activity_id: z.coerce.number().positive().describe('Activity ID'),
+  phase_id: z.coerce.number().optional().describe('Phase ID'),
+  group_id: z.coerce.number().optional().describe('Group ID'),
 });
 
 const UpdateProjectPlanTaskArgsSchema = z.object({
-  id: z.number().positive().describe('Project ID'),
-  task_id: z.number().positive().describe('Task ID'),
-  phase_id: z.number().optional().describe('Phase ID'),
-  group_id: z.number().optional().describe('Group ID'),
+  id: z.coerce.number().positive().describe('Project ID'),
+  task_id: z.coerce.number().positive().describe('Task ID'),
+  phase_id: z.coerce.number().optional().describe('Phase ID'),
+  group_id: z.coerce.number().optional().describe('Group ID'),
 });
 
 interface ListResponse<T> {

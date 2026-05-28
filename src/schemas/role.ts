@@ -115,7 +115,7 @@ export const AddRoleSettingSchema = z
   .object({
     id: IdSchema.describe('ID of the role'),
     setting_key: z.string().min(1, 'Setting key is required').describe('Key of the setting'),
-    value: z.union([z.string(), z.number(), z.boolean()]).describe('Value of the setting'),
+    value: z.union([z.string(), z.coerce.number(), z.boolean()]).describe('Value of the setting'),
   })
   .strict();
 
@@ -128,7 +128,7 @@ export const UpdateRoleSettingSchema = z
   .object({
     id: IdSchema.describe('ID of the role'),
     setting_key: z.string().min(1, 'Setting key is required').describe('Key of the setting'),
-    value: z.union([z.string(), z.number(), z.boolean()]).describe('Value of the setting'),
+    value: z.union([z.string(), z.coerce.number(), z.boolean()]).describe('Value of the setting'),
   })
   .strict();
 
@@ -168,7 +168,7 @@ export const UpdateRolePipelinesSchema = z
   .object({
     id: IdSchema.describe('ID of the role'),
     visible_pipeline_ids: z
-      .record(z.number())
+      .record(z.coerce.number())
       .describe('Object where keys are pipeline IDs and values are 1 (visible) or 0 (hidden)'),
   })
   .strict();

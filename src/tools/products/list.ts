@@ -126,8 +126,8 @@ Supports the same filters as products/list:
     handler: async (params: unknown) => {
       const validated = z
         .object({
-          user_id: z.number().int().positive().optional(),
-          filter_id: z.number().int().positive().optional(),
+          user_id: z.coerce.number().int().positive().optional(),
+          filter_id: z.coerce.number().int().positive().optional(),
           first_char: z.string().length(1).optional(),
         })
         .parse(params);

@@ -4,13 +4,13 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { OrganizationRelationship } from '../../types/pipedrive-api.js';
 
 const UpdateOrganizationRelationshipArgsSchema = z.object({
-  id: z.number().describe('ID of the organization relationship to update'),
+  id: z.coerce.number().describe('ID of the organization relationship to update'),
   type: z
     .string()
     .optional()
     .describe('The type of the relationship (e.g., parent, daughter, related)'),
-  rel_owner_org_id: z.number().optional().describe('The owner organization ID'),
-  rel_linked_org_id: z.number().optional().describe('The linked organization ID'),
+  rel_owner_org_id: z.coerce.number().optional().describe('The owner organization ID'),
+  rel_linked_org_id: z.coerce.number().optional().describe('The linked organization ID'),
   org_id: z
     .number()
     .optional()

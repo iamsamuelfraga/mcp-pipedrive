@@ -3,7 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { ProjectBoard } from '../../types/pipedrive-api.js';
 
 const GetProjectBoardArgsSchema = z.object({
-  id: z.number().positive().describe('Board ID'),
+  id: z.coerce.number().positive().describe('Board ID'),
 });
 
 interface ListResponse<T> {

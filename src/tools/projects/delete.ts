@@ -2,7 +2,7 @@ import { z } from 'zod';
 import type { PipedriveClient } from '../../pipedrive-client.js';
 
 const DeleteProjectArgsSchema = z.object({
-  id: z.number().positive().describe('Project ID'),
+  id: z.coerce.number().positive().describe('Project ID'),
 });
 
 interface DeleteResponse {

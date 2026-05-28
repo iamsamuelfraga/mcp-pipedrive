@@ -6,7 +6,7 @@ import type { Team } from '../../types/pipedrive-api.js';
 const GetAllTeamsArgsSchema = z.object({
   order_by: z.string().optional().describe('The field name to sort returned teams by'),
   skip_users: z
-    .union([z.boolean(), z.number()])
+    .union([z.boolean(), z.coerce.number()])
     .optional()
     .describe('When enabled, the teams will not include IDs of member users'),
 });

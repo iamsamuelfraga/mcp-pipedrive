@@ -12,12 +12,16 @@ import {
  */
 export const PriceSchema = z
   .object({
-    price: z.number().nonnegative('Price must be non-negative').describe('Product price'),
+    price: z.coerce.number().nonnegative('Price must be non-negative').describe('Product price'),
     currency: z
       .string()
       .length(3, 'Currency must be a 3-letter code')
       .describe('Currency code (e.g., USD, EUR)'),
-    cost: z.number().nonnegative('Cost must be non-negative').optional().describe('Product cost'),
+    cost: z.coerce
+      .number()
+      .nonnegative('Cost must be non-negative')
+      .optional()
+      .describe('Product cost'),
     overhead_cost: z
       .number()
       .nonnegative('Overhead cost must be non-negative')

@@ -3,7 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { ProjectGroup } from '../../types/pipedrive-api.js';
 
 const GetProjectGroupsArgsSchema = z.object({
-  id: z.number().positive().describe('Project ID'),
+  id: z.coerce.number().positive().describe('Project ID'),
 });
 
 interface ListResponse<T> {
