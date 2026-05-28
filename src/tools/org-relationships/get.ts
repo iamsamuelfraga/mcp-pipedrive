@@ -4,7 +4,7 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { OrganizationRelationship } from '../../types/pipedrive-api.js';
 
 const GetOrganizationRelationshipArgsSchema = z.object({
-  id: z.number().describe('ID of the organization relationship'),
+  id: z.coerce.number().describe('ID of the organization relationship'),
 });
 
 export function createGetOrganizationRelationshipTool(client: PipedriveClient) {

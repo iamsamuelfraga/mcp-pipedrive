@@ -4,19 +4,19 @@ import type { Activity } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const ActivityParticipantSchema = z.object({
-  person_id: z.number().describe('Person ID'),
+  person_id: z.coerce.number().describe('Person ID'),
   primary_flag: z.boolean().optional().describe('Is this the primary participant?'),
 });
 
 const ActivityAttendeeSchema = z.object({
   email_address: z.string().describe('Email address of attendee'),
   name: z.string().optional().describe('Name of attendee'),
-  user_id: z.number().optional().describe('User ID if attendee is a Pipedrive user'),
-  person_id: z.number().optional().describe('Person ID if attendee is a Pipedrive person'),
+  user_id: z.coerce.number().optional().describe('User ID if attendee is a Pipedrive user'),
+  person_id: z.coerce.number().optional().describe('Person ID if attendee is a Pipedrive person'),
 });
 
 const UpdateActivityArgsSchema = z.object({
-  id: z.number().describe('Activity ID'),
+  id: z.coerce.number().describe('Activity ID'),
   subject: z.string().optional().describe('Activity subject'),
   type: z
     .enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch'])
@@ -25,11 +25,11 @@ const UpdateActivityArgsSchema = z.object({
   due_date: z.string().optional().describe('Due date in YYYY-MM-DD format'),
   due_time: z.string().optional().describe('Due time in HH:MM format'),
   duration: z.string().optional().describe('Duration in HH:MM format'),
-  user_id: z.number().optional().describe('User ID to assign the activity to'),
-  deal_id: z.number().optional().describe('Deal ID to link the activity to'),
-  person_id: z.number().optional().describe('Person ID to link the activity to'),
-  org_id: z.number().optional().describe('Organization ID to link the activity to'),
-  project_id: z.number().optional().describe('Project ID to link the activity to'),
+  user_id: z.coerce.number().optional().describe('User ID to assign the activity to'),
+  deal_id: z.coerce.number().optional().describe('Deal ID to link the activity to'),
+  person_id: z.coerce.number().optional().describe('Person ID to link the activity to'),
+  org_id: z.coerce.number().optional().describe('Organization ID to link the activity to'),
+  project_id: z.coerce.number().optional().describe('Project ID to link the activity to'),
   lead_id: z.string().optional().describe('Lead ID to link the activity to'),
   note: z.string().optional().describe('Activity note'),
   location: z.string().optional().describe('Activity location'),

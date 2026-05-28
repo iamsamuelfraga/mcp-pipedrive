@@ -4,8 +4,8 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { User } from '../../types/pipedrive-api.js';
 
 const AddUserToTeamArgsSchema = z.object({
-  id: z.number().describe('ID of the team'),
-  user_id: z.number().describe('ID of the user to add to the team'),
+  id: z.coerce.number().describe('ID of the team'),
+  user_id: z.coerce.number().describe('ID of the user to add to the team'),
 });
 
 export function createAddUserToTeamTool(client: PipedriveClient) {

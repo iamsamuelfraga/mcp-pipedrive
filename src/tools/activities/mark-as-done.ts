@@ -4,7 +4,7 @@ import type { Activity } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const MarkActivityAsDoneArgsSchema = z.object({
-  id: z.number().describe('Activity ID'),
+  id: z.coerce.number().describe('Activity ID'),
 });
 
 export function createMarkActivityAsDoneTool(client: PipedriveClient) {

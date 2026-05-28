@@ -11,7 +11,10 @@ import {
  * Lead value schema - amount and currency
  */
 export const LeadValueSchema = z.object({
-  amount: z.number().nonnegative('Amount must be non-negative').describe('Lead value amount'),
+  amount: z.coerce
+    .number()
+    .nonnegative('Amount must be non-negative')
+    .describe('Lead value amount'),
   currency: z
     .string()
     .length(3, 'Currency must be a 3-letter ISO code')
@@ -52,7 +55,7 @@ export const CreateLeadSchema = z
     visible_to: VisibilitySchema.optional().describe('Visibility of the lead'),
     was_seen: BooleanLikeSchema.optional().describe('Whether the lead was seen'),
     origin_id: z.string().optional().describe('Origin ID for tracking'),
-    channel: z.number().int('Channel must be an integer').optional().describe('Channel ID'),
+    channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
     channel_id: z.string().optional().describe('Channel identifier string'),
   })
   .strict();
@@ -85,7 +88,7 @@ export const UpdateLeadSchema = z
     ),
     visible_to: VisibilitySchema.optional().describe('Visibility of the lead'),
     was_seen: BooleanLikeSchema.optional().describe('Whether the lead was seen'),
-    channel: z.number().int('Channel must be an integer').optional().describe('Channel ID'),
+    channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
     channel_id: z.string().optional().describe('Channel identifier string'),
   })
   .strict();

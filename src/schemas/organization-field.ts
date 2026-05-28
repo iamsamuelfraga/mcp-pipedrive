@@ -31,7 +31,7 @@ export type FieldType = z.infer<typeof FieldTypeSchema>;
  */
 export const FieldOptionSchema = z
   .object({
-    id: z.number().int().optional().describe('Existing option ID (when updating)'),
+    id: z.coerce.number().int().optional().describe('Existing option ID (when updating)'),
     label: z.string().min(1).describe('Visible label of the option'),
   })
   .strict();
@@ -122,7 +122,7 @@ export const BulkDeleteOrganizationFieldsSchema = z
     ids: z
       .union([
         z.string().regex(/^\d+(,\d+)*$/, 'IDs must be a comma-separated list of numbers'),
-        z.array(z.number().int().positive()).min(1, 'At least one ID is required'),
+        z.array(z.coerce.number().int().positive()).min(1, 'At least one ID is required'),
       ])
       .describe('Comma-separated string of IDs or array of numeric IDs'),
   })

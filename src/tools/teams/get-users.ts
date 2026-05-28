@@ -4,7 +4,7 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { User } from '../../types/pipedrive-api.js';
 
 const GetTeamUsersArgsSchema = z.object({
-  id: z.number().describe('ID of the team'),
+  id: z.coerce.number().describe('ID of the team'),
 });
 
 export function createGetTeamUsersTool(client: PipedriveClient) {

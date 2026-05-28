@@ -3,7 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const DeleteOrganizationArgsSchema = z.object({
-  id: z.number().describe('Organization ID'),
+  id: z.coerce.number().describe('Organization ID'),
 });
 
 export function createDeleteOrganizationTool(client: PipedriveClient) {

@@ -4,21 +4,21 @@ import type { Project } from '../../types/pipedrive-api.js';
 
 const CreateProjectArgsSchema = z.object({
   title: z.string().min(1).describe('Project title'),
-  board_id: z.number().positive().describe('Board ID'),
-  phase_id: z.number().positive().describe('Phase ID'),
+  board_id: z.coerce.number().positive().describe('Board ID'),
+  phase_id: z.coerce.number().positive().describe('Phase ID'),
   description: z.string().optional().describe('Project description'),
   status: z
     .enum(['open', 'completed', 'canceled', 'deleted'])
     .optional()
     .describe('Project status'),
-  owner_id: z.number().optional().describe('Owner user ID'),
+  owner_id: z.coerce.number().optional().describe('Owner user ID'),
   start_date: z.string().optional().describe('Start date (YYYY-MM-DD)'),
   end_date: z.string().optional().describe('End date (YYYY-MM-DD)'),
-  deal_ids: z.array(z.number()).optional().describe('Array of deal IDs'),
-  org_id: z.number().optional().describe('Organization ID'),
-  person_id: z.number().optional().describe('Person ID'),
-  labels: z.array(z.number()).optional().describe('Array of label IDs'),
-  template_id: z.number().optional().describe('Template ID'),
+  deal_ids: z.array(z.coerce.number()).optional().describe('Array of deal IDs'),
+  org_id: z.coerce.number().optional().describe('Organization ID'),
+  person_id: z.coerce.number().optional().describe('Person ID'),
+  labels: z.array(z.coerce.number()).optional().describe('Array of label IDs'),
+  template_id: z.coerce.number().optional().describe('Template ID'),
 });
 
 interface SingleResponse<T> {

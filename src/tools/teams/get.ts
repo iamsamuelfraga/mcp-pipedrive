@@ -4,9 +4,9 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { Team } from '../../types/pipedrive-api.js';
 
 const GetTeamArgsSchema = z.object({
-  id: z.number().describe('ID of the team'),
+  id: z.coerce.number().describe('ID of the team'),
   skip_users: z
-    .union([z.boolean(), z.number()])
+    .union([z.boolean(), z.coerce.number()])
     .optional()
     .describe('When enabled, the team will not include IDs of member users'),
 });

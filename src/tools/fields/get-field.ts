@@ -5,7 +5,7 @@ const GetFieldSchema = z.object({
   entity_type: z.enum(['deal', 'person', 'organization', 'activity', 'product'], {
     description: 'Type of entity (deal, person, organization, activity, product)',
   }),
-  field_id: z.number({ description: 'Field ID to retrieve' }),
+  field_id: z.coerce.number({ description: 'Field ID to retrieve' }),
 });
 
 export function getGetFieldTool(client: PipedriveClient) {

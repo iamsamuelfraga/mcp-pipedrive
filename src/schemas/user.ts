@@ -146,7 +146,7 @@ export type FindUsersInput = z.infer<typeof FindUsersSchema>;
 export const ListUserRoleAssignmentsSchema = z
   .object({
     id: IdSchema.describe('ID of the user'),
-    start: z.number().int().nonnegative().optional().describe('Pagination start'),
+    start: z.coerce.number().int().nonnegative().optional().describe('Pagination start'),
     limit: z
       .number()
       .int()

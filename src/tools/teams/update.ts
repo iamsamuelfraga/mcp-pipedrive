@@ -4,12 +4,18 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { Team } from '../../types/pipedrive-api.js';
 
 const UpdateTeamArgsSchema = z.object({
-  id: z.number().describe('ID of the team to update'),
+  id: z.coerce.number().describe('ID of the team to update'),
   name: z.string().optional().describe('Team name'),
-  manager_id: z.number().optional().describe('ID of the user who will be the manager of this team'),
+  manager_id: z.coerce
+    .number()
+    .optional()
+    .describe('ID of the user who will be the manager of this team'),
   description: z.string().optional().describe('Team description'),
-  users: z.array(z.number()).optional().describe('Array of user IDs to add to the team'),
-  active_flag: z.union([z.boolean(), z.number()]).optional().describe('Whether the team is active'),
+  users: z.array(z.coerce.number()).optional().describe('Array of user IDs to add to the team'),
+  active_flag: z
+    .union([z.boolean(), z.coerce.number()])
+    .optional()
+    .describe('Whether the team is active'),
 });
 
 export function createUpdateTeamTool(client: PipedriveClient) {

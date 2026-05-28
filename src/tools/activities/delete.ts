@@ -3,7 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const DeleteActivityArgsSchema = z.object({
-  id: z.number().describe('Activity ID'),
+  id: z.coerce.number().describe('Activity ID'),
 });
 
 export function createDeleteActivityTool(client: PipedriveClient) {

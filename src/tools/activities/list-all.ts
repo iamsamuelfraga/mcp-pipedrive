@@ -3,7 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { Activity } from '../../types/pipedrive-api.js';
 
 const ListAllActivitiesArgsSchema = z.object({
-  user_id: z.number().optional().describe('Filter by user ID'),
+  user_id: z.coerce.number().optional().describe('Filter by user ID'),
   type: z
     .enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch'])
     .optional()
@@ -14,7 +14,7 @@ const ListAllActivitiesArgsSchema = z.object({
     .describe('Filter by done status (true for done, false for not done)'),
   start_date: z.string().optional().describe('Start date filter (YYYY-MM-DD)'),
   end_date: z.string().optional().describe('End date filter (YYYY-MM-DD)'),
-  max_items: z.number().optional().describe('Maximum number of items to fetch'),
+  max_items: z.coerce.number().optional().describe('Maximum number of items to fetch'),
 });
 
 export function createListAllActivitiesTool(client: PipedriveClient) {

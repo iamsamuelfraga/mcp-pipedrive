@@ -10,8 +10,8 @@ const SearchOrganizationsArgsSchema = z.object({
     .optional()
     .describe('Comma-separated field names to search (e.g., "name,address")'),
   exact_match: z.boolean().optional().describe('When true, only full exact matches are returned'),
-  start: z.number().default(0).describe('Pagination start'),
-  limit: z.number().default(100).describe('Items per page'),
+  start: z.coerce.number().default(0).describe('Pagination start'),
+  limit: z.coerce.number().default(100).describe('Items per page'),
 });
 
 export function createSearchOrganizationsTool(client: PipedriveClient) {

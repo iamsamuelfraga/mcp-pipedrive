@@ -3,8 +3,8 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const AddOrganizationFollowerArgsSchema = z.object({
-  id: z.number().describe('Organization ID'),
-  user_id: z.number().describe('User ID to add as follower'),
+  id: z.coerce.number().describe('Organization ID'),
+  user_id: z.coerce.number().describe('User ID to add as follower'),
 });
 
 export function createAddOrganizationFollowerTool(client: PipedriveClient) {

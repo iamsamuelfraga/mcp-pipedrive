@@ -3,11 +3,11 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { ProjectPhase } from '../../types/pipedrive-api.js';
 
 const GetProjectPhasesArgsSchema = z.object({
-  board_id: z.number().positive().describe('Board ID'),
+  board_id: z.coerce.number().positive().describe('Board ID'),
 });
 
 const GetProjectPhaseArgsSchema = z.object({
-  id: z.number().positive().describe('Phase ID'),
+  id: z.coerce.number().positive().describe('Phase ID'),
 });
 
 interface ListResponse<T> {

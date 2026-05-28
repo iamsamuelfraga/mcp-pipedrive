@@ -4,9 +4,9 @@ import type { PipedriveResponse } from '../../types/common.js';
 import type { MailMessage } from '../../types/pipedrive-api.js';
 
 const GetMailMessageArgsSchema = z.object({
-  id: z.number().describe('ID of the mail message'),
+  id: z.coerce.number().describe('ID of the mail message'),
   include_body: z
-    .union([z.boolean(), z.number()])
+    .union([z.boolean(), z.coerce.number()])
     .optional()
     .describe('Whether to include the full message body or not'),
 });

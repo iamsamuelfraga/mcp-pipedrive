@@ -4,9 +4,9 @@ import type { Person } from '../../types/pipedrive-api.js';
 import type { PaginatedResponse } from '../../utils/pagination.js';
 
 const ListOrganizationPersonsArgsSchema = z.object({
-  id: z.number().describe('Organization ID'),
-  start: z.number().default(0).describe('Pagination start'),
-  limit: z.number().default(100).describe('Items per page'),
+  id: z.coerce.number().describe('Organization ID'),
+  start: z.coerce.number().default(0).describe('Pagination start'),
+  limit: z.coerce.number().default(100).describe('Items per page'),
 });
 
 export function createListOrganizationPersonsTool(client: PipedriveClient) {

@@ -45,7 +45,7 @@ export const CreateTeamSchema = z
       .max(500, 'Description cannot exceed 500 characters')
       .optional()
       .describe('Team description'),
-    users: z.array(z.number()).optional().describe('Array of user IDs to add to the team'),
+    users: z.array(z.coerce.number()).optional().describe('Array of user IDs to add to the team'),
   })
   .strict();
 
@@ -69,7 +69,7 @@ export const UpdateTeamSchema = z
       .max(500, 'Description cannot exceed 500 characters')
       .optional()
       .describe('Team description'),
-    users: z.array(z.number()).optional().describe('Array of user IDs to add to the team'),
+    users: z.array(z.coerce.number()).optional().describe('Array of user IDs to add to the team'),
     active_flag: BooleanLikeSchema.optional().describe('Whether the team is active'),
   })
   .strict();

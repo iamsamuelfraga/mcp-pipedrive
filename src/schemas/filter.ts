@@ -36,15 +36,15 @@ export const FilterConditionLeafSchema = z.object({
   value: z
     .union([
       z.string(),
-      z.number(),
+      z.coerce.number(),
       z.boolean(),
       z.null(),
-      z.array(z.union([z.string(), z.number()])),
+      z.array(z.union([z.string(), z.coerce.number()])),
     ])
     .optional()
     .describe('Value to compare against'),
   extra_value: z
-    .union([z.string(), z.number()])
+    .union([z.string(), z.coerce.number()])
     .optional()
     .describe('Extra value for range conditions'),
 });

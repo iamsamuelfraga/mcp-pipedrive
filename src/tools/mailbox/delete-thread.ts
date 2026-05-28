@@ -3,7 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { PipedriveResponse } from '../../types/common.js';
 
 const DeleteMailThreadArgsSchema = z.object({
-  id: z.number().describe('ID of the mail thread to delete'),
+  id: z.coerce.number().describe('ID of the mail thread to delete'),
 });
 
 export function createDeleteMailThreadTool(client: PipedriveClient) {

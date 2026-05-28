@@ -199,9 +199,9 @@ describe('IdSchema', () => {
     expect(() => IdSchema.parse(1.5)).toThrow('ID must be an integer');
   });
 
-  it('should reject string', () => {
-    expect(() => IdSchema.parse('123')).toThrow();
-  });
+  // Note: string-encoded numbers ("123") are intentionally accepted via
+  // z.coerce.number() to support LLM tool-callers that serialize numeric
+  // arguments as strings. See `numeric coercion (issue #26)` block below.
 });
 
 describe('OptionalIdSchema', () => {
@@ -380,5 +380,78 @@ describe('SortDirectionSchema', () => {
 
   it('should reject uppercase', () => {
     expect(() => SortDirectionSchema.parse('ASC')).toThrow();
+  });
+});
+
+/**
+ * Regression tests for issue #26: LLM tool-callers serialize numeric arguments
+ * as strings, so all numeric input schemas must accept string-encoded numbers
+ * via z.coerce.number().
+ */
+describe('numeric coercion (issue #26)', () => {
+  describe('IdSchema', () => {
+    it('accepts native numbers', () => {
+      expect(IdSchema.parse(123)).toBe(123);
+    });
+
+    it('coerces string-encoded numbers', () => {
+      expect(IdSchema.parse('123')).toBe(123);
+      expect(IdSchema.parse('456789')).toBe(456789);
+    });
+
+    it('still rejects non-numeric strings after coercion', () => {
+      expect(() => IdSchema.parse('abc')).toThrow();
+      expect(() => IdSchema.parse('12.5.6')).toThrow();
+    });
+
+    it('still rejects non-positive coerced values', () => {
+      expect(() => IdSchema.parse('0')).toThrow('ID must be positive');
+      expect(() => IdSchema.parse('-1')).toThrow('ID must be positive');
+      expect(() => IdSchema.parse(0)).toThrow('ID must be positive');
+    });
+
+    it('still rejects non-integer coerced values', () => {
+      expect(() => IdSchema.parse('1.5')).toThrow('ID must be an integer');
+      expect(() => IdSchema.parse(1.5)).toThrow('ID must be an integer');
+    });
+  });
+
+  describe('OptionalIdSchema', () => {
+    it('coerces string-encoded numbers when provided', () => {
+      expect(OptionalIdSchema.parse('42')).toBe(42);
+    });
+
+    it('accepts undefined', () => {
+      expect(OptionalIdSchema.parse(undefined)).toBeUndefined();
+    });
+  });
+
+  describe('PaginationSchema', () => {
+    it('coerces string-encoded start and limit', () => {
+      const result = PaginationSchema.parse({ start: '10', limit: '50' });
+      expect(result).toEqual({ start: 10, limit: 50 });
+    });
+
+    it('accepts native numbers', () => {
+      const result = PaginationSchema.parse({ start: 0, limit: 100 });
+      expect(result).toEqual({ start: 0, limit: 100 });
+    });
+
+    it('mixes native and string-encoded inputs', () => {
+      const result = PaginationSchema.parse({ start: '0', limit: 25 });
+      expect(result).toEqual({ start: 0, limit: 25 });
+    });
+
+    it('still enforces limit ceiling after coercion', () => {
+      expect(() => PaginationSchema.parse({ limit: '501' })).toThrow(
+        'Limit cannot exceed 500'
+      );
+    });
+
+    it('still rejects negative start after coercion', () => {
+      expect(() => PaginationSchema.parse({ start: '-1' })).toThrow(
+        'Start must be non-negative'
+      );
+    });
   });
 });

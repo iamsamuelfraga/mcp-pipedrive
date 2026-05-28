@@ -314,7 +314,10 @@ export const GetPipelineDealsSchema = z
       .positive('Limit must be positive')
       .optional()
       .describe('Number of items per page'),
-    get_summary: z.number().optional().describe('Include pipeline summary in additional_data'),
+    get_summary: z.coerce
+      .number()
+      .optional()
+      .describe('Include pipeline summary in additional_data'),
     totals_convert_currency: z
       .string()
       .optional()

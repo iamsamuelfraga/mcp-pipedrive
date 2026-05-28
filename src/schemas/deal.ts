@@ -21,7 +21,11 @@ export const CreateDealSchema = z
       .min(1, 'Title is required and cannot be empty')
       .max(255, 'Title cannot exceed 255 characters')
       .describe('Deal title'),
-    value: z.number().nonnegative('Value must be non-negative').optional().describe('Deal value'),
+    value: z.coerce
+      .number()
+      .nonnegative('Value must be non-negative')
+      .optional()
+      .describe('Deal value'),
     currency: CurrencySchema.optional().describe('Currency code (e.g., USD, EUR)'),
     user_id: OptionalIdSchema.describe(
       'ID of the user who will be marked as the owner of the deal'
@@ -70,7 +74,11 @@ export const UpdateDealSchema = z
       .max(255, 'Title cannot exceed 255 characters')
       .optional()
       .describe('Deal title'),
-    value: z.number().nonnegative('Value must be non-negative').optional().describe('Deal value'),
+    value: z.coerce
+      .number()
+      .nonnegative('Value must be non-negative')
+      .optional()
+      .describe('Deal value'),
     currency: CurrencySchema.optional().describe('Currency code'),
     user_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
     person_id: OptionalIdSchema.describe('ID of the person associated with this deal'),
@@ -567,7 +575,11 @@ export const BulkEditDealsSchema = z
       .array(IdSchema)
       .min(1, 'At least one deal ID is required')
       .describe('Array of deal IDs to update'),
-    value: z.number().nonnegative('Value must be non-negative').optional().describe('Deal value'),
+    value: z.coerce
+      .number()
+      .nonnegative('Value must be non-negative')
+      .optional()
+      .describe('Deal value'),
     currency: CurrencySchema.optional().describe('Currency code'),
     stage_id: OptionalIdSchema.describe('ID of the stage'),
     status: z
