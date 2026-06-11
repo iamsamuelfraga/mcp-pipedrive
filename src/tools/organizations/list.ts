@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { Organization } from '../../types/pipedrive-api.js';
 import type { PaginatedResponse } from '../../utils/pagination.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 const ListOrganizationsArgsSchema = z.object({
   user_id: z.coerce.number().optional().describe('Filter by user ID'),
@@ -46,11 +47,13 @@ export function createListOrganizationsTool(client: PipedriveClient) {
         ttl: 60000,
       });
 
+      const enriched = await enrichEntityWithCustomFields(client, 'organization', response);
+
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(response, null, 2),
+            text: JSON.stringify(enriched, null, 2),
           },
         ],
       };

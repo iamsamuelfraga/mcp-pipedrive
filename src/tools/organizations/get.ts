@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { Organization } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 const GetOrganizationArgsSchema = z.object({
   id: z.coerce.number().describe('Organization ID'),
@@ -27,11 +28,13 @@ export function createGetOrganizationTool(client: PipedriveClient) {
         { enabled: true, ttl: 60000 }
       );
 
+      const enriched = await enrichEntityWithCustomFields(client, 'organization', response);
+
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(response, null, 2),
+            text: JSON.stringify(enriched, null, 2),
           },
         ],
       };
