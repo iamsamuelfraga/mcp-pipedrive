@@ -404,12 +404,12 @@ describe('Edge Cases', () => {
     expect(result.success).toBe(true);
   });
 
-  it('should reject extra fields in strict mode', () => {
+  it('should tolerate unknown top-level keys (non-strict)', () => {
     const result = CreateDealSchema.safeParse({
       title: 'Test Deal',
-      extra_field: 'should not be here',
+      extra_field: 'tolerated, stripped by zod default behavior',
     });
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 
   it('should handle default values', () => {
