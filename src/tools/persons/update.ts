@@ -2,6 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { UpdatePersonSchema } from '../../schemas/person.js';
 import type { Person } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 /**
  * Tool for updating an existing person
@@ -24,7 +25,12 @@ Optional fields (only provide fields you want to change):
 - visible_to: Visibility level (1=owner only, 3=entire company, 5=owner's followers, 7=visibility group)
 - marketing_status: Marketing consent status (no_consent, unsubscribed, subscribed, archived)
 
-Note: When updating email/phone arrays, provide the complete array (it replaces the existing one).`,
+Note: When updating email/phone arrays, provide the complete array (it replaces the existing one).
+
+Custom fields:
+- Pass display names: { "custom_fields": { "Region": "EU", "Tier": "Gold" } }
+- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }
+- For enum/set fields, pass option labels (not ids).`,
     inputSchema: {
       type: 'object',
       properties: {
@@ -105,6 +111,11 @@ Note: When updating email/phone arrays, provide the complete array (it replaces 
           description: 'Marketing consent status',
           enum: ['no_consent', 'unsubscribed', 'subscribed', 'archived'],
         },
+        custom_fields: {
+          type: 'object',
+          description: 'Custom field values keyed by display name or hash.',
+          additionalProperties: true,
+        },
       },
       required: ['id'],
     } as const,
@@ -122,6 +133,9 @@ Note: When updating email/phone arrays, provide the complete array (it replaces 
       if (validated.visible_to !== undefined) body.visible_to = validated.visible_to;
       if (validated.marketing_status !== undefined)
         body.marketing_status = validated.marketing_status;
+
+      const resolved = await resolveCustomFieldsForEntity(client, 'person', validated.custom_fields);
+      Object.assign(body, resolved);
 
       const response = await client.put<PipedriveResponse<Person>>(
         `/persons/${validated.id}`,

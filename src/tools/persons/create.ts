@@ -2,6 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { CreatePersonSchema } from '../../schemas/person.js';
 import type { Person } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 /**
  * Tool for creating a new person
@@ -33,7 +34,12 @@ Example email/phone arrays:
   "phone": [
     {"value": "+1234567890", "primary": true, "label": "mobile"}
   ]
-}`,
+}
+
+Custom fields:
+- Pass display names: { "custom_fields": { "Region": "EU", "Tier": "Gold" } }
+- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }
+- For enum/set fields, pass option labels (not ids).`,
     inputSchema: {
       type: 'object',
       properties: {
@@ -114,6 +120,11 @@ Example email/phone arrays:
           type: 'string',
           description: 'Creation time in YYYY-MM-DD HH:MM:SS format',
         },
+        custom_fields: {
+          type: 'object',
+          description: 'Custom field values keyed by display name or hash.',
+          additionalProperties: true,
+        },
       },
       required: ['name'],
     } as const,
@@ -132,6 +143,9 @@ Example email/phone arrays:
       if (validated.visible_to) body.visible_to = validated.visible_to;
       if (validated.marketing_status) body.marketing_status = validated.marketing_status;
       if (validated.add_time) body.add_time = validated.add_time;
+
+      const resolved = await resolveCustomFieldsForEntity(client, 'person', validated.custom_fields);
+      Object.assign(body, resolved);
 
       const response = await client.post<PipedriveResponse<Person>>('/persons', body);
 

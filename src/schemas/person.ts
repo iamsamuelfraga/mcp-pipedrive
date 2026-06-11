@@ -33,8 +33,11 @@ export const CreatePersonSchema = z
     visible_to: VisibilitySchema.optional().describe('Visibility of the person'),
     marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
     add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe('Map of custom field names (or hash keys) to values.'),
+  });
 
 export type CreatePersonInput = z.infer<typeof CreatePersonSchema>;
 
@@ -61,8 +64,11 @@ export const UpdatePersonSchema = z
       .describe('Job title / function of the person'),
     visible_to: VisibilitySchema.optional().describe('Visibility of the person'),
     marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe('Map of custom field names (or hash keys) to values.'),
+  });
 
 export type UpdatePersonInput = z.infer<typeof UpdatePersonSchema>;
 

@@ -236,4 +236,40 @@ describe('Persons Tools', () => {
       expect(result.content[0].text).toContain('VP of Sales');
     });
   });
+
+  describe('persons/create with custom_fields', () => {
+    it('resolves and merges custom fields', async () => {
+      const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Region', field_type: 'varchar' }];
+      mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+      mockClient.post.mockResolvedValue({ success: true, data: { id: 1, name: 'X' } });
+
+      const tools = getCreatePersonTool(mockClient);
+      await tools.handler({ name: 'X', custom_fields: { Region: 'EU' } });
+
+      expect(mockClient.post).toHaveBeenCalledWith(
+        '/persons',
+        expect.objectContaining({ name: 'X', [defs[0].key]: 'EU' })
+      );
+      const body = (mockClient.post.mock.calls[0] as any[])[1];
+      expect(body.custom_fields).toBeUndefined();
+    });
+  });
+
+  describe('persons/update with custom_fields', () => {
+    it('resolves and merges custom fields into PUT body', async () => {
+      const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Region', field_type: 'varchar' }];
+      mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+      mockClient.put.mockResolvedValue({ success: true, data: { id: 1 } });
+
+      const tools = getUpdatePersonTool(mockClient);
+      await tools.handler({ id: 1, custom_fields: { Region: 'EU' } });
+
+      expect(mockClient.put).toHaveBeenCalledWith(
+        '/persons/1',
+        expect.objectContaining({ [defs[0].key]: 'EU' })
+      );
+      const body = (mockClient.put.mock.calls[0] as any[])[1];
+      expect(body.custom_fields).toBeUndefined();
+    });
+  });
 });
