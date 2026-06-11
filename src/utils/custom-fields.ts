@@ -1,5 +1,5 @@
 import type { PipedriveClient } from '../pipedrive-client.js';
-import { CustomFieldResolutionError } from './custom-fields-errors.js';
+import { CustomFieldResolutionError, CustomFieldValidationError } from './custom-fields-errors.js';
 
 export type CustomFieldEntity = 'deal' | 'person' | 'organization' | 'product' | 'lead';
 
@@ -153,4 +153,178 @@ function levenshtein(a: string, b: string): number {
     for (let j = 0; j <= b.length; j++) prev[j] = curr[j];
   }
   return prev[b.length];
+}
+
+const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
+const TIME_RE = /^\d{2}:\d{2}(:\d{2})?$/;
+
+/**
+ * Converts an LLM-friendly value into the wire format Pipedrive expects, returning
+ * the partial body object to merge into the request payload. Always keyed by hash.
+ */
+export function transformValueToWireFormat(
+  def: FieldDefinition,
+  value: unknown
+): Record<string, unknown> {
+  const key = def.key;
+
+  switch (def.field_type) {
+    case 'enum':
+      return { [key]: optionLabelToId(def, value) };
+
+    case 'set': {
+      if (!Array.isArray(value)) {
+        throw new CustomFieldValidationError({
+          fieldName: def.name,
+          expectedType: 'set (array of labels)',
+          value,
+        });
+      }
+      const ids = value.map((label) => optionLabelToId(def, label));
+      return { [key]: ids.join(',') };
+    }
+
+    case 'date':
+      if (typeof value !== 'string' || !DATE_RE.test(value)) {
+        throw new CustomFieldValidationError({
+          fieldName: def.name,
+          expectedType: 'date (YYYY-MM-DD)',
+          value,
+        });
+      }
+      return { [key]: value };
+
+    case 'time':
+      if (typeof value !== 'string' || !TIME_RE.test(value)) {
+        throw new CustomFieldValidationError({
+          fieldName: def.name,
+          expectedType: 'time (HH:MM or HH:MM:SS)',
+          value,
+        });
+      }
+      return { [key]: value };
+
+    case 'daterange':
+      return expandRange(def, value, DATE_RE, 'date (YYYY-MM-DD)');
+
+    case 'timerange':
+      return expandRange(def, value, TIME_RE, 'time (HH:MM[:SS])');
+
+    case 'monetary':
+      if (typeof value === 'number') return { [key]: value };
+      if (
+        value &&
+        typeof value === 'object' &&
+        'value' in value &&
+        typeof (value as { value: unknown }).value === 'number'
+      ) {
+        const v = value as { value: number; currency?: string };
+        const out: Record<string, unknown> = { [key]: v.value };
+        if (v.currency) out[`${key}_currency`] = v.currency;
+        return out;
+      }
+      throw new CustomFieldValidationError({
+        fieldName: def.name,
+        expectedType: 'monetary (number or { value, currency })',
+        value,
+      });
+
+    case 'double':
+      if (typeof value !== 'number') {
+        throw new CustomFieldValidationError({
+          fieldName: def.name,
+          expectedType: 'number',
+          value,
+        });
+      }
+      return { [key]: value };
+
+    case 'address':
+      if (typeof value === 'string' || (value && typeof value === 'object')) {
+        return { [key]: value };
+      }
+      throw new CustomFieldValidationError({
+        fieldName: def.name,
+        expectedType: 'address (string or structured object)',
+        value,
+      });
+
+    case 'user':
+    case 'org':
+    case 'people':
+      if (typeof value !== 'number') {
+        throw new CustomFieldValidationError({
+          fieldName: def.name,
+          expectedType: `${def.field_type} (numeric id)`,
+          value,
+        });
+      }
+      return { [key]: value };
+
+    case 'varchar':
+    case 'varchar_auto':
+    case 'text':
+    case 'phone':
+      if (typeof value !== 'string') {
+        throw new CustomFieldValidationError({
+          fieldName: def.name,
+          expectedType: def.field_type,
+          value,
+        });
+      }
+      return { [key]: value };
+
+    case 'unknown':
+    default:
+      return { [key]: value };
+  }
+}
+
+function optionLabelToId(def: FieldDefinition, label: unknown): number {
+  if (typeof label !== 'string') {
+    throw new CustomFieldValidationError({
+      fieldName: def.name,
+      expectedType: 'option label (string)',
+      value: label,
+    });
+  }
+  const needle = label.trim().toLowerCase();
+  const match = def.options?.find((o) => o.label.trim().toLowerCase() === needle);
+  if (!match) {
+    throw new CustomFieldResolutionError({
+      kind: 'invalid_option',
+      fieldName: def.name,
+      detail: `Valid options: ${def.options?.map((o) => `"${o.label}"`).join(', ') ?? '(none)'}.`,
+    });
+  }
+  return match.id;
+}
+
+function expandRange(
+  def: FieldDefinition,
+  value: unknown,
+  pattern: RegExp,
+  expected: string
+): Record<string, unknown> {
+  if (
+    !value ||
+    typeof value !== 'object' ||
+    typeof (value as { start?: unknown }).start !== 'string' ||
+    typeof (value as { end?: unknown }).end !== 'string'
+  ) {
+    throw new CustomFieldValidationError({
+      fieldName: def.name,
+      expectedType: `${def.field_type} ({ start, end })`,
+      value,
+    });
+  }
+  const { start, end } = value as { start: string; end: string };
+  if (!pattern.test(start) || !pattern.test(end)) {
+    throw new CustomFieldValidationError({
+      fieldName: def.name,
+      expectedType: `${def.field_type} of ${expected}`,
+      value,
+    });
+  }
+  return { [def.key]: start, [`${def.key}_until`]: end };
 }

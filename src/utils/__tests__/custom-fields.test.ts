@@ -129,3 +129,80 @@ describe('findFieldDefinition', () => {
     }
   });
 });
+
+import { transformValueToWireFormat } from '../custom-fields.js';
+import { CustomFieldValidationError } from '../custom-fields-errors.js';
+
+describe('transformValueToWireFormat', () => {
+  const enumDef: FieldDefinition = {
+    id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
+    options: [{ id: 10, label: 'Tech' }, { id: 11, label: 'Finance' }],
+  };
+  const setDef: FieldDefinition = {
+    id: 2, key: 'b'.repeat(40), name: 'Tags', field_type: 'set',
+    options: [{ id: 20, label: 'A' }, { id: 21, label: 'B' }, { id: 22, label: 'C' }],
+  };
+  const dateDef: FieldDefinition = {
+    id: 3, key: 'c'.repeat(40), name: 'Closed At', field_type: 'date',
+  };
+  const monetaryDef: FieldDefinition = {
+    id: 4, key: 'd'.repeat(40), name: 'Budget', field_type: 'monetary',
+  };
+  const daterangeDef: FieldDefinition = {
+    id: 5, key: 'e'.repeat(40), name: 'Window', field_type: 'daterange',
+  };
+  const textDef: FieldDefinition = {
+    id: 6, key: 'f'.repeat(40), name: 'Notes', field_type: 'varchar',
+  };
+  const unknownDef: FieldDefinition = {
+    id: -1, key: 'a'.repeat(40), name: 'a'.repeat(40), field_type: 'unknown',
+  };
+
+  it('enum: label → option id', () => {
+    expect(transformValueToWireFormat(enumDef, 'Tech')).toEqual({ [enumDef.key]: 10 });
+  });
+
+  it('enum: unknown label throws invalid_option', () => {
+    expect(() => transformValueToWireFormat(enumDef, 'Mining')).toThrow(/option/i);
+  });
+
+  it('set: array of labels → comma-separated option ids', () => {
+    expect(transformValueToWireFormat(setDef, ['A', 'C'])).toEqual({ [setDef.key]: '20,22' });
+  });
+
+  it('set: non-array throws', () => {
+    expect(() => transformValueToWireFormat(setDef, 'A')).toThrow(CustomFieldValidationError);
+  });
+
+  it('date: validates YYYY-MM-DD', () => {
+    expect(transformValueToWireFormat(dateDef, '2026-06-11')).toEqual({ [dateDef.key]: '2026-06-11' });
+    expect(() => transformValueToWireFormat(dateDef, '06/11/2026')).toThrow(CustomFieldValidationError);
+  });
+
+  it('monetary: number is passed through', () => {
+    expect(transformValueToWireFormat(monetaryDef, 1000)).toEqual({ [monetaryDef.key]: 1000 });
+  });
+
+  it('monetary: { value, currency } passed through', () => {
+    expect(
+      transformValueToWireFormat(monetaryDef, { value: 1000, currency: 'EUR' })
+    ).toEqual({ [monetaryDef.key]: 1000, [`${monetaryDef.key}_currency`]: 'EUR' });
+  });
+
+  it('daterange: { start, end } expands to <hash> and <hash>_until', () => {
+    expect(
+      transformValueToWireFormat(daterangeDef, { start: '2026-01-01', end: '2026-12-31' })
+    ).toEqual({
+      [daterangeDef.key]: '2026-01-01',
+      [`${daterangeDef.key}_until`]: '2026-12-31',
+    });
+  });
+
+  it('varchar: string is passed through', () => {
+    expect(transformValueToWireFormat(textDef, 'hello')).toEqual({ [textDef.key]: 'hello' });
+  });
+
+  it('unknown field_type (hash passthrough): value is passed through untouched', () => {
+    expect(transformValueToWireFormat(unknownDef, 42)).toEqual({ [unknownDef.key]: 42 });
+  });
+});
