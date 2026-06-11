@@ -363,13 +363,12 @@ export async function buildResolvedCustomFields(
   if (!defs?.length) return {};
 
   const out: Record<string, unknown> = {};
-  const byKey = new Map(defs.map((d) => [d.key, d] as const));
 
   for (const def of defs) {
     if (!(def.key in data)) continue;
     const raw = data[def.key];
     if (raw === null || raw === undefined || raw === '') continue;
-    out[def.name] = humanizeValue(def, raw, byKey);
+    out[def.name] = humanizeValue(def, raw);
   }
 
   return out;
@@ -377,8 +376,7 @@ export async function buildResolvedCustomFields(
 
 function humanizeValue(
   def: FieldDefinition,
-  raw: unknown,
-  _byKey: Map<string, FieldDefinition>
+  raw: unknown
 ): unknown {
   if (def.field_type === 'enum' && typeof raw === 'number') {
     return def.options?.find((o) => o.id === raw)?.label ?? raw;
