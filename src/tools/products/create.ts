@@ -2,6 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { CreateProductSchema } from '../../schemas/product.js';
 import type { Product } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 /**
  * Tool for creating a new product
@@ -26,6 +27,11 @@ Optional fields:
 - prices: Array of price objects with format: [{"price": 100, "currency": "USD", "cost": 50}]
 - billing_frequency: One of: one-time, weekly, monthly, quarterly, semi-annually, annually
 - billing_frequency_cycles: Number of billing cycles
+
+Custom fields:
+- Pass display names: { "custom_fields": { "SKU Class": "A", "Category": "Electronics" } }
+- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }
+- For enum/set fields, pass option labels (not ids).
 
 Example prices array:
 {
@@ -113,6 +119,11 @@ Example prices array:
           type: 'number',
           description: 'Number of billing cycles',
         },
+        custom_fields: {
+          type: 'object',
+          description: 'Custom field values keyed by display name or hash.',
+          additionalProperties: true,
+        },
       },
       required: ['name'],
     } as const,
@@ -136,6 +147,9 @@ Example prices array:
       if (validated.billing_frequency_cycles !== undefined) {
         body.billing_frequency_cycles = validated.billing_frequency_cycles;
       }
+
+      const resolved = await resolveCustomFieldsForEntity(client, 'product', validated.custom_fields);
+      Object.assign(body, resolved);
 
       const response = await client.post<PipedriveResponse<Product>>('/products', body);
 

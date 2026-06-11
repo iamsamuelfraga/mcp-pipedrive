@@ -2,6 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { UpdateProductSchema } from '../../schemas/product.js';
 import type { Product } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 /**
  * Tool for updating an existing product
@@ -27,7 +28,12 @@ Updatable fields:
 - billing_frequency: Billing frequency
 - billing_frequency_cycles: Number of billing cycles
 
-Note: When updating prices, the entire prices array is replaced.`,
+Note: When updating prices, the entire prices array is replaced.
+
+Custom fields:
+- Pass display names: { "custom_fields": { "SKU Class": "A", "Category": "Electronics" } }
+- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }
+- For enum/set fields, pass option labels (not ids).`,
     inputSchema: {
       type: 'object',
       properties: {
@@ -111,6 +117,11 @@ Note: When updating prices, the entire prices array is replaced.`,
           type: 'number',
           description: 'Number of billing cycles',
         },
+        custom_fields: {
+          type: 'object',
+          description: 'Custom field values keyed by display name or hash.',
+          additionalProperties: true,
+        },
       },
       required: ['id'],
     } as const,
@@ -133,6 +144,9 @@ Note: When updating prices, the entire prices array is replaced.`,
       if (validated.billing_frequency_cycles !== undefined) {
         body.billing_frequency_cycles = validated.billing_frequency_cycles;
       }
+
+      const resolved = await resolveCustomFieldsForEntity(client, 'product', validated.custom_fields);
+      Object.assign(body, resolved);
 
       const response = await client.put<PipedriveResponse<Product>>(
         `/products/${validated.id}`,

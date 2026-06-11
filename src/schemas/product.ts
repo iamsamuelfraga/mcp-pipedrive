@@ -88,8 +88,11 @@ export const CreateProductSchema = z
       .optional()
       .nullable()
       .describe('Number of billing cycles'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe('Map of custom field names (or hash keys) to values.'),
+  });
 
 export type CreateProductInput = z.infer<typeof CreateProductSchema>;
 
@@ -131,8 +134,11 @@ export const UpdateProductSchema = z
       .optional()
       .nullable()
       .describe('Number of billing cycles'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe('Map of custom field names (or hash keys) to values.'),
+  });
 
 export type UpdateProductInput = z.infer<typeof UpdateProductSchema>;
 
