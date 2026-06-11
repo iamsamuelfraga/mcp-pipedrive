@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getFieldDefinitionsEndpoint, isHashKey, loadFieldDefinitions } from '../custom-fields.js';
+import { getFieldDefinitionsEndpoint, isHashKey, loadFieldDefinitions, findFieldDefinition } from '../custom-fields.js';
 import { createMockClient } from '../../__tests__/mocks/client.mock.js';
+import { CustomFieldResolutionError } from '../custom-fields-errors.js';
+import type { FieldDefinition } from '../custom-fields.js';
 
 describe('getFieldDefinitionsEndpoint', () => {
   it.each([
@@ -69,5 +71,61 @@ describe('loadFieldDefinitions', () => {
     await loadFieldDefinitions(mockClient, 'lead', { fetchIfMissing: true });
 
     expect(mockClient.get).toHaveBeenCalledWith('/dealFields', undefined, expect.any(Object));
+  });
+});
+
+describe('findFieldDefinition', () => {
+  const defs: FieldDefinition[] = [
+    { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum', options: [] },
+    { id: 2, key: 'b'.repeat(40), name: 'Industry', field_type: 'varchar' },
+    { id: 3, key: 'c'.repeat(40), name: 'Plan', field_type: 'enum', options: [] },
+    { id: 4, key: 'd'.repeat(40), name: 'plan', field_type: 'varchar' }, // duplicate (case-insensitive)
+  ];
+
+  it('finds by exact name', () => {
+    expect(findFieldDefinition(defs, 'Industria').key).toBe('a'.repeat(40));
+  });
+
+  it('finds by case-insensitive name', () => {
+    expect(findFieldDefinition(defs, 'industria').key).toBe('a'.repeat(40));
+  });
+
+  it('finds by trimmed name', () => {
+    expect(findFieldDefinition(defs, '  Industria  ').key).toBe('a'.repeat(40));
+  });
+
+  it('passes hash through (returns synthetic definition)', () => {
+    const hash = 'e'.repeat(40);
+    const result = findFieldDefinition(defs, hash);
+    expect(result.key).toBe(hash);
+    expect(result.field_type).toBe('unknown');
+  });
+
+  it('finds exact hash in definitions', () => {
+    const result = findFieldDefinition(defs, 'a'.repeat(40));
+    expect(result.id).toBe(1);
+    expect(result.field_type).toBe('enum');
+  });
+
+  it('throws not_found with top-3 suggestions', () => {
+    expect(() => findFieldDefinition(defs, 'Industri')).toThrow(CustomFieldResolutionError);
+    try {
+      findFieldDefinition(defs, 'Industri');
+    } catch (e) {
+      const err = e as CustomFieldResolutionError;
+      expect(err.kind).toBe('not_found');
+      expect(err.suggestions).toContain('Industria');
+    }
+  });
+
+  it('throws duplicate_name when two definitions share a case-insensitive name', () => {
+    try {
+      findFieldDefinition(defs, 'Plan');
+      throw new Error('expected duplicate_name to throw');
+    } catch (e) {
+      const err = e as CustomFieldResolutionError;
+      expect(err.kind).toBe('duplicate_name');
+      expect(err.candidates).toEqual(['c'.repeat(40), 'd'.repeat(40)]);
+    }
   });
 });
