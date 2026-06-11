@@ -107,12 +107,12 @@ describe('CreateDealSchema', () => {
     expect(() => CreateDealSchema.parse(invalid)).toThrow('Date must be in YYYY-MM-DD format');
   });
 
-  it('should reject extra fields in strict mode', () => {
-    const invalid = {
+  it('should tolerate unknown top-level keys (non-strict)', () => {
+    const input = {
       title: 'Deal',
-      extra_field: 'not allowed',
+      extra_field: 'tolerated',
     };
-    expect(() => CreateDealSchema.parse(invalid)).toThrow();
+    expect(() => CreateDealSchema.parse(input)).not.toThrow();
   });
 
   it('should reject lost_reason exceeding 255 characters', () => {
@@ -443,5 +443,31 @@ describe('MarkDealAsLostSchema', () => {
     expect(() => MarkDealAsLostSchema.parse(invalid)).toThrow(
       'Lost reason cannot exceed 255 characters'
     );
+  });
+});
+
+describe('CreateDealSchema custom_fields', () => {
+  it('accepts a custom_fields object', () => {
+    const result = CreateDealSchema.parse({
+      title: 'X',
+      custom_fields: { Industria: 'Tech', Budget: 5000 },
+    });
+    expect(result.custom_fields).toEqual({ Industria: 'Tech', Budget: 5000 });
+  });
+
+  it('no longer rejects unknown keys (passthrough)', () => {
+    // Hashes passed at top level are tolerated.
+    const result = CreateDealSchema.parse({
+      title: 'X',
+      ['a'.repeat(40)]: 'raw',
+    } as any);
+    expect(result.title).toBe('X');
+  });
+});
+
+describe('UpdateDealSchema custom_fields', () => {
+  it('accepts a custom_fields object', () => {
+    const result = UpdateDealSchema.parse({ id: 1, custom_fields: { Plan: 'Gold' } });
+    expect(result.custom_fields).toEqual({ Plan: 'Gold' });
   });
 });

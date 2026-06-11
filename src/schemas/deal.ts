@@ -57,8 +57,11 @@ export const CreateDealSchema = z
       .describe('Reason why the deal was lost'),
     visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
     add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
+  });
 
 export type CreateDealInput = z.infer<typeof CreateDealSchema>;
 
@@ -106,8 +109,11 @@ export const UpdateDealSchema = z
       .optional()
       .describe('Reason why the deal was lost'),
     visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
+  });
 
 export type UpdateDealInput = z.infer<typeof UpdateDealSchema>;
 
