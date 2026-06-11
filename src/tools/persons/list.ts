@@ -3,6 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { ListPersonsSchema } from '../../schemas/person.js';
 import type { Person } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 /**
  * Tool for listing persons with pagination
@@ -73,11 +74,13 @@ Returns paginated results. Use start/limit for manual pagination.`,
         { enabled: true, ttl: 60000 } // Cache for 1 minute
       );
 
+      const enriched = await enrichEntityWithCustomFields(client, 'person', response);
+
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(response, null, 2),
+            text: JSON.stringify(enriched, null, 2),
           },
         ],
       };
@@ -150,19 +153,19 @@ Supports the same filters as persons_list:
       const paginator = client.createPaginator<Person>('/persons', queryParams);
       const allPersons = await paginator.fetchAll(100);
 
+      const rawResponse = {
+        success: true,
+        data: allPersons,
+        count: allPersons.length,
+      };
+
+      const enriched = await enrichEntityWithCustomFields(client, 'person', rawResponse);
+
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(
-              {
-                success: true,
-                data: allPersons,
-                count: allPersons.length,
-              },
-              null,
-              2
-            ),
+            text: JSON.stringify(enriched, null, 2),
           },
         ],
       };

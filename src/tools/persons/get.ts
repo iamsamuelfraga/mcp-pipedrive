@@ -2,6 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { GetPersonSchema } from '../../schemas/person.js';
 import type { Person } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 /**
  * Tool for getting a single person by ID
@@ -37,11 +38,13 @@ Returns all person data including:
         { enabled: true, ttl: 60000 } // Cache for 1 minute
       );
 
+      const enriched = await enrichEntityWithCustomFields(client, 'person', response);
+
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(response, null, 2),
+            text: JSON.stringify(enriched, null, 2),
           },
         ],
       };

@@ -2,6 +2,9 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createMockClient } from './mocks/client.mock.js';
 import { getCreatePersonTool } from '../persons/create.js';
 import { getUpdatePersonTool } from '../persons/update.js';
+import { loadFieldDefinitions } from '../../utils/custom-fields.js';
+import { getGetPersonTool } from '../persons/get.js';
+import { getListPersonsTool } from '../persons/list.js';
 
 describe('Persons Tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -271,5 +274,60 @@ describe('Persons Tools', () => {
       const body = (mockClient.put.mock.calls[0] as any[])[1];
       expect(body.custom_fields).toBeUndefined();
     });
+  });
+});
+
+describe('persons/get with enrichment', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('adds custom_fields_resolved when cache is warm', async () => {
+    const hashKey = 'a'.repeat(40);
+    const defs = [{ id: 1, key: hashKey, name: 'Region', field_type: 'varchar' }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/personFields') return { success: true, data: defs };
+      return { success: true, data: { id: 1, name: 'X', [hashKey]: 'EU' } };
+    });
+
+    await loadFieldDefinitions(mockClient as any, 'person', { fetchIfMissing: true });
+
+    const tool = getGetPersonTool(mockClient as any);
+    const result = await tool.handler({ id: 1 });
+
+    // persons/get wraps response in { content: [{ text: JSON }] }
+    const parsed = JSON.parse((result as any).content[0].text);
+    expect((parsed.data as any).custom_fields_resolved).toEqual({ Region: 'EU' });
+  });
+});
+
+describe('persons/list with enrichment', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('adds custom_fields_resolved to each item when cache is warm', async () => {
+    const hashKey = 'b'.repeat(40);
+    const defs = [{ id: 2, key: hashKey, name: 'Tier', field_type: 'varchar' }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/personFields') return { success: true, data: defs };
+      return { success: true, data: [{ id: 1, name: 'Alice', [hashKey]: 'Gold' }] };
+    });
+
+    await loadFieldDefinitions(mockClient as any, 'person', { fetchIfMissing: true });
+
+    const tool = getListPersonsTool(mockClient as any);
+    const result = await tool.handler({});
+
+    const parsed = JSON.parse((result as any).content[0].text);
+    expect((parsed.data[0] as any).custom_fields_resolved).toEqual({ Tier: 'Gold' });
   });
 });
