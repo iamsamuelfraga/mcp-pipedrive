@@ -12,11 +12,21 @@ export interface ResolutionErrorParams {
   detail?: string;
 }
 
+function safeStringify(v: unknown): string {
+  try {
+    const s = JSON.stringify(v);
+    return s ?? String(v);
+  } catch {
+    return String(v);
+  }
+}
+
 export class CustomFieldResolutionError extends Error {
   readonly kind: ResolutionErrorKind;
   readonly fieldName: string;
   readonly suggestions?: string[];
   readonly candidates?: string[];
+  readonly detail?: string;
 
   constructor(params: ResolutionErrorParams) {
     const parts = [`Custom field "${params.fieldName}"`];
@@ -44,10 +54,14 @@ export class CustomFieldResolutionError extends Error {
     }
     super(parts.join(' '));
     this.name = 'CustomFieldResolutionError';
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
     this.kind = params.kind;
     this.fieldName = params.fieldName;
     this.suggestions = params.suggestions;
     this.candidates = params.candidates;
+    this.detail = params.detail;
   }
 }
 
@@ -65,12 +79,15 @@ export class CustomFieldValidationError extends Error {
 
   constructor(params: ValidationErrorParams) {
     const valueStr =
-      typeof params.value === 'string' ? params.value : JSON.stringify(params.value);
+      typeof params.value === 'string' ? params.value : safeStringify(params.value);
     const detail = params.detail ? ` ${params.detail}` : '';
     super(
       `Custom field "${params.fieldName}" expects type ${params.expectedType}, got ${valueStr}.${detail}`
     );
     this.name = 'CustomFieldValidationError';
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
     this.fieldName = params.fieldName;
     this.expectedType = params.expectedType;
     this.value = params.value;
