@@ -54,7 +54,10 @@ Common use cases:
       },
       handler: async (args: unknown) => {
         const validated = SearchDealsSchema.parse(args);
-        const response = await client.get('/deals/search', validated, { enabled: true, ttl: 300000 });
+        const response = await client.get('/deals/search', validated, {
+          enabled: true,
+          ttl: 300000,
+        });
         return enrichEntityWithCustomFields(client, 'deal', response as { data?: unknown });
       },
     },

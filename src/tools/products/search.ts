@@ -73,7 +73,11 @@ Use cases:
         { enabled: true, ttl: 60000 } // Cache for 1 minute
       );
 
-      const response = await enrichEntityWithCustomFields(client, 'product', rawResponse as { data?: unknown });
+      const response = await enrichEntityWithCustomFields(
+        client,
+        'product',
+        rawResponse as { data?: unknown }
+      );
 
       return {
         content: [

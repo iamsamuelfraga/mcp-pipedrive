@@ -80,7 +80,11 @@ The search is case-insensitive and supports partial matches.`,
         { enabled: true, ttl: 30000 } // Cache for 30 seconds
       );
 
-      const response = await enrichEntityWithCustomFields(client, 'person', rawResponse as { data?: unknown });
+      const response = await enrichEntityWithCustomFields(
+        client,
+        'person',
+        rawResponse as { data?: unknown }
+      );
 
       return {
         content: [

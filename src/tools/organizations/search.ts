@@ -54,7 +54,11 @@ export function createSearchOrganizationsTool(client: PipedriveClient) {
         { enabled: true, ttl: 30000 }
       );
 
-      const response = await enrichEntityWithCustomFields(client, 'organization', rawResponse as { data?: unknown });
+      const response = await enrichEntityWithCustomFields(
+        client,
+        'organization',
+        rawResponse as { data?: unknown }
+      );
 
       return {
         content: [
