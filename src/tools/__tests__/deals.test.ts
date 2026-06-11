@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createMockClient } from './mocks/client.mock.js';
 import { getCreateDealTool } from '../deals/create.js';
 import { getGetDealTool } from '../deals/get.js';
+import { getUpdateDealTools } from '../deals/update.js';
 
 describe('Deals Tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -154,5 +155,65 @@ describe('Deals Tools', () => {
       await expect(tool.handler({ id: -1 })).rejects.toThrow();
       expect(mockClient.get).not.toHaveBeenCalled();
     });
+  });
+});
+
+describe('deals/create with custom_fields', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('resolves custom_fields by name and merges hash-keyed values into the request', async () => {
+    const defs = [
+      { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
+        options: [{ id: 10, label: 'Tech' }] },
+    ];
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    mockClient.post.mockResolvedValue({ success: true, data: { id: 1 } });
+
+    const tools = getCreateDealTool(mockClient);
+    await tools['deals_create'].handler({
+      title: 'X',
+      custom_fields: { Industria: 'Tech' },
+    });
+
+    expect(mockClient.post).toHaveBeenCalledWith(
+      '/deals',
+      expect.objectContaining({ title: 'X', [defs[0].key]: 10, status: 'open' })
+    );
+    // custom_fields itself must not be sent to Pipedrive
+    const body = (mockClient.post.mock.calls[0] as any[])[1];
+    expect(body.custom_fields).toBeUndefined();
+  });
+});
+
+describe('deals/update with custom_fields', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('merges resolved custom fields into the PUT body', async () => {
+    const defs = [
+      { id: 1, key: 'a'.repeat(40), name: 'Budget', field_type: 'monetary' },
+    ];
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    mockClient.put.mockResolvedValue({ success: true, data: { id: 1 } });
+
+    const tools = getUpdateDealTools(mockClient);
+    await tools['deals_update'].handler({
+      id: 1,
+      custom_fields: { Budget: 9999 },
+    });
+
+    expect(mockClient.put).toHaveBeenCalledWith(
+      '/deals/1',
+      expect.objectContaining({ [defs[0].key]: 9999 })
+    );
+    const body = (mockClient.put.mock.calls[0] as any[])[1];
+    expect(body.custom_fields).toBeUndefined();
   });
 });

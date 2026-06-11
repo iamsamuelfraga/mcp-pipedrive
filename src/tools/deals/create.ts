@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { CreateDealSchema } from '../../schemas/deal.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 export function getCreateDealTool(client: PipedriveClient) {
   return {
@@ -7,6 +8,11 @@ export function getCreateDealTool(client: PipedriveClient) {
       description: `Create a new deal in Pipedrive.
 
 Creates a new deal with the specified information. Only title is required.
+
+Custom fields:
+- Pass display names: { "custom_fields": { "Industria": "Tech", "Budget": 5000 } }
+- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }
+- For enum/set fields, pass option labels (not ids).
 
 Workflow tips:
 - Title is the only required field
@@ -56,12 +62,18 @@ Common use cases:
               "Visibility: 1=Owner, 3=Owner's group, 5=Owner's group and sub-groups, 7=Entire company",
           },
           add_time: { type: 'string', description: 'Creation time in ISO 8601 format' },
+          custom_fields: {
+            type: 'object',
+            description: 'Custom field values keyed by display name or hash. See description for format.',
+            additionalProperties: true,
+          },
         },
         required: ['title'],
       },
       handler: async (args: unknown) => {
-        const validated = CreateDealSchema.parse(args);
-        return client.post('/deals', validated);
+        const { custom_fields, ...validated } = CreateDealSchema.parse(args);
+        const resolved = await resolveCustomFieldsForEntity(client, 'deal', custom_fields);
+        return client.post('/deals', { ...validated, ...resolved });
       },
     },
   };
