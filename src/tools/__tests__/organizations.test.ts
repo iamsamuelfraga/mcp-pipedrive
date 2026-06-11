@@ -5,6 +5,7 @@ import { createUpdateOrganizationTool } from '../organizations/update.js';
 import { loadFieldDefinitions } from '../../utils/custom-fields.js';
 import { createGetOrganizationTool } from '../organizations/get.js';
 import { createListOrganizationsTool } from '../organizations/list.js';
+import { createSearchOrganizationsTool } from '../organizations/search.js';
 
 describe('organizations/create with custom_fields', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -105,5 +106,35 @@ describe('organizations/list with enrichment', () => {
 
     const parsed = JSON.parse((result as any).content[0].text);
     expect((parsed.data[0] as any).custom_fields_resolved).toEqual({ Tier: 'Gold' });
+  });
+});
+
+describe('organizations/search with enrichment', () => {
+  it('adds custom_fields_resolved to each item in search results', async () => {
+    const mockClient = createMockClient();
+    const hashKey = 'a'.repeat(40);
+    const defs = [{ id: 1, key: hashKey, name: 'Tier', field_type: 'varchar' }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/organizationFields') return { success: true, data: defs };
+      return {
+        success: true,
+        data: {
+          items: [
+            { result_score: 1.0, item: { id: 1, name: 'ACME', [hashKey]: 'Gold' } },
+          ],
+        },
+      };
+    });
+
+    await loadFieldDefinitions(mockClient as any, 'organization', { fetchIfMissing: true });
+
+    const tool = createSearchOrganizationsTool(mockClient as any);
+    const result = await tool.handler({ term: 'ACME' });
+
+    const data = (result as any).content
+      ? JSON.parse((result as any).content[0].text).data
+      : (result as any).data;
+    expect(data.items[0].item.custom_fields_resolved).toEqual({ Tier: 'Gold' });
   });
 });

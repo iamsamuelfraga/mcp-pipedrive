@@ -300,6 +300,7 @@ describe('leads/update with custom_fields', () => {
 
 import { loadFieldDefinitions } from '../../utils/custom-fields.js';
 import { getGetLeadTool } from '../leads/get.js';
+import { getSearchLeadsTool } from '../leads/search.js';
 
 describe('leads/get with enrichment', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -334,5 +335,34 @@ describe('leads/get with enrichment', () => {
     } else {
       expect((result.data as any).custom_fields_resolved).toEqual({ Source: 'Web' });
     }
+  });
+});
+
+describe('leads/search with enrichment', () => {
+  it('adds custom_fields_resolved to each item in search results', async () => {
+    const mockClient = createMockClient();
+    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Source', field_type: 'varchar' }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/dealFields') return { success: true, data: defs };
+      return {
+        success: true,
+        data: {
+          items: [
+            { result_score: 1.0, item: { id: 1, title: 'Hot Lead', ['a'.repeat(40)]: 'Web' } },
+          ],
+        },
+      };
+    });
+
+    await loadFieldDefinitions(mockClient, 'lead', { fetchIfMissing: true });
+
+    const tools = getSearchLeadsTool(mockClient);
+    const result = await tools['leads_search'].handler({ term: 'Hot' });
+
+    const data = (result as any).content
+      ? JSON.parse((result as any).content[0].text).data
+      : (result as any).data;
+    expect(data.items[0].item.custom_fields_resolved).toEqual({ Source: 'Web' });
   });
 });

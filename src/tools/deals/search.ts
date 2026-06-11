@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { SearchDealsSchema } from '../../schemas/deal.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 export function getSearchDealsTool(client: PipedriveClient) {
   return {
@@ -53,7 +54,8 @@ Common use cases:
       },
       handler: async (args: unknown) => {
         const validated = SearchDealsSchema.parse(args);
-        return client.get('/deals/search', validated, { enabled: true, ttl: 300000 });
+        const response = await client.get('/deals/search', validated, { enabled: true, ttl: 300000 });
+        return enrichEntityWithCustomFields(client, 'deal', response as { data?: unknown });
       },
     },
   };

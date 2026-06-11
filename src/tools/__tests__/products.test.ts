@@ -5,6 +5,7 @@ import { getUpdateProductTool } from '../products/update.js';
 import { loadFieldDefinitions } from '../../utils/custom-fields.js';
 import { getGetProductTool } from '../products/get.js';
 import { getListProductsTool } from '../products/list.js';
+import { getSearchProductsTool } from '../products/search.js';
 
 describe('products/create', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -240,5 +241,35 @@ describe('products/list with enrichment', () => {
 
     const parsed = JSON.parse((result as any).content[0].text);
     expect((parsed.data[0] as any).custom_fields_resolved).toEqual({ 'SKU Class': 'A' });
+  });
+});
+
+describe('products/search with enrichment', () => {
+  it('adds custom_fields_resolved to each item in search results', async () => {
+    const mockClient = createMockClient();
+    const hashKey = 'a'.repeat(40);
+    const defs = [{ id: 1, key: hashKey, name: 'SKU Class', field_type: 'varchar' }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/productFields') return { success: true, data: defs };
+      return {
+        success: true,
+        data: {
+          items: [
+            { result_score: 1.0, item: { id: 1, name: 'Widget', [hashKey]: 'A' } },
+          ],
+        },
+      };
+    });
+
+    await loadFieldDefinitions(mockClient as any, 'product', { fetchIfMissing: true });
+
+    const tool = getSearchProductsTool(mockClient as any);
+    const result = await tool.handler({ term: 'Widget' });
+
+    const data = (result as any).content
+      ? JSON.parse((result as any).content[0].text).data
+      : (result as any).data;
+    expect(data.items[0].item.custom_fields_resolved).toEqual({ 'SKU Class': 'A' });
   });
 });

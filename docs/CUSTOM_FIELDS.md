@@ -571,7 +571,7 @@ Useful when you have two fields with the same display name (the name path errors
 
 Enrichment requires the field definitions cache to be warm (it is warmed automatically by any prior write, or by calling e.g. `fields_list_deal_fields`).
 
-Note: search endpoints (`*_search`) do not enrich yet because of their nested response shape — coming in a future release.
+`*_search` responses are also enriched: the inner `item` object inside each `data.items[]` entry receives `custom_fields_resolved` next to its raw fields.
 
 ## Managing Custom Field Definitions
 

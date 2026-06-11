@@ -413,6 +413,33 @@ export async function enrichEntityWithCustomFields<R extends { data?: unknown }>
   }
 
   if (typeof data === 'object') {
+    // Detect search shape: { items: [{ result_score, item }] }
+    const maybeItems = (data as { items?: unknown }).items;
+    if (Array.isArray(maybeItems)) {
+      const enrichedItems = await Promise.all(
+        maybeItems.map(async (entry) => {
+          if (
+            !entry ||
+            typeof entry !== 'object' ||
+            !('item' in entry) ||
+            !entry.item ||
+            typeof (entry as { item: unknown }).item !== 'object'
+          ) {
+            return entry;
+          }
+          const inner = (entry as { item: Record<string, unknown> }).item;
+          const resolved = await buildResolvedCustomFields(client, entity, inner);
+          if (!Object.keys(resolved).length) return entry;
+          return {
+            ...(entry as Record<string, unknown>),
+            item: { ...inner, custom_fields_resolved: resolved },
+          };
+        })
+      );
+      return { ...response, data: { ...(data as Record<string, unknown>), items: enrichedItems } };
+    }
+
+    // Single-entity shape
     const resolved = await buildResolvedCustomFields(
       client,
       entity,

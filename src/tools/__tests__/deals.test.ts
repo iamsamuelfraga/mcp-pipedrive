@@ -5,6 +5,7 @@ import { getGetDealTool } from '../deals/get.js';
 import { getUpdateDealTools } from '../deals/update.js';
 import { loadFieldDefinitions } from '../../utils/custom-fields.js';
 import { getListDealsTools } from '../deals/list.js';
+import { getSearchDealsTool } from '../deals/search.js';
 
 describe('Deals Tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -266,5 +267,33 @@ describe('deals/list with enrichment', () => {
 
     expect((result.data as any[])[0].custom_fields_resolved).toEqual({ Industria: 'Tech' });
     expect((result.data as any[])[1].custom_fields_resolved).toEqual({ Industria: 'Tech' });
+  });
+});
+
+describe('deals/search with enrichment', () => {
+  it('adds custom_fields_resolved to each item in search results', async () => {
+    const mockClient = createMockClient();
+    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'varchar' }];
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/dealFields') return { success: true, data: defs };
+      return {
+        success: true,
+        data: {
+          items: [
+            { result_score: 1.0, item: { id: 1, title: 'X', ['a'.repeat(40)]: 'Tech' } },
+          ],
+        },
+      };
+    });
+
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const tools = getSearchDealsTool(mockClient);
+    const result = await tools['deals_search'].handler({ term: 'Xa' });
+
+    const data = (result as any).content
+      ? JSON.parse((result as any).content[0].text).data
+      : (result as any).data;
+    expect(data.items[0].item.custom_fields_resolved).toEqual({ Industria: 'Tech' });
   });
 });

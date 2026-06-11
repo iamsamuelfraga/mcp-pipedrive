@@ -369,3 +369,48 @@ describe('enrichEntityWithCustomFields', () => {
     expect(enriched).toBe(response);
   });
 });
+
+describe('enrichEntityWithCustomFields — search shape', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+  const defs: FieldDefinition[] = [
+    { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }] },
+  ];
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('enriches each item in a search response (data.items[].item shape)', async () => {
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const response = {
+      success: true,
+      data: {
+        items: [
+          { result_score: 1.0, item: { id: 1, title: 'A', ['a'.repeat(40)]: 10 } },
+          { result_score: 0.8, item: { id: 2, title: 'B', ['a'.repeat(40)]: 10 } },
+        ],
+      },
+    };
+
+    const enriched = await enrichEntityWithCustomFields(mockClient, 'deal', response);
+    const items = (enriched.data as any).items;
+    expect(items[0].item.custom_fields_resolved).toEqual({ Industria: 'Tech' });
+    expect(items[1].item.custom_fields_resolved).toEqual({ Industria: 'Tech' });
+    // Preserve result_score and original payload
+    expect(items[0].result_score).toBe(1.0);
+    expect(items[0].item.title).toBe('A');
+  });
+
+  it('returns response unchanged when items is empty', async () => {
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const response = { success: true, data: { items: [] } };
+    const enriched = await enrichEntityWithCustomFields(mockClient, 'deal', response);
+    expect((enriched.data as any).items).toEqual([]);
+  });
+});

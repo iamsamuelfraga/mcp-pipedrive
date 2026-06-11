@@ -5,6 +5,7 @@ import { getUpdatePersonTool } from '../persons/update.js';
 import { loadFieldDefinitions } from '../../utils/custom-fields.js';
 import { getGetPersonTool } from '../persons/get.js';
 import { getListPersonsTool } from '../persons/list.js';
+import { getSearchPersonsTool } from '../persons/search.js';
 
 describe('Persons Tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -329,5 +330,33 @@ describe('persons/list with enrichment', () => {
 
     const parsed = JSON.parse((result as any).content[0].text);
     expect((parsed.data[0] as any).custom_fields_resolved).toEqual({ Tier: 'Gold' });
+  });
+});
+
+describe('persons/search with enrichment', () => {
+  it('adds custom_fields_resolved to each item in search results', async () => {
+    const mockClient = createMockClient();
+    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Region', field_type: 'varchar' }];
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/personFields') return { success: true, data: defs };
+      return {
+        success: true,
+        data: {
+          items: [
+            { result_score: 1.0, item: { id: 1, name: 'Alice', ['a'.repeat(40)]: 'EU' } },
+          ],
+        },
+      };
+    });
+
+    await loadFieldDefinitions(mockClient as any, 'person', { fetchIfMissing: true });
+
+    const tool = getSearchPersonsTool(mockClient as any);
+    const result = await tool.handler({ term: 'Alice' });
+
+    const data = (result as any).content
+      ? JSON.parse((result as any).content[0].text).data
+      : (result as any).data;
+    expect(data.items[0].item.custom_fields_resolved).toEqual({ Region: 'EU' });
   });
 });

@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { Organization } from '../../types/pipedrive-api.js';
 import type { PaginatedResponse } from '../../utils/pagination.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 const SearchOrganizationsArgsSchema = z.object({
   term: z.string().describe('Search term'),
@@ -47,11 +48,13 @@ export function createSearchOrganizationsTool(client: PipedriveClient) {
       if (parsed.fields !== undefined) params.fields = parsed.fields;
       if (parsed.exact_match !== undefined) params.exact_match = parsed.exact_match;
 
-      const response = await client.get<PaginatedResponse<Organization>>(
+      const rawResponse = await client.get<PaginatedResponse<Organization>>(
         '/organizations/search',
         params,
         { enabled: true, ttl: 30000 }
       );
+
+      const response = await enrichEntityWithCustomFields(client, 'organization', rawResponse as { data?: unknown });
 
       return {
         content: [

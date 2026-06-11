@@ -1,6 +1,7 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { SearchPersonsSchema } from '../../schemas/person.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 /**
  * Tool for searching persons
@@ -73,11 +74,13 @@ The search is case-insensitive and supports partial matches.`,
       if (validated.start !== undefined) queryParams.start = validated.start;
       if (validated.limit) queryParams.limit = validated.limit;
 
-      const response = await client.get<PipedriveResponse<unknown[]>>(
+      const rawResponse = await client.get<PipedriveResponse<unknown[]>>(
         '/persons/search',
         queryParams,
         { enabled: true, ttl: 30000 } // Cache for 30 seconds
       );
+
+      const response = await enrichEntityWithCustomFields(client, 'person', rawResponse as { data?: unknown });
 
       return {
         content: [

@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { SearchLeadsSchema } from '../../schemas/lead.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 export function getSearchLeadsTool(client: PipedriveClient) {
   return {
@@ -65,11 +66,12 @@ Common use cases:
       handler: async (args: unknown) => {
         const validated = SearchLeadsSchema.parse(args);
 
-        return client.get(
+        const response = await client.get(
           '/leads/search',
           validated,
           { enabled: true, ttl: 180000 } // Cache for 3 minutes
         );
+        return enrichEntityWithCustomFields(client, 'lead', response as { data?: unknown });
       },
     },
   };

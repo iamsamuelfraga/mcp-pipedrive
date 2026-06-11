@@ -1,6 +1,7 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { SearchProductsSchema } from '../../schemas/product.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 /**
  * Tool for searching products
@@ -66,11 +67,13 @@ Use cases:
       if (validated.include_fields) queryParams.include_fields = validated.include_fields;
       if (validated.limit) queryParams.limit = validated.limit;
 
-      const response = await client.get<PipedriveResponse<unknown>>(
+      const rawResponse = await client.get<PipedriveResponse<unknown>>(
         '/products/search',
         queryParams,
         { enabled: true, ttl: 60000 } // Cache for 1 minute
       );
+
+      const response = await enrichEntityWithCustomFields(client, 'product', rawResponse as { data?: unknown });
 
       return {
         content: [
