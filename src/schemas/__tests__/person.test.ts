@@ -112,12 +112,12 @@ describe('CreatePersonSchema', () => {
     );
   });
 
-  it('should reject extra fields in strict mode', () => {
-    const invalid = {
+  it('should tolerate unknown top-level keys (non-strict, custom_fields preferred)', () => {
+    const input = {
       name: 'John Doe',
-      extra_field: 'not allowed',
+      extra_field: 'tolerated, stripped by zod default behavior',
     };
-    expect(() => CreatePersonSchema.parse(invalid)).toThrow();
+    expect(() => CreatePersonSchema.parse(input)).not.toThrow();
   });
 });
 
