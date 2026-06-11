@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import type { Organization } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 const UpdateOrganizationArgsSchema = z.object({
   id: z.coerce.number().describe('Organization ID'),
@@ -25,7 +26,7 @@ const UpdateOrganizationArgsSchema = z.object({
 export function createUpdateOrganizationTool(client: PipedriveClient) {
   return {
     name: 'organizations_update',
-    description: 'Update an existing organization. Only provided fields will be updated.',
+    description: 'Update an existing organization. Only provided fields will be updated.\n\nCustom fields:\n- Pass display names: { "custom_fields": { "Industry": "Tech", "Tier": "Gold" } }\n- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }\n- For enum/set fields, pass option labels (not ids).',
     inputSchema: {
       type: 'object',
       properties: {
@@ -44,7 +45,7 @@ export function createUpdateOrganizationTool(client: PipedriveClient) {
         address_locality: { type: 'string', description: 'City' },
         address_country: { type: 'string', description: 'Country' },
         address_postal_code: { type: 'string', description: 'Postal code' },
-        custom_fields: { type: 'object', description: 'Custom fields as key-value pairs' },
+        custom_fields: { type: 'object', description: 'Custom field values keyed by display name or hash. e.g. { "Industry": "Tech" }', additionalProperties: true },
       },
       required: ['id'],
     },
@@ -65,10 +66,9 @@ export function createUpdateOrganizationTool(client: PipedriveClient) {
       if (parsed.address_postal_code !== undefined)
         body.address_postal_code = parsed.address_postal_code;
 
-      // Merge custom fields
-      if (parsed.custom_fields) {
-        Object.assign(body, parsed.custom_fields);
-      }
+      // Resolve custom field names to hash keys and merge into body.
+      const resolved = await resolveCustomFieldsForEntity(client, 'organization', parsed.custom_fields);
+      Object.assign(body, resolved);
 
       const response = await client.put<PipedriveResponse<Organization>>(
         `/organizations/${parsed.id}`,
