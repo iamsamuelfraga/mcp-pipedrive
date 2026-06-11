@@ -2,6 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { GetProductSchema } from '../../schemas/product.js';
 import type { Product } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 /**
  * Tool for getting a single product
@@ -41,11 +42,13 @@ Use this when you need full details about a product, such as:
         { enabled: true, ttl: 600000 } // Cache for 10 minutes
       );
 
+      const enriched = await enrichEntityWithCustomFields(client, 'product', response);
+
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(response, null, 2),
+            text: JSON.stringify(enriched, null, 2),
           },
         ],
       };

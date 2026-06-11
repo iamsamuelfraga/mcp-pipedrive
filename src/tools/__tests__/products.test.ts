@@ -2,6 +2,9 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { createMockClient } from './mocks/client.mock.js';
 import { getCreateProductTool } from '../products/create.js';
 import { getUpdateProductTool } from '../products/update.js';
+import { loadFieldDefinitions } from '../../utils/custom-fields.js';
+import { getGetProductTool } from '../products/get.js';
+import { getListProductsTool } from '../products/list.js';
 
 describe('products/create', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -183,5 +186,59 @@ describe('products/update with custom_fields', () => {
     );
     const body = (mockClient.put.mock.calls[0] as any[])[1];
     expect(body.custom_fields).toBeUndefined();
+  });
+});
+
+describe('products/get with enrichment', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('adds custom_fields_resolved when cache is warm', async () => {
+    const hashKey = 'a'.repeat(40);
+    const defs = [{ id: 1, key: hashKey, name: 'SKU Class', field_type: 'varchar' }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/productFields') return { success: true, data: defs };
+      return { success: true, data: { id: 1, name: 'Widget', [hashKey]: 'A' } };
+    });
+
+    await loadFieldDefinitions(mockClient as any, 'product', { fetchIfMissing: true });
+
+    const tool = getGetProductTool(mockClient as any);
+    const result = await tool.handler({ id: 1 });
+
+    const parsed = JSON.parse((result as any).content[0].text);
+    expect((parsed.data as any).custom_fields_resolved).toEqual({ 'SKU Class': 'A' });
+  });
+});
+
+describe('products/list with enrichment', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('adds custom_fields_resolved to each item when cache is warm', async () => {
+    const hashKey = 'b'.repeat(40);
+    const defs = [{ id: 2, key: hashKey, name: 'SKU Class', field_type: 'varchar' }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/productFields') return { success: true, data: defs };
+      return { success: true, data: [{ id: 1, name: 'Widget', [hashKey]: 'A' }] };
+    });
+
+    await loadFieldDefinitions(mockClient as any, 'product', { fetchIfMissing: true });
+
+    const tool = getListProductsTool(mockClient as any);
+    const result = await tool.handler({});
+
+    const parsed = JSON.parse((result as any).content[0].text);
+    expect((parsed.data[0] as any).custom_fields_resolved).toEqual({ 'SKU Class': 'A' });
   });
 });

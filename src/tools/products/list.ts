@@ -3,6 +3,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { ListProductsSchema } from '../../schemas/product.js';
 import type { Product } from '../../types/pipedrive-api.js';
 import type { PipedriveResponse } from '../../types/common.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 /**
  * Tool for listing products with pagination
@@ -77,11 +78,13 @@ Returns paginated results. Use start/limit for manual pagination.`,
         { enabled: true, ttl: 300000 } // Cache for 5 minutes
       );
 
+      const enriched = await enrichEntityWithCustomFields(client, 'product', response);
+
       return {
         content: [
           {
             type: 'text',
-            text: JSON.stringify(response, null, 2),
+            text: JSON.stringify(enriched, null, 2),
           },
         ],
       };
