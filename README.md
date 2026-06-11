@@ -244,6 +244,24 @@ Claude will:
 3. Calculate metrics (won/lost, approaching close, stale deals)
 4. Generate actionable recommendations
 
+### Custom fields
+
+Pass custom field values by display name when creating or updating deals, persons, organizations, products, or leads:
+
+```json
+{
+  "title": "ACME Enterprise Deal",
+  "value": 50000,
+  "currency": "USD",
+  "custom_fields": {
+    "Industria": "Tech",
+    "Budget": 50000
+  }
+}
+```
+
+The MCP server resolves names to Pipedrive hash keys automatically. See `docs/CUSTOM_FIELDS.md` for the full guide.
+
 ## Architecture
 
 ### Core Components
