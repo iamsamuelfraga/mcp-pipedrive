@@ -7,15 +7,22 @@ import { getBulkDeletePersonFieldsTool } from '../fields/bulk-delete-person-fiel
 
 describe('person-field CRUD tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
-  beforeEach(() => { mockClient = createMockClient(); vi.clearAllMocks(); });
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
 
   it('create posts to /personFields', async () => {
     mockClient.post.mockResolvedValue({ success: true, data: { id: 1 } });
     const tools = getCreatePersonFieldTool(mockClient);
     await tools['fields_create_person_field'].handler({ name: 'X', field_type: 'varchar' });
-    expect(mockClient.post).toHaveBeenCalledWith('/personFields', expect.objectContaining({
-      name: 'X', field_type: 'varchar',
-    }));
+    expect(mockClient.post).toHaveBeenCalledWith(
+      '/personFields',
+      expect.objectContaining({
+        name: 'X',
+        field_type: 'varchar',
+      })
+    );
   });
 
   it('update puts to /personFields/:id with id stripped from body', async () => {

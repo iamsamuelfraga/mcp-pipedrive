@@ -7,15 +7,22 @@ import { getBulkDeleteProductFieldsTool } from '../fields/bulk-delete-product-fi
 
 describe('product-field CRUD tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
-  beforeEach(() => { mockClient = createMockClient(); vi.clearAllMocks(); });
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
 
   it('create posts to /productFields', async () => {
     mockClient.post.mockResolvedValue({ success: true, data: { id: 1 } });
     const tools = getCreateProductFieldTool(mockClient);
     await tools['fields_create_product_field'].handler({ name: 'X', field_type: 'varchar' });
-    expect(mockClient.post).toHaveBeenCalledWith('/productFields', expect.objectContaining({
-      name: 'X', field_type: 'varchar',
-    }));
+    expect(mockClient.post).toHaveBeenCalledWith(
+      '/productFields',
+      expect.objectContaining({
+        name: 'X',
+        field_type: 'varchar',
+      })
+    );
   });
 
   it('update puts to /productFields/:id with id stripped from body', async () => {

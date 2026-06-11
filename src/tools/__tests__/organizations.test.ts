@@ -120,9 +120,7 @@ describe('organizations/search with enrichment', () => {
       return {
         success: true,
         data: {
-          items: [
-            { result_score: 1.0, item: { id: 1, name: 'ACME', [hashKey]: 'Gold' } },
-          ],
+          items: [{ result_score: 1.0, item: { id: 1, name: 'ACME', [hashKey]: 'Gold' } }],
         },
       };
     });

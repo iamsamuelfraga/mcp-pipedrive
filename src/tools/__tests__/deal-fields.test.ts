@@ -7,15 +7,22 @@ import { getBulkDeleteDealFieldsTool } from '../fields/bulk-delete-deal-fields.j
 
 describe('deal-field CRUD tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
-  beforeEach(() => { mockClient = createMockClient(); vi.clearAllMocks(); });
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
 
   it('create posts to /dealFields', async () => {
     mockClient.post.mockResolvedValue({ success: true, data: { id: 1 } });
     const tools = getCreateDealFieldTool(mockClient);
     await tools['fields_create_deal_field'].handler({ name: 'X', field_type: 'varchar' });
-    expect(mockClient.post).toHaveBeenCalledWith('/dealFields', expect.objectContaining({
-      name: 'X', field_type: 'varchar',
-    }));
+    expect(mockClient.post).toHaveBeenCalledWith(
+      '/dealFields',
+      expect.objectContaining({
+        name: 'X',
+        field_type: 'varchar',
+      })
+    );
   });
 
   it('update puts to /dealFields/:id with id stripped from body', async () => {

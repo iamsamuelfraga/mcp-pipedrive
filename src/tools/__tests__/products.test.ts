@@ -255,9 +255,7 @@ describe('products/search with enrichment', () => {
       return {
         success: true,
         data: {
-          items: [
-            { result_score: 1.0, item: { id: 1, name: 'Widget', [hashKey]: 'A' } },
-          ],
+          items: [{ result_score: 1.0, item: { id: 1, name: 'Widget', [hashKey]: 'A' } }],
         },
       };
     });

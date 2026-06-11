@@ -1,5 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { getFieldDefinitionsEndpoint, isHashKey, loadFieldDefinitions, findFieldDefinition } from '../custom-fields.js';
+import {
+  getFieldDefinitionsEndpoint,
+  isHashKey,
+  loadFieldDefinitions,
+  findFieldDefinition,
+} from '../custom-fields.js';
 import { createMockClient } from '../../__tests__/mocks/client.mock.js';
 import { CustomFieldResolutionError } from '../custom-fields-errors.js';
 import type { FieldDefinition } from '../custom-fields.js';
@@ -40,9 +45,7 @@ describe('loadFieldDefinitions', () => {
   it('returns definitions array from Pipedrive', async () => {
     mockClient.get = vi.fn().mockResolvedValue({
       success: true,
-      data: [
-        { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum', options: [] },
-      ],
+      data: [{ id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum', options: [] }],
     });
 
     const result = await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
@@ -132,34 +135,59 @@ describe('findFieldDefinition', () => {
 
 import { transformValueToWireFormat, resolveCustomFieldsForEntity } from '../custom-fields.js';
 import { CustomFieldValidationError } from '../custom-fields-errors.js';
-import {
-  buildResolvedCustomFields,
-  enrichEntityWithCustomFields,
-} from '../custom-fields.js';
+import { buildResolvedCustomFields, enrichEntityWithCustomFields } from '../custom-fields.js';
 
 describe('transformValueToWireFormat', () => {
   const enumDef: FieldDefinition = {
-    id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
-    options: [{ id: 10, label: 'Tech' }, { id: 11, label: 'Finance' }],
+    id: 1,
+    key: 'a'.repeat(40),
+    name: 'Industria',
+    field_type: 'enum',
+    options: [
+      { id: 10, label: 'Tech' },
+      { id: 11, label: 'Finance' },
+    ],
   };
   const setDef: FieldDefinition = {
-    id: 2, key: 'b'.repeat(40), name: 'Tags', field_type: 'set',
-    options: [{ id: 20, label: 'A' }, { id: 21, label: 'B' }, { id: 22, label: 'C' }],
+    id: 2,
+    key: 'b'.repeat(40),
+    name: 'Tags',
+    field_type: 'set',
+    options: [
+      { id: 20, label: 'A' },
+      { id: 21, label: 'B' },
+      { id: 22, label: 'C' },
+    ],
   };
   const dateDef: FieldDefinition = {
-    id: 3, key: 'c'.repeat(40), name: 'Closed At', field_type: 'date',
+    id: 3,
+    key: 'c'.repeat(40),
+    name: 'Closed At',
+    field_type: 'date',
   };
   const monetaryDef: FieldDefinition = {
-    id: 4, key: 'd'.repeat(40), name: 'Budget', field_type: 'monetary',
+    id: 4,
+    key: 'd'.repeat(40),
+    name: 'Budget',
+    field_type: 'monetary',
   };
   const daterangeDef: FieldDefinition = {
-    id: 5, key: 'e'.repeat(40), name: 'Window', field_type: 'daterange',
+    id: 5,
+    key: 'e'.repeat(40),
+    name: 'Window',
+    field_type: 'daterange',
   };
   const textDef: FieldDefinition = {
-    id: 6, key: 'f'.repeat(40), name: 'Notes', field_type: 'varchar',
+    id: 6,
+    key: 'f'.repeat(40),
+    name: 'Notes',
+    field_type: 'varchar',
   };
   const unknownDef: FieldDefinition = {
-    id: -1, key: 'a'.repeat(40), name: 'a'.repeat(40), field_type: 'unknown',
+    id: -1,
+    key: 'a'.repeat(40),
+    name: 'a'.repeat(40),
+    field_type: 'unknown',
   };
 
   it('enum: label → option id', () => {
@@ -179,8 +207,12 @@ describe('transformValueToWireFormat', () => {
   });
 
   it('date: validates YYYY-MM-DD', () => {
-    expect(transformValueToWireFormat(dateDef, '2026-06-11')).toEqual({ [dateDef.key]: '2026-06-11' });
-    expect(() => transformValueToWireFormat(dateDef, '06/11/2026')).toThrow(CustomFieldValidationError);
+    expect(transformValueToWireFormat(dateDef, '2026-06-11')).toEqual({
+      [dateDef.key]: '2026-06-11',
+    });
+    expect(() => transformValueToWireFormat(dateDef, '06/11/2026')).toThrow(
+      CustomFieldValidationError
+    );
   });
 
   it('monetary: number is passed through', () => {
@@ -188,9 +220,10 @@ describe('transformValueToWireFormat', () => {
   });
 
   it('monetary: { value, currency } passed through', () => {
-    expect(
-      transformValueToWireFormat(monetaryDef, { value: 1000, currency: 'EUR' })
-    ).toEqual({ [monetaryDef.key]: 1000, [`${monetaryDef.key}_currency`]: 'EUR' });
+    expect(transformValueToWireFormat(monetaryDef, { value: 1000, currency: 'EUR' })).toEqual({
+      [monetaryDef.key]: 1000,
+      [`${monetaryDef.key}_currency`]: 'EUR',
+    });
   });
 
   it('daterange: { start, end } expands to <hash> and <hash>_until', () => {
@@ -271,12 +304,26 @@ describe('buildResolvedCustomFields', () => {
   let mockClient: ReturnType<typeof createMockClient>;
   const defs: FieldDefinition[] = [
     {
-      id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
-      options: [{ id: 10, label: 'Tech' }, { id: 11, label: 'Finance' }],
+      id: 1,
+      key: 'a'.repeat(40),
+      name: 'Industria',
+      field_type: 'enum',
+      options: [
+        { id: 10, label: 'Tech' },
+        { id: 11, label: 'Finance' },
+      ],
     },
     { id: 2, key: 'b'.repeat(40), name: 'Budget', field_type: 'monetary' },
-    { id: 3, key: 'c'.repeat(40), name: 'Tags', field_type: 'set',
-      options: [{ id: 20, label: 'A' }, { id: 21, label: 'B' }] },
+    {
+      id: 3,
+      key: 'c'.repeat(40),
+      name: 'Tags',
+      field_type: 'set',
+      options: [
+        { id: 20, label: 'A' },
+        { id: 21, label: 'B' },
+      ],
+    },
   ];
 
   beforeEach(() => {
@@ -325,8 +372,13 @@ describe('buildResolvedCustomFields', () => {
 describe('enrichEntityWithCustomFields', () => {
   let mockClient: ReturnType<typeof createMockClient>;
   const defs: FieldDefinition[] = [
-    { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
-      options: [{ id: 10, label: 'Tech' }] },
+    {
+      id: 1,
+      key: 'a'.repeat(40),
+      name: 'Industria',
+      field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }],
+    },
   ];
 
   beforeEach(() => {
@@ -373,8 +425,13 @@ describe('enrichEntityWithCustomFields', () => {
 describe('enrichEntityWithCustomFields — search shape', () => {
   let mockClient: ReturnType<typeof createMockClient>;
   const defs: FieldDefinition[] = [
-    { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
-      options: [{ id: 10, label: 'Tech' }] },
+    {
+      id: 1,
+      key: 'a'.repeat(40),
+      name: 'Industria',
+      field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }],
+    },
   ];
 
   beforeEach(() => {

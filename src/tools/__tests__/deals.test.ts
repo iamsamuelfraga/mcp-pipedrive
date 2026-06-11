@@ -170,8 +170,13 @@ describe('deals/create with custom_fields', () => {
 
   it('resolves custom_fields by name and merges hash-keyed values into the request', async () => {
     const defs = [
-      { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
-        options: [{ id: 10, label: 'Tech' }] },
+      {
+        id: 1,
+        key: 'a'.repeat(40),
+        name: 'Industria',
+        field_type: 'enum',
+        options: [{ id: 10, label: 'Tech' }],
+      },
     ];
     mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
     mockClient.post.mockResolvedValue({ success: true, data: { id: 1 } });
@@ -200,9 +205,7 @@ describe('deals/update with custom_fields', () => {
   });
 
   it('merges resolved custom fields into the PUT body', async () => {
-    const defs = [
-      { id: 1, key: 'a'.repeat(40), name: 'Budget', field_type: 'monetary' },
-    ];
+    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Budget', field_type: 'monetary' }];
     mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
     mockClient.put.mockResolvedValue({ success: true, data: { id: 1 } });
 
@@ -224,8 +227,15 @@ describe('deals/update with custom_fields', () => {
 describe('deals/get with enrichment', () => {
   it('adds custom_fields_resolved when cache is warm', async () => {
     const mockClient = createMockClient();
-    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
-      options: [{ id: 10, label: 'Tech' }] }];
+    const defs = [
+      {
+        id: 1,
+        key: 'a'.repeat(40),
+        name: 'Industria',
+        field_type: 'enum',
+        options: [{ id: 10, label: 'Tech' }],
+      },
+    ];
 
     mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
       if (endpoint === '/dealFields') return { success: true, data: defs };
@@ -246,8 +256,15 @@ describe('deals/get with enrichment', () => {
 describe('deals/list with enrichment', () => {
   it('adds custom_fields_resolved to each item in the list', async () => {
     const mockClient = createMockClient();
-    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
-      options: [{ id: 10, label: 'Tech' }] }];
+    const defs = [
+      {
+        id: 1,
+        key: 'a'.repeat(40),
+        name: 'Industria',
+        field_type: 'enum',
+        options: [{ id: 10, label: 'Tech' }],
+      },
+    ];
 
     mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
       if (endpoint === '/dealFields') return { success: true, data: defs };
@@ -279,9 +296,7 @@ describe('deals/search with enrichment', () => {
       return {
         success: true,
         data: {
-          items: [
-            { result_score: 1.0, item: { id: 1, title: 'X', ['a'.repeat(40)]: 'Tech' } },
-          ],
+          items: [{ result_score: 1.0, item: { id: 1, title: 'X', ['a'.repeat(40)]: 'Tech' } }],
         },
       };
     });

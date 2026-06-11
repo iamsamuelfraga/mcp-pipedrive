@@ -1,8 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import {
-  CustomFieldResolutionError,
-  CustomFieldValidationError,
-} from '../custom-fields-errors.js';
+import { CustomFieldResolutionError, CustomFieldValidationError } from '../custom-fields-errors.js';
 
 describe('CustomFieldResolutionError', () => {
   it('carries kind, fieldName and suggestions', () => {

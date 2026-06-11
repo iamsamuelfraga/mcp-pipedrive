@@ -342,9 +342,7 @@ describe('persons/search with enrichment', () => {
       return {
         success: true,
         data: {
-          items: [
-            { result_score: 1.0, item: { id: 1, name: 'Alice', ['a'.repeat(40)]: 'EU' } },
-          ],
+          items: [{ result_score: 1.0, item: { id: 1, name: 'Alice', ['a'.repeat(40)]: 'EU' } }],
         },
       };
     });

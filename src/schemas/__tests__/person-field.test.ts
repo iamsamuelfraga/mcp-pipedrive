@@ -18,7 +18,9 @@ describe('CreatePersonFieldSchema', () => {
 
   it('accepts enum with options', () => {
     const r = CreatePersonFieldSchema.parse({
-      name: 'X', field_type: 'enum', options: [{ label: 'A' }],
+      name: 'X',
+      field_type: 'enum',
+      options: [{ label: 'A' }],
     });
     expect(r.options?.[0].label).toBe('A');
   });
