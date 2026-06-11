@@ -130,7 +130,7 @@ describe('findFieldDefinition', () => {
   });
 });
 
-import { transformValueToWireFormat } from '../custom-fields.js';
+import { transformValueToWireFormat, resolveCustomFieldsForEntity } from '../custom-fields.js';
 import { CustomFieldValidationError } from '../custom-fields-errors.js';
 
 describe('transformValueToWireFormat', () => {
@@ -204,5 +204,61 @@ describe('transformValueToWireFormat', () => {
 
   it('unknown field_type (hash passthrough): value is passed through untouched', () => {
     expect(transformValueToWireFormat(unknownDef, 42)).toEqual({ [unknownDef.key]: 42 });
+  });
+});
+
+describe('resolveCustomFieldsForEntity', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  const defs: FieldDefinition[] = [
+    {
+      id: 1,
+      key: 'a'.repeat(40),
+      name: 'Industria',
+      field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }],
+    },
+    { id: 2, key: 'b'.repeat(40), name: 'Budget', field_type: 'monetary' },
+  ];
+
+  it('returns empty object when custom_fields is undefined', async () => {
+    const result = await resolveCustomFieldsForEntity(mockClient, 'deal', undefined);
+    expect(result).toEqual({});
+    expect(mockClient.get).not.toHaveBeenCalled();
+  });
+
+  it('returns empty object when custom_fields is empty', async () => {
+    const result = await resolveCustomFieldsForEntity(mockClient, 'deal', {});
+    expect(result).toEqual({});
+  });
+
+  it('resolves multiple fields by name', async () => {
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+
+    const result = await resolveCustomFieldsForEntity(mockClient, 'deal', {
+      Industria: 'Tech',
+      Budget: 5000,
+    });
+
+    expect(result).toEqual({
+      [defs[0].key]: 10,
+      [defs[1].key]: 5000,
+    });
+  });
+
+  it('passes hash keys through without resolving', async () => {
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    const hash = 'c'.repeat(40);
+
+    const result = await resolveCustomFieldsForEntity(mockClient, 'deal', {
+      [hash]: 'raw-value',
+    });
+
+    expect(result).toEqual({ [hash]: 'raw-value' });
   });
 });

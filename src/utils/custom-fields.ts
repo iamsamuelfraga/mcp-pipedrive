@@ -300,6 +300,27 @@ function optionLabelToId(def: FieldDefinition, label: unknown): number {
   return match.id;
 }
 
+/**
+ * Translates an LLM-friendly custom_fields object into a hash-keyed payload ready to merge
+ * into a Pipedrive create/update request body. Loads field definitions on demand (cached).
+ */
+export async function resolveCustomFieldsForEntity(
+  client: PipedriveClient,
+  entity: CustomFieldEntity,
+  customFields: Record<string, unknown> | undefined
+): Promise<Record<string, unknown>> {
+  if (!customFields || Object.keys(customFields).length === 0) return {};
+
+  const defs = (await loadFieldDefinitions(client, entity, { fetchIfMissing: true })) ?? [];
+
+  const out: Record<string, unknown> = {};
+  for (const [inputKey, value] of Object.entries(customFields)) {
+    const def = findFieldDefinition(defs, inputKey);
+    Object.assign(out, transformValueToWireFormat(def, value));
+  }
+  return out;
+}
+
 function expandRange(
   def: FieldDefinition,
   value: unknown,
