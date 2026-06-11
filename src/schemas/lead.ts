@@ -57,8 +57,13 @@ export const CreateLeadSchema = z
     origin_id: z.string().optional().describe('Origin ID for tracking'),
     channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
     channel_id: z.string().optional().describe('Channel identifier string'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe(
+        'Map of custom field names (or hash keys) to values. Uses deal field definitions.'
+      ),
+  });
 
 export type CreateLeadInput = z.infer<typeof CreateLeadSchema>;
 
@@ -90,8 +95,13 @@ export const UpdateLeadSchema = z
     was_seen: BooleanLikeSchema.optional().describe('Whether the lead was seen'),
     channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
     channel_id: z.string().optional().describe('Channel identifier string'),
-  })
-  .strict();
+    custom_fields: z
+      .record(z.unknown())
+      .optional()
+      .describe(
+        'Map of custom field names (or hash keys) to values. Uses deal field definitions.'
+      ),
+  });
 
 export type UpdateLeadInput = z.infer<typeof UpdateLeadSchema>;
 

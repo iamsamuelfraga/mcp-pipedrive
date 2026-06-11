@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { UpdateLeadSchema } from '../../schemas/lead.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 export function getUpdateLeadTool(client: PipedriveClient) {
   return {
@@ -8,6 +9,11 @@ export function getUpdateLeadTool(client: PipedriveClient) {
 
 Updates one or more properties of a lead. Only properties included in the request will be updated.
 Send null to unset a property (applicable for value, person_id, or organization_id).
+
+Custom fields:
+- Pass display names: { "custom_fields": { "Source": "Web", "Budget": 5000 } }
+- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }
+- Uses deal field definitions (leads share the deal custom fields).
 
 Workflow tips:
 - Only include fields you want to update
@@ -65,13 +71,20 @@ Common use cases:
           was_seen: { type: 'boolean', description: 'Whether the lead was seen' },
           channel: { type: 'number', description: 'Channel ID' },
           channel_id: { type: 'string', description: 'Channel identifier string' },
+          custom_fields: {
+            type: 'object',
+            description:
+              'Custom field values keyed by display name or hash. Uses deal field definitions.',
+            additionalProperties: true,
+          },
         },
         required: ['id'],
       },
       handler: async (args: unknown) => {
         const validated = UpdateLeadSchema.parse(args);
-        const { id, ...updates } = validated;
-        return client.put(`/leads/${id}`, updates);
+        const { id, custom_fields, ...updates } = validated;
+        const resolved = await resolveCustomFieldsForEntity(client, 'lead', custom_fields);
+        return client.put(`/leads/${id}`, { ...updates, ...resolved });
       },
     },
   };

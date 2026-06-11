@@ -181,12 +181,12 @@ describe('CreateLeadSchema', () => {
     expect(() => CreateLeadSchema.parse(invalid)).toThrow();
   });
 
-  it('should reject extra fields in strict mode', () => {
-    const invalid = {
+  it('should tolerate unknown top-level keys (non-strict, custom_fields preferred)', () => {
+    const input = {
       title: 'Lead',
       extra_field: 'not allowed',
     };
-    expect(() => CreateLeadSchema.parse(invalid)).toThrow();
+    expect(() => CreateLeadSchema.parse(input)).not.toThrow();
   });
 });
 

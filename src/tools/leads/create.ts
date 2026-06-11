@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { CreateLeadSchema } from '../../schemas/lead.js';
+import { resolveCustomFieldsForEntity } from '../../utils/custom-fields.js';
 
 export function getCreateLeadTool(client: PipedriveClient) {
   return {
@@ -8,6 +9,11 @@ export function getCreateLeadTool(client: PipedriveClient) {
 
 Creates a new lead with the specified information. A lead must be linked to a person or an organization (or both).
 All leads created through the API will have source_name "API" and origin "API".
+
+Custom fields:
+- Pass display names: { "custom_fields": { "Source": "Web", "Budget": 5000 } }
+- Or hash keys directly: { "custom_fields": { "abc123...": "raw value" } }
+- Uses deal field definitions (leads share the deal custom fields).
 
 Workflow tips:
 - Title is required
@@ -66,12 +72,20 @@ Common use cases:
           origin_id: { type: 'string', description: 'Origin ID for tracking' },
           channel: { type: 'number', description: 'Channel ID' },
           channel_id: { type: 'string', description: 'Channel identifier string' },
+          custom_fields: {
+            type: 'object',
+            description:
+              'Custom field values keyed by display name or hash. Uses deal field definitions.',
+            additionalProperties: true,
+          },
         },
         required: ['title'],
       },
       handler: async (args: unknown) => {
         const validated = CreateLeadSchema.parse(args);
-        return client.post('/leads', validated);
+        const { custom_fields, ...rest } = validated;
+        const resolved = await resolveCustomFieldsForEntity(client, 'lead', custom_fields);
+        return client.post('/leads', { ...rest, ...resolved });
       },
     },
   };
