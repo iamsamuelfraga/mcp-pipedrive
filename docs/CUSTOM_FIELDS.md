@@ -2,6 +2,8 @@
 
 Custom fields in Pipedrive allow you to extend the standard data model with fields specific to your business. This guide explains how to discover, understand, and use custom fields with the MCP server.
 
+> **New in this release:** Custom fields are now set via a dedicated `custom_fields` object on `*_create` and `*_update` tools, and read back as `custom_fields_resolved` on get/list/search responses. See [Setting Custom Values on Create/Update](#setting-custom-values-on-createupdate) for the modern pattern. The "Using Custom Fields" and "Examples by Entity Type" sections below contain older examples that pass hash keys directly at the top level of payloads — that pattern no longer works for create/update tools, but the field-type reference content is still valid.
+
 ## Table of Contents
 
 - [What Are Custom Fields?](#what-are-custom-fields)
@@ -350,13 +352,18 @@ Claude will:
 3. Include custom fields in the create request
 
 **Explicit (Advanced):**
+
+Custom field values go inside the `custom_fields` object. Pass display names (preferred) or 40-char hash keys.
+
 ```json
 {
   "title": "Acme Corp Deal",
   "value": 50000,
   "currency": "USD",
-  "abc123": 1,
-  "def456": "Website"
+  "custom_fields": {
+    "Industry": "Technology",
+    "Lead Source": "Website"
+  }
 }
 ```
 
@@ -368,18 +375,25 @@ When you get an entity, custom fields are included:
 Get deal #12345
 ```
 
-Response includes:
+The MCP server adds a `custom_fields_resolved` map alongside the raw hash-keyed values for human-readable inspection. Response includes:
+
 ```json
 {
   "id": 12345,
   "title": "Acme Corp Deal",
   "value": 50000,
-  "abc123": "Technology",
-  "def456": "Website"
+  "abc123": 1,
+  "def456": "Website",
+  "custom_fields_resolved": {
+    "Industry": "Technology",
+    "Lead Source": "Website"
+  }
 }
 ```
 
 ## Field Keys vs Field Names
+
+> **You usually don't need this.** The `custom_fields` object resolves names to hash keys automatically. This section describes how the mapping works under the hood — useful for advanced workflows or debugging.
 
 Pipedrive uses hash keys for custom fields in API calls, but displays human-readable names in the UI.
 
@@ -444,10 +458,12 @@ Create a deal for "Enterprise Software Sale" with:
   "title": "Enterprise Software Sale",
   "value": 100000,
   "currency": "USD",
-  "abc123": 1,
-  "def456": 3,
-  "ghi789": "2025-03-31",
-  "jkl012": "Salesforce"
+  "custom_fields": {
+    "Industry": "Technology",
+    "Lead Source": "Referral",
+    "Decision Timeline": "2025-03-31",
+    "Competitor": "Salesforce"
+  }
 }
 ```
 
@@ -472,6 +488,20 @@ Create a contact:
 - VIP Status: Yes
 ```
 
+**API Equivalent:**
+```json
+{
+  "name": "Sarah Johnson",
+  "email": "sarah@techcorp.com",
+  "custom_fields": {
+    "Job Title": "VP of Sales",
+    "Department": "Sales",
+    "LinkedIn URL": "linkedin.com/in/sarahjohnson",
+    "VIP Status": "Yes"
+  }
+}
+```
+
 ### Organization Custom Fields
 
 **Common Organization Fields:**
@@ -492,7 +522,23 @@ Create organization TechCorp with:
 - Founded Year: 2010
 ```
 
+**API Equivalent:**
+```json
+{
+  "name": "TechCorp",
+  "custom_fields": {
+    "Company Size": "200-500 employees",
+    "Industry": "Technology",
+    "Annual Revenue": 50000000,
+    "Website": "techcorp.com",
+    "Founded Year": 2010
+  }
+}
+```
+
 ### Activity Custom Fields
+
+> **Note:** Activity custom field write operations are not supported through the MCP server (Pipedrive's `/activities` endpoint does not accept arbitrary custom field keys). Discover them via `fields_list_activity_fields` but plan workflows around deals/persons/orgs instead.
 
 **Common Activity Fields:**
 - Meeting Type (dropdown: Discovery, Demo, Negotiation)
