@@ -35,11 +35,52 @@ export function isHashKey(value: string): boolean {
   return HASH_KEY_RE.test(value);
 }
 
-// Placeholder exports — implemented in later tasks.
+interface PipedriveListResponse<T> {
+  success: boolean;
+  data: T[] | null;
+}
+
+const FIELD_DEFINITIONS_TTL_MS = 900_000; // 15 min, matches existing field tools
+
+// Per-client tracker so the read path knows if the write path has ever
+// warmed the cache for this entity. Cleared automatically when the client is GC'd.
+const cachePresence = new WeakMap<PipedriveClient, Set<string>>();
+
+/**
+ * Loads field definitions for an entity.
+ *
+ * Two modes:
+ * - fetchIfMissing=true (write path): always returns definitions, fetching once if cache cold.
+ * - fetchIfMissing=false (read enrichment path): returns undefined if cache cold; never adds an HTTP call.
+ *
+ * Note: the underlying PipedriveClient cache doesn't expose a "peek" API, so we track
+ * per-client which endpoints have been warmed in a WeakMap (auto-GC'd with the client).
+ */
 export async function loadFieldDefinitions(
-  _client: PipedriveClient,
-  _entity: CustomFieldEntity,
-  _opts?: { fetchIfMissing?: boolean }
+  client: PipedriveClient,
+  entity: CustomFieldEntity,
+  opts: { fetchIfMissing?: boolean } = {}
 ): Promise<FieldDefinition[] | undefined> {
-  throw new Error('not implemented');
+  const endpoint = getFieldDefinitionsEndpoint(entity);
+
+  if (!opts.fetchIfMissing) {
+    if (!cachePresence.get(client)?.has(endpoint)) {
+      return undefined;
+    }
+  }
+
+  const response = await client.get<PipedriveListResponse<FieldDefinition>>(
+    endpoint,
+    undefined,
+    { enabled: true, ttl: FIELD_DEFINITIONS_TTL_MS }
+  );
+
+  let set = cachePresence.get(client);
+  if (!set) {
+    set = new Set();
+    cachePresence.set(client, set);
+  }
+  set.add(endpoint);
+
+  return response.data ?? [];
 }
