@@ -132,6 +132,10 @@ describe('findFieldDefinition', () => {
 
 import { transformValueToWireFormat, resolveCustomFieldsForEntity } from '../custom-fields.js';
 import { CustomFieldValidationError } from '../custom-fields-errors.js';
+import {
+  buildResolvedCustomFields,
+  enrichEntityWithCustomFields,
+} from '../custom-fields.js';
 
 describe('transformValueToWireFormat', () => {
   const enumDef: FieldDefinition = {
@@ -260,5 +264,108 @@ describe('resolveCustomFieldsForEntity', () => {
     });
 
     expect(result).toEqual({ [hash]: 'raw-value' });
+  });
+});
+
+describe('buildResolvedCustomFields', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+  const defs: FieldDefinition[] = [
+    {
+      id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }, { id: 11, label: 'Finance' }],
+    },
+    { id: 2, key: 'b'.repeat(40), name: 'Budget', field_type: 'monetary' },
+    { id: 3, key: 'c'.repeat(40), name: 'Tags', field_type: 'set',
+      options: [{ id: 20, label: 'A' }, { id: 21, label: 'B' }] },
+  ];
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('returns empty object when cache is cold (no HTTP call)', async () => {
+    const result = await buildResolvedCustomFields(mockClient, 'deal', {
+      ['a'.repeat(40)]: 10,
+    });
+    expect(result).toEqual({});
+    expect(mockClient.get).not.toHaveBeenCalled();
+  });
+
+  it('maps enum hash to label when cache is warm', async () => {
+    // Warm the cache by an explicit load.
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const result = await buildResolvedCustomFields(mockClient, 'deal', {
+      ['a'.repeat(40)]: 10,
+      ['b'.repeat(40)]: 5000,
+      ['c'.repeat(40)]: '20,21',
+    });
+
+    expect(result).toEqual({
+      Industria: 'Tech',
+      Budget: 5000,
+      Tags: ['A', 'B'],
+    });
+  });
+
+  it('returns empty object when entity has no custom field values', async () => {
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const result = await buildResolvedCustomFields(mockClient, 'deal', {
+      title: 'Deal X',
+      id: 1,
+    });
+    expect(result).toEqual({});
+  });
+});
+
+describe('enrichEntityWithCustomFields', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+  const defs: FieldDefinition[] = [
+    { id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }] },
+  ];
+
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('adds custom_fields_resolved to a single-entity response', async () => {
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const response = {
+      success: true,
+      data: { id: 1, title: 'Deal X', ['a'.repeat(40)]: 10 },
+    };
+    const enriched = await enrichEntityWithCustomFields(mockClient, 'deal', response);
+    expect((enriched.data as any).custom_fields_resolved).toEqual({ Industria: 'Tech' });
+    expect((enriched.data as any).title).toBe('Deal X'); // preserved
+  });
+
+  it('adds custom_fields_resolved to each entity in a list response', async () => {
+    mockClient.get = vi.fn().mockResolvedValue({ success: true, data: defs });
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const response = {
+      success: true,
+      data: [
+        { id: 1, title: 'A', ['a'.repeat(40)]: 10 },
+        { id: 2, title: 'B', ['a'.repeat(40)]: 10 },
+      ],
+    };
+    const enriched = await enrichEntityWithCustomFields(mockClient, 'deal', response);
+    expect((enriched.data as any[])[0].custom_fields_resolved).toEqual({ Industria: 'Tech' });
+    expect((enriched.data as any[])[1].custom_fields_resolved).toEqual({ Industria: 'Tech' });
+  });
+
+  it('returns response unchanged when data is null/undefined', async () => {
+    const response = { success: false, data: null };
+    const enriched = await enrichEntityWithCustomFields(mockClient, 'deal', response);
+    expect(enriched).toBe(response);
   });
 });

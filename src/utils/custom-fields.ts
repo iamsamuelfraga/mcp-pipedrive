@@ -349,3 +349,87 @@ function expandRange(
   }
   return { [def.key]: start, [`${def.key}_until`]: end };
 }
+
+/**
+ * Given a raw Pipedrive entity payload (a flat object), return a name-keyed map of
+ * the resolved custom field values. Read-path only — never adds an HTTP call.
+ */
+export async function buildResolvedCustomFields(
+  client: PipedriveClient,
+  entity: CustomFieldEntity,
+  data: Record<string, unknown>
+): Promise<Record<string, unknown>> {
+  const defs = await loadFieldDefinitions(client, entity, { fetchIfMissing: false });
+  if (!defs?.length) return {};
+
+  const out: Record<string, unknown> = {};
+  const byKey = new Map(defs.map((d) => [d.key, d] as const));
+
+  for (const def of defs) {
+    if (!(def.key in data)) continue;
+    const raw = data[def.key];
+    if (raw === null || raw === undefined || raw === '') continue;
+    out[def.name] = humanizeValue(def, raw, byKey);
+  }
+
+  return out;
+}
+
+function humanizeValue(
+  def: FieldDefinition,
+  raw: unknown,
+  _byKey: Map<string, FieldDefinition>
+): unknown {
+  if (def.field_type === 'enum' && typeof raw === 'number') {
+    return def.options?.find((o) => o.id === raw)?.label ?? raw;
+  }
+  if (def.field_type === 'set' && typeof raw === 'string') {
+    const ids = raw.split(',').map((s) => Number(s.trim()));
+    return ids.map((id) => def.options?.find((o) => o.id === id)?.label ?? id);
+  }
+  return raw;
+}
+
+/**
+ * Non-destructive wrapper: adds `custom_fields_resolved` next to the raw payload
+ * for either a single entity (`data: { ... }`) or a list (`data: [...]`).
+ */
+export async function enrichEntityWithCustomFields<R extends { data?: unknown }>(
+  client: PipedriveClient,
+  entity: CustomFieldEntity,
+  response: R
+): Promise<R> {
+  const data = response.data;
+  if (!data) return response;
+
+  if (Array.isArray(data)) {
+    const enrichedItems = await Promise.all(
+      data.map(async (item) => {
+        if (!item || typeof item !== 'object') return item;
+        const resolved = await buildResolvedCustomFields(
+          client,
+          entity,
+          item as Record<string, unknown>
+        );
+        if (!Object.keys(resolved).length) return item;
+        return { ...(item as Record<string, unknown>), custom_fields_resolved: resolved };
+      })
+    );
+    return { ...response, data: enrichedItems };
+  }
+
+  if (typeof data === 'object') {
+    const resolved = await buildResolvedCustomFields(
+      client,
+      entity,
+      data as Record<string, unknown>
+    );
+    if (!Object.keys(resolved).length) return response;
+    return {
+      ...response,
+      data: { ...(data as Record<string, unknown>), custom_fields_resolved: resolved },
+    };
+  }
+
+  return response;
+}
