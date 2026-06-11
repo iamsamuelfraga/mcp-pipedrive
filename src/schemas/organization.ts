@@ -11,149 +11,153 @@ import {
 /**
  * Schema for creating a new organization
  */
-export const CreateOrganizationSchema = z
-  .object({
-    name: z
-      .string()
-      .min(1, 'Name is required and cannot be empty')
-      .max(255, 'Name cannot exceed 255 characters')
-      .describe('Organization name'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the organization'),
-    add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
-    label: OptionalIdSchema.describe('ID of the label to assign to the organization'),
-    address: z
-      .string()
-      .max(255, 'Address cannot exceed 255 characters')
-      .optional()
-      .describe('Street address'),
-    address_subpremise: z
-      .string()
-      .max(255, 'Address subpremise cannot exceed 255 characters')
-      .optional()
-      .describe('Apartment/suite number'),
-    address_street_number: z
-      .string()
-      .max(50, 'Street number cannot exceed 50 characters')
-      .optional()
-      .describe('Street number'),
-    address_route: z
-      .string()
-      .max(255, 'Route cannot exceed 255 characters')
-      .optional()
-      .describe('Street name'),
-    address_sublocality: z
-      .string()
-      .max(255, 'Sublocality cannot exceed 255 characters')
-      .optional()
-      .describe('District/sublocality'),
-    address_locality: z
-      .string()
-      .max(255, 'Locality cannot exceed 255 characters')
-      .optional()
-      .describe('City/locality'),
-    address_admin_area_level_1: z
-      .string()
-      .max(255, 'Admin area level 1 cannot exceed 255 characters')
-      .optional()
-      .describe('State/province'),
-    address_admin_area_level_2: z
-      .string()
-      .max(255, 'Admin area level 2 cannot exceed 255 characters')
-      .optional()
-      .describe('County/region'),
-    address_country: z
-      .string()
-      .max(255, 'Country cannot exceed 255 characters')
-      .optional()
-      .describe('Country'),
-    address_postal_code: z
-      .string()
-      .max(50, 'Postal code cannot exceed 50 characters')
-      .optional()
-      .describe('Postal/ZIP code'),
-    address_formatted_address: z
-      .string()
-      .max(500, 'Formatted address cannot exceed 500 characters')
-      .optional()
-      .describe('Full formatted address'),
-  })
-  .strict();
+export const CreateOrganizationSchema = z.object({
+  name: z
+    .string()
+    .min(1, 'Name is required and cannot be empty')
+    .max(255, 'Name cannot exceed 255 characters')
+    .describe('Organization name'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the organization'),
+  add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
+  label: OptionalIdSchema.describe('ID of the label to assign to the organization'),
+  address: z
+    .string()
+    .max(255, 'Address cannot exceed 255 characters')
+    .optional()
+    .describe('Street address'),
+  address_subpremise: z
+    .string()
+    .max(255, 'Address subpremise cannot exceed 255 characters')
+    .optional()
+    .describe('Apartment/suite number'),
+  address_street_number: z
+    .string()
+    .max(50, 'Street number cannot exceed 50 characters')
+    .optional()
+    .describe('Street number'),
+  address_route: z
+    .string()
+    .max(255, 'Route cannot exceed 255 characters')
+    .optional()
+    .describe('Street name'),
+  address_sublocality: z
+    .string()
+    .max(255, 'Sublocality cannot exceed 255 characters')
+    .optional()
+    .describe('District/sublocality'),
+  address_locality: z
+    .string()
+    .max(255, 'Locality cannot exceed 255 characters')
+    .optional()
+    .describe('City/locality'),
+  address_admin_area_level_1: z
+    .string()
+    .max(255, 'Admin area level 1 cannot exceed 255 characters')
+    .optional()
+    .describe('State/province'),
+  address_admin_area_level_2: z
+    .string()
+    .max(255, 'Admin area level 2 cannot exceed 255 characters')
+    .optional()
+    .describe('County/region'),
+  address_country: z
+    .string()
+    .max(255, 'Country cannot exceed 255 characters')
+    .optional()
+    .describe('Country'),
+  address_postal_code: z
+    .string()
+    .max(50, 'Postal code cannot exceed 50 characters')
+    .optional()
+    .describe('Postal/ZIP code'),
+  address_formatted_address: z
+    .string()
+    .max(500, 'Formatted address cannot exceed 500 characters')
+    .optional()
+    .describe('Full formatted address'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
+});
 
 export type CreateOrganizationInput = z.infer<typeof CreateOrganizationSchema>;
 
 /**
  * Schema for updating an existing organization
  */
-export const UpdateOrganizationSchema = z
-  .object({
-    id: IdSchema.describe('ID of the organization to update'),
-    name: z
-      .string()
-      .min(1, 'Name cannot be empty')
-      .max(255, 'Name cannot exceed 255 characters')
-      .optional()
-      .describe('Organization name'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the organization'),
-    label: OptionalIdSchema.describe('ID of the label to assign to the organization'),
-    address: z
-      .string()
-      .max(255, 'Address cannot exceed 255 characters')
-      .optional()
-      .describe('Street address'),
-    address_subpremise: z
-      .string()
-      .max(255, 'Address subpremise cannot exceed 255 characters')
-      .optional()
-      .describe('Apartment/suite number'),
-    address_street_number: z
-      .string()
-      .max(50, 'Street number cannot exceed 50 characters')
-      .optional()
-      .describe('Street number'),
-    address_route: z
-      .string()
-      .max(255, 'Route cannot exceed 255 characters')
-      .optional()
-      .describe('Street name'),
-    address_sublocality: z
-      .string()
-      .max(255, 'Sublocality cannot exceed 255 characters')
-      .optional()
-      .describe('District/sublocality'),
-    address_locality: z
-      .string()
-      .max(255, 'Locality cannot exceed 255 characters')
-      .optional()
-      .describe('City/locality'),
-    address_admin_area_level_1: z
-      .string()
-      .max(255, 'Admin area level 1 cannot exceed 255 characters')
-      .optional()
-      .describe('State/province'),
-    address_admin_area_level_2: z
-      .string()
-      .max(255, 'Admin area level 2 cannot exceed 255 characters')
-      .optional()
-      .describe('County/region'),
-    address_country: z
-      .string()
-      .max(255, 'Country cannot exceed 255 characters')
-      .optional()
-      .describe('Country'),
-    address_postal_code: z
-      .string()
-      .max(50, 'Postal code cannot exceed 50 characters')
-      .optional()
-      .describe('Postal/ZIP code'),
-    address_formatted_address: z
-      .string()
-      .max(500, 'Formatted address cannot exceed 500 characters')
-      .optional()
-      .describe('Full formatted address'),
-  })
-  .strict();
+export const UpdateOrganizationSchema = z.object({
+  id: IdSchema.describe('ID of the organization to update'),
+  name: z
+    .string()
+    .min(1, 'Name cannot be empty')
+    .max(255, 'Name cannot exceed 255 characters')
+    .optional()
+    .describe('Organization name'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the organization'),
+  label: OptionalIdSchema.describe('ID of the label to assign to the organization'),
+  address: z
+    .string()
+    .max(255, 'Address cannot exceed 255 characters')
+    .optional()
+    .describe('Street address'),
+  address_subpremise: z
+    .string()
+    .max(255, 'Address subpremise cannot exceed 255 characters')
+    .optional()
+    .describe('Apartment/suite number'),
+  address_street_number: z
+    .string()
+    .max(50, 'Street number cannot exceed 50 characters')
+    .optional()
+    .describe('Street number'),
+  address_route: z
+    .string()
+    .max(255, 'Route cannot exceed 255 characters')
+    .optional()
+    .describe('Street name'),
+  address_sublocality: z
+    .string()
+    .max(255, 'Sublocality cannot exceed 255 characters')
+    .optional()
+    .describe('District/sublocality'),
+  address_locality: z
+    .string()
+    .max(255, 'Locality cannot exceed 255 characters')
+    .optional()
+    .describe('City/locality'),
+  address_admin_area_level_1: z
+    .string()
+    .max(255, 'Admin area level 1 cannot exceed 255 characters')
+    .optional()
+    .describe('State/province'),
+  address_admin_area_level_2: z
+    .string()
+    .max(255, 'Admin area level 2 cannot exceed 255 characters')
+    .optional()
+    .describe('County/region'),
+  address_country: z
+    .string()
+    .max(255, 'Country cannot exceed 255 characters')
+    .optional()
+    .describe('Country'),
+  address_postal_code: z
+    .string()
+    .max(50, 'Postal code cannot exceed 50 characters')
+    .optional()
+    .describe('Postal/ZIP code'),
+  address_formatted_address: z
+    .string()
+    .max(500, 'Formatted address cannot exceed 500 characters')
+    .optional()
+    .describe('Full formatted address'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
+});
 
 export type UpdateOrganizationInput = z.infer<typeof UpdateOrganizationSchema>;
 

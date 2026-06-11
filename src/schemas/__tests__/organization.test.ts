@@ -96,12 +96,12 @@ describe('CreateOrganizationSchema', () => {
     expect(() => CreateOrganizationSchema.parse(invalid)).toThrow();
   });
 
-  it('should reject extra fields in strict mode', () => {
-    const invalid = {
+  it('should tolerate unknown top-level keys (non-strict, custom_fields preferred)', () => {
+    const input = {
       name: 'Company',
       extra_field: 'not allowed',
     };
-    expect(() => CreateOrganizationSchema.parse(invalid)).toThrow();
+    expect(() => CreateOrganizationSchema.parse(input)).not.toThrow();
   });
 });
 
