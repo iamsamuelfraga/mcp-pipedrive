@@ -3,6 +3,8 @@ import { createMockClient } from './mocks/client.mock.js';
 import { getCreateDealTool } from '../deals/create.js';
 import { getGetDealTool } from '../deals/get.js';
 import { getUpdateDealTools } from '../deals/update.js';
+import { loadFieldDefinitions } from '../../utils/custom-fields.js';
+import { getListDealsTools } from '../deals/list.js';
 
 describe('Deals Tools', () => {
   let mockClient: ReturnType<typeof createMockClient>;
@@ -215,5 +217,54 @@ describe('deals/update with custom_fields', () => {
     );
     const body = (mockClient.put.mock.calls[0] as any[])[1];
     expect(body.custom_fields).toBeUndefined();
+  });
+});
+
+describe('deals/get with enrichment', () => {
+  it('adds custom_fields_resolved when cache is warm', async () => {
+    const mockClient = createMockClient();
+    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }] }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/dealFields') return { success: true, data: defs };
+      return { success: true, data: { id: 1, title: 'X', ['a'.repeat(40)]: 10 } };
+    });
+
+    // Warm the cache once.
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const tools = getGetDealTool(mockClient);
+    const result = await tools['deals_get'].handler({ id: 1 });
+
+    expect((result.data as any).custom_fields_resolved).toEqual({ Industria: 'Tech' });
+    expect((result.data as any).title).toBe('X');
+  });
+});
+
+describe('deals/list with enrichment', () => {
+  it('adds custom_fields_resolved to each item in the list', async () => {
+    const mockClient = createMockClient();
+    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Industria', field_type: 'enum',
+      options: [{ id: 10, label: 'Tech' }] }];
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/dealFields') return { success: true, data: defs };
+      return {
+        success: true,
+        data: [
+          { id: 1, title: 'A', ['a'.repeat(40)]: 10 },
+          { id: 2, title: 'B', ['a'.repeat(40)]: 10 },
+        ],
+      };
+    });
+
+    await loadFieldDefinitions(mockClient, 'deal', { fetchIfMissing: true });
+
+    const tools = getListDealsTools(mockClient);
+    const result = await tools['deals_list'].handler({});
+
+    expect((result.data as any[])[0].custom_fields_resolved).toEqual({ Industria: 'Tech' });
+    expect((result.data as any[])[1].custom_fields_resolved).toEqual({ Industria: 'Tech' });
   });
 });

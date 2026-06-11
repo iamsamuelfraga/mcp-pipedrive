@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { GetDealSchema } from '../../schemas/deal.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 export function getGetDealTool(client: PipedriveClient) {
   return {
@@ -26,7 +27,12 @@ Common use cases:
       },
       handler: async (args: unknown) => {
         const { id } = GetDealSchema.parse(args);
-        return client.get(`/deals/${id}`, undefined, { enabled: true, ttl: 300000 });
+        const response = await client.get<{ success: boolean; data?: unknown }>(
+          `/deals/${id}`,
+          undefined,
+          { enabled: true, ttl: 300000 }
+        );
+        return enrichEntityWithCustomFields(client, 'deal', response);
       },
     },
   };

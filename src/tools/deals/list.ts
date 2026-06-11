@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { ListDealsSchema } from '../../schemas/deal.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 export function getListDealsTools(client: PipedriveClient) {
   return {
@@ -53,7 +54,7 @@ Common use cases:
         const validated = ListDealsSchema.parse(args);
         const { start, limit, ...filters } = validated;
 
-        return client.get(
+        const response = await client.get<{ success: boolean; data?: unknown }>(
           '/deals',
           {
             ...filters,
@@ -62,6 +63,7 @@ Common use cases:
           },
           { enabled: true, ttl: 300000 } // Cache for 5 minutes
         );
+        return enrichEntityWithCustomFields(client, 'deal', response);
       },
     },
 
@@ -123,13 +125,8 @@ Common use cases:
         const paginator = client.createPaginator('/deals', filters);
         const allDeals = await paginator.fetchAll(100, max_items);
 
-        return {
-          success: true,
-          data: allDeals,
-          additional_data: {
-            total_count: allDeals.length,
-          },
-        };
+        const response = { success: true, data: allDeals, additional_data: { total_count: allDeals.length } };
+        return enrichEntityWithCustomFields(client, 'deal', response);
       },
     },
 
@@ -178,7 +175,7 @@ Common use cases:
         const validated = ListDealsSchema.parse(args);
         const { start, limit, ...filters } = validated;
 
-        return client.get(
+        const response = await client.get<{ success: boolean; data?: unknown }>(
           '/deals/archived',
           {
             ...filters,
@@ -187,6 +184,7 @@ Common use cases:
           },
           { enabled: true, ttl: 300000 } // Cache for 5 minutes
         );
+        return enrichEntityWithCustomFields(client, 'deal', response);
       },
     },
   };
