@@ -509,6 +509,81 @@ Create a call activity:
 - Duration: 30 minutes
 ```
 
+## Setting Custom Values on Create/Update
+
+All `*_create` and `*_update` tools for deals, persons, organizations, products and leads accept a `custom_fields` object. Keys can be the display name or the hash key.
+
+### By display name (recommended)
+
+```json
+{
+  "title": "ACME deal",
+  "value": 50000,
+  "custom_fields": {
+    "Industria": "Tech",
+    "Budget": 50000,
+    "Tags": ["Enterprise", "EU"]
+  }
+}
+```
+
+The MCP server resolves names against the cached field definitions and translates `enum`/`set` labels to option ids automatically.
+
+### By hash key (advanced)
+
+```json
+{
+  "title": "ACME deal",
+  "custom_fields": {
+    "abc123def4567890abcdef0123456789abcdef01": "raw value"
+  }
+}
+```
+
+Useful when you have two fields with the same display name (the name path errors with `duplicate_name` in that case).
+
+### Type-specific shapes
+
+| Type | Shape |
+|---|---|
+| `enum` | option label as string |
+| `set` | array of option labels |
+| `date` | `"YYYY-MM-DD"` |
+| `monetary` | number, or `{ "value": 1000, "currency": "EUR" }` |
+| `daterange` | `{ "start": "YYYY-MM-DD", "end": "YYYY-MM-DD" }` |
+| `timerange` | `{ "start": "HH:MM", "end": "HH:MM" }` |
+| `address` | string or structured object |
+
+## Reading Custom Values
+
+`*_get` and `*_list` responses are enriched with a `custom_fields_resolved` object next to the raw payload:
+
+```json
+{
+  "id": 123,
+  "title": "ACME deal",
+  "abc123def456...": 18,
+  "custom_fields_resolved": {
+    "Industria": "Tech"
+  }
+}
+```
+
+Enrichment requires the field definitions cache to be warm (it is warmed automatically by any prior write, or by calling e.g. `fields_list_deal_fields`).
+
+Note: search endpoints (`*_search`) do not enrich yet because of their nested response shape — coming in a future release.
+
+## Managing Custom Field Definitions
+
+CRUD tools are available for all four entity types that support custom fields:
+
+- Deals: `fields_create_deal_field`, `fields_update_deal_field`, `fields_delete_deal_field`, `fields_bulk_delete_deal_fields`
+- Persons: `fields_create_person_field`, `fields_update_person_field`, `fields_delete_person_field`, `fields_bulk_delete_person_fields`
+- Organizations: `fields_create_organization_field`, `fields_update_organization_field`, `fields_delete_organization_field`, `fields_bulk_delete_organization_fields`
+- Products: `fields_create_product_field`, `fields_update_product_field`, `fields_delete_product_field`, `fields_bulk_delete_product_fields`
+
+Leads share their custom field definitions with deals — no separate lead-field CRUD.
+
 ## Best Practices
 
 ### 1. Understand Your Fields Before Using
