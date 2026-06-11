@@ -56,7 +56,8 @@ Common use cases:
           },
           custom_fields: {
             type: 'object',
-            description: 'Custom field values keyed by display name or hash. See description for format.',
+            description:
+              'Custom field values keyed by display name or hash. See description for format.',
             additionalProperties: true,
           },
         },

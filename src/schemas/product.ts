@@ -50,95 +50,91 @@ export type BillingFrequency = z.infer<typeof BillingFrequencySchema>;
 /**
  * Schema for creating a new product
  */
-export const CreateProductSchema = z
-  .object({
-    name: z
-      .string()
-      .min(1, 'Name is required and cannot be empty')
-      .max(255, 'Name cannot exceed 255 characters')
-      .describe('Product name'),
-    code: z
-      .string()
-      .max(255, 'Code cannot exceed 255 characters')
-      .optional()
-      .describe('Product code'),
-    description: z.string().optional().describe('Product description'),
-    unit: z.string().optional().describe('Unit type (e.g., pcs, kg, hours)'),
-    tax: z
-      .number()
-      .nonnegative('Tax must be non-negative')
-      .max(100, 'Tax cannot exceed 100%')
-      .optional()
-      .default(0)
-      .describe('Tax percentage'),
-    active_flag: BooleanLikeSchema.optional()
-      .default(true)
-      .describe('Whether the product is active'),
-    selectable: BooleanLikeSchema.optional()
-      .default(true)
-      .describe('Whether the product is selectable in deals'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the product'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
-    prices: z.array(PriceSchema).optional().describe('Array of product prices'),
-    billing_frequency: BillingFrequencySchema.optional().describe('Billing frequency'),
-    billing_frequency_cycles: z
-      .number()
-      .int('Billing frequency cycles must be an integer')
-      .positive('Billing frequency cycles must be positive')
-      .optional()
-      .nullable()
-      .describe('Number of billing cycles'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe('Map of custom field names (or hash keys) to values.'),
-  });
+export const CreateProductSchema = z.object({
+  name: z
+    .string()
+    .min(1, 'Name is required and cannot be empty')
+    .max(255, 'Name cannot exceed 255 characters')
+    .describe('Product name'),
+  code: z
+    .string()
+    .max(255, 'Code cannot exceed 255 characters')
+    .optional()
+    .describe('Product code'),
+  description: z.string().optional().describe('Product description'),
+  unit: z.string().optional().describe('Unit type (e.g., pcs, kg, hours)'),
+  tax: z
+    .number()
+    .nonnegative('Tax must be non-negative')
+    .max(100, 'Tax cannot exceed 100%')
+    .optional()
+    .default(0)
+    .describe('Tax percentage'),
+  active_flag: BooleanLikeSchema.optional().default(true).describe('Whether the product is active'),
+  selectable: BooleanLikeSchema.optional()
+    .default(true)
+    .describe('Whether the product is selectable in deals'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the product'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
+  prices: z.array(PriceSchema).optional().describe('Array of product prices'),
+  billing_frequency: BillingFrequencySchema.optional().describe('Billing frequency'),
+  billing_frequency_cycles: z
+    .number()
+    .int('Billing frequency cycles must be an integer')
+    .positive('Billing frequency cycles must be positive')
+    .optional()
+    .nullable()
+    .describe('Number of billing cycles'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values.'),
+});
 
 export type CreateProductInput = z.infer<typeof CreateProductSchema>;
 
 /**
  * Schema for updating an existing product
  */
-export const UpdateProductSchema = z
-  .object({
-    id: IdSchema.describe('ID of the product to update'),
-    name: z
-      .string()
-      .min(1, 'Name cannot be empty')
-      .max(255, 'Name cannot exceed 255 characters')
-      .optional()
-      .describe('Product name'),
-    code: z
-      .string()
-      .max(255, 'Code cannot exceed 255 characters')
-      .optional()
-      .describe('Product code'),
-    description: z.string().optional().describe('Product description'),
-    unit: z.string().optional().describe('Unit type (e.g., pcs, kg, hours)'),
-    tax: z
-      .number()
-      .nonnegative('Tax must be non-negative')
-      .max(100, 'Tax cannot exceed 100%')
-      .optional()
-      .describe('Tax percentage'),
-    active_flag: BooleanLikeSchema.optional().describe('Whether the product is active'),
-    selectable: BooleanLikeSchema.optional().describe('Whether the product is selectable in deals'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the product'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
-    prices: z.array(PriceSchema).optional().describe('Array of product prices'),
-    billing_frequency: BillingFrequencySchema.optional().describe('Billing frequency'),
-    billing_frequency_cycles: z
-      .number()
-      .int('Billing frequency cycles must be an integer')
-      .positive('Billing frequency cycles must be positive')
-      .optional()
-      .nullable()
-      .describe('Number of billing cycles'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe('Map of custom field names (or hash keys) to values.'),
-  });
+export const UpdateProductSchema = z.object({
+  id: IdSchema.describe('ID of the product to update'),
+  name: z
+    .string()
+    .min(1, 'Name cannot be empty')
+    .max(255, 'Name cannot exceed 255 characters')
+    .optional()
+    .describe('Product name'),
+  code: z
+    .string()
+    .max(255, 'Code cannot exceed 255 characters')
+    .optional()
+    .describe('Product code'),
+  description: z.string().optional().describe('Product description'),
+  unit: z.string().optional().describe('Unit type (e.g., pcs, kg, hours)'),
+  tax: z
+    .number()
+    .nonnegative('Tax must be non-negative')
+    .max(100, 'Tax cannot exceed 100%')
+    .optional()
+    .describe('Tax percentage'),
+  active_flag: BooleanLikeSchema.optional().describe('Whether the product is active'),
+  selectable: BooleanLikeSchema.optional().describe('Whether the product is selectable in deals'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the product'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
+  prices: z.array(PriceSchema).optional().describe('Array of product prices'),
+  billing_frequency: BillingFrequencySchema.optional().describe('Billing frequency'),
+  billing_frequency_cycles: z
+    .number()
+    .int('Billing frequency cycles must be an integer')
+    .positive('Billing frequency cycles must be positive')
+    .optional()
+    .nullable()
+    .describe('Number of billing cycles'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values.'),
+});
 
 export type UpdateProductInput = z.infer<typeof UpdateProductSchema>;
 

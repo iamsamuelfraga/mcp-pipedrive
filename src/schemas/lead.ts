@@ -32,76 +32,68 @@ export const LeadIdSchema = z.string().uuid('Lead ID must be a valid UUID').desc
 /**
  * Schema for creating a new lead
  */
-export const CreateLeadSchema = z
-  .object({
-    title: z
-      .string()
-      .min(1, 'Title is required and cannot be empty')
-      .max(255, 'Title cannot exceed 255 characters')
-      .describe('Lead title'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will own this lead'),
-    label_ids: z
-      .array(z.string().uuid('Label ID must be a valid UUID'))
-      .optional()
-      .describe('Array of label UUIDs'),
-    person_id: OptionalIdSchema.describe('ID of the person this lead is associated with'),
-    organization_id: OptionalIdSchema.describe(
-      'ID of the organization this lead is associated with'
-    ),
-    value: LeadValueSchema.optional().describe('Lead value with amount and currency'),
-    expected_close_date: DateStringSchema.optional().describe(
-      'Expected close date in YYYY-MM-DD format'
-    ),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the lead'),
-    was_seen: BooleanLikeSchema.optional().describe('Whether the lead was seen'),
-    origin_id: z.string().optional().describe('Origin ID for tracking'),
-    channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
-    channel_id: z.string().optional().describe('Channel identifier string'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe(
-        'Map of custom field names (or hash keys) to values. Uses deal field definitions.'
-      ),
-  });
+export const CreateLeadSchema = z.object({
+  title: z
+    .string()
+    .min(1, 'Title is required and cannot be empty')
+    .max(255, 'Title cannot exceed 255 characters')
+    .describe('Lead title'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will own this lead'),
+  label_ids: z
+    .array(z.string().uuid('Label ID must be a valid UUID'))
+    .optional()
+    .describe('Array of label UUIDs'),
+  person_id: OptionalIdSchema.describe('ID of the person this lead is associated with'),
+  organization_id: OptionalIdSchema.describe('ID of the organization this lead is associated with'),
+  value: LeadValueSchema.optional().describe('Lead value with amount and currency'),
+  expected_close_date: DateStringSchema.optional().describe(
+    'Expected close date in YYYY-MM-DD format'
+  ),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the lead'),
+  was_seen: BooleanLikeSchema.optional().describe('Whether the lead was seen'),
+  origin_id: z.string().optional().describe('Origin ID for tracking'),
+  channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
+  channel_id: z.string().optional().describe('Channel identifier string'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values. Uses deal field definitions.'),
+});
 
 export type CreateLeadInput = z.infer<typeof CreateLeadSchema>;
 
 /**
  * Schema for updating an existing lead
  */
-export const UpdateLeadSchema = z
-  .object({
-    id: LeadIdSchema.describe('UUID of the lead to update'),
-    title: z
-      .string()
-      .min(1, 'Title cannot be empty')
-      .max(255, 'Title cannot exceed 255 characters')
-      .optional()
-      .describe('Lead title'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will own this lead'),
-    label_ids: z
-      .array(z.string().uuid('Label ID must be a valid UUID'))
-      .optional()
-      .describe('Array of label UUIDs'),
-    person_id: OptionalIdSchema.describe('ID of the person associated with this lead'),
-    organization_id: OptionalIdSchema.describe('ID of the organization associated with this lead'),
-    is_archived: BooleanLikeSchema.optional().describe('Whether the lead is archived'),
-    value: LeadValueSchema.optional().describe('Lead value with amount and currency'),
-    expected_close_date: DateStringSchema.optional().describe(
-      'Expected close date in YYYY-MM-DD format'
-    ),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the lead'),
-    was_seen: BooleanLikeSchema.optional().describe('Whether the lead was seen'),
-    channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
-    channel_id: z.string().optional().describe('Channel identifier string'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe(
-        'Map of custom field names (or hash keys) to values. Uses deal field definitions.'
-      ),
-  });
+export const UpdateLeadSchema = z.object({
+  id: LeadIdSchema.describe('UUID of the lead to update'),
+  title: z
+    .string()
+    .min(1, 'Title cannot be empty')
+    .max(255, 'Title cannot exceed 255 characters')
+    .optional()
+    .describe('Lead title'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will own this lead'),
+  label_ids: z
+    .array(z.string().uuid('Label ID must be a valid UUID'))
+    .optional()
+    .describe('Array of label UUIDs'),
+  person_id: OptionalIdSchema.describe('ID of the person associated with this lead'),
+  organization_id: OptionalIdSchema.describe('ID of the organization associated with this lead'),
+  is_archived: BooleanLikeSchema.optional().describe('Whether the lead is archived'),
+  value: LeadValueSchema.optional().describe('Lead value with amount and currency'),
+  expected_close_date: DateStringSchema.optional().describe(
+    'Expected close date in YYYY-MM-DD format'
+  ),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the lead'),
+  was_seen: BooleanLikeSchema.optional().describe('Whether the lead was seen'),
+  channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
+  channel_id: z.string().optional().describe('Channel identifier string'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values. Uses deal field definitions.'),
+});
 
 export type UpdateLeadInput = z.infer<typeof UpdateLeadSchema>;
 

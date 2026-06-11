@@ -66,10 +66,7 @@ After creation, the field's \`key\` is the hash you must use in Person create/up
       handler: async (args: unknown) => {
         const parsed = CreatePersonFieldSchema.parse(args);
 
-        const response = await client.post<PipedriveResponse<unknown>>(
-          '/personFields',
-          parsed
-        );
+        const response = await client.post<PipedriveResponse<unknown>>('/personFields', parsed);
 
         return {
           content: [

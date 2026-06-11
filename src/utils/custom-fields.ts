@@ -70,11 +70,10 @@ export async function loadFieldDefinitions(
     }
   }
 
-  const response = await client.get<PipedriveListResponse<FieldDefinition>>(
-    endpoint,
-    undefined,
-    { enabled: true, ttl: FIELD_DEFINITIONS_TTL_MS }
-  );
+  const response = await client.get<PipedriveListResponse<FieldDefinition>>(endpoint, undefined, {
+    enabled: true,
+    ttl: FIELD_DEFINITIONS_TTL_MS,
+  });
 
   let set = cachePresence.get(client);
   if (!set) {
@@ -374,10 +373,7 @@ export async function buildResolvedCustomFields(
   return out;
 }
 
-function humanizeValue(
-  def: FieldDefinition,
-  raw: unknown
-): unknown {
+function humanizeValue(def: FieldDefinition, raw: unknown): unknown {
   if (def.field_type === 'enum' && typeof raw === 'number') {
     return def.options?.find((o) => o.id === raw)?.label ?? raw;
   }

@@ -14,106 +14,102 @@ import {
 /**
  * Schema for creating a new deal
  */
-export const CreateDealSchema = z
-  .object({
-    title: z
-      .string()
-      .min(1, 'Title is required and cannot be empty')
-      .max(255, 'Title cannot exceed 255 characters')
-      .describe('Deal title'),
-    value: z.coerce
-      .number()
-      .nonnegative('Value must be non-negative')
-      .optional()
-      .describe('Deal value'),
-    currency: CurrencySchema.optional().describe('Currency code (e.g., USD, EUR)'),
-    user_id: OptionalIdSchema.describe(
-      'ID of the user who will be marked as the owner of the deal'
-    ),
-    person_id: OptionalIdSchema.describe('ID of the person this deal is associated with'),
-    org_id: OptionalIdSchema.describe('ID of the organization this deal is associated with'),
-    pipeline_id: OptionalIdSchema.describe('ID of the pipeline this deal will be placed in'),
-    stage_id: OptionalIdSchema.describe('ID of the stage this deal will be placed in'),
-    status: z
-      .enum(['open', 'won', 'lost'], {
-        errorMap: () => ({ message: 'Status must be one of: open, won, lost' }),
-      })
-      .optional()
-      .default('open')
-      .describe('Deal status'),
-    expected_close_date: DateStringSchema.optional().describe(
-      'Expected close date in YYYY-MM-DD format'
-    ),
-    probability: z
-      .number()
-      .min(0, 'Probability must be between 0 and 100')
-      .max(100, 'Probability must be between 0 and 100')
-      .optional()
-      .describe('Deal success probability percentage'),
-    lost_reason: z
-      .string()
-      .max(255, 'Lost reason cannot exceed 255 characters')
-      .optional()
-      .describe('Reason why the deal was lost'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
-    add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
-  });
+export const CreateDealSchema = z.object({
+  title: z
+    .string()
+    .min(1, 'Title is required and cannot be empty')
+    .max(255, 'Title cannot exceed 255 characters')
+    .describe('Deal title'),
+  value: z.coerce
+    .number()
+    .nonnegative('Value must be non-negative')
+    .optional()
+    .describe('Deal value'),
+  currency: CurrencySchema.optional().describe('Currency code (e.g., USD, EUR)'),
+  user_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner of the deal'),
+  person_id: OptionalIdSchema.describe('ID of the person this deal is associated with'),
+  org_id: OptionalIdSchema.describe('ID of the organization this deal is associated with'),
+  pipeline_id: OptionalIdSchema.describe('ID of the pipeline this deal will be placed in'),
+  stage_id: OptionalIdSchema.describe('ID of the stage this deal will be placed in'),
+  status: z
+    .enum(['open', 'won', 'lost'], {
+      errorMap: () => ({ message: 'Status must be one of: open, won, lost' }),
+    })
+    .optional()
+    .default('open')
+    .describe('Deal status'),
+  expected_close_date: DateStringSchema.optional().describe(
+    'Expected close date in YYYY-MM-DD format'
+  ),
+  probability: z
+    .number()
+    .min(0, 'Probability must be between 0 and 100')
+    .max(100, 'Probability must be between 0 and 100')
+    .optional()
+    .describe('Deal success probability percentage'),
+  lost_reason: z
+    .string()
+    .max(255, 'Lost reason cannot exceed 255 characters')
+    .optional()
+    .describe('Reason why the deal was lost'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
+  add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
+});
 
 export type CreateDealInput = z.infer<typeof CreateDealSchema>;
 
 /**
  * Schema for updating an existing deal
  */
-export const UpdateDealSchema = z
-  .object({
-    id: IdSchema.describe('ID of the deal to update'),
-    title: z
-      .string()
-      .min(1, 'Title cannot be empty')
-      .max(255, 'Title cannot exceed 255 characters')
-      .optional()
-      .describe('Deal title'),
-    value: z.coerce
-      .number()
-      .nonnegative('Value must be non-negative')
-      .optional()
-      .describe('Deal value'),
-    currency: CurrencySchema.optional().describe('Currency code'),
-    user_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
-    person_id: OptionalIdSchema.describe('ID of the person associated with this deal'),
-    org_id: OptionalIdSchema.describe('ID of the organization associated with this deal'),
-    pipeline_id: OptionalIdSchema.describe('ID of the pipeline'),
-    stage_id: OptionalIdSchema.describe('ID of the stage'),
-    status: z
-      .enum(['open', 'won', 'lost'], {
-        errorMap: () => ({ message: 'Status must be one of: open, won, lost' }),
-      })
-      .optional()
-      .describe('Deal status'),
-    expected_close_date: DateStringSchema.optional().describe(
-      'Expected close date in YYYY-MM-DD format'
-    ),
-    probability: z
-      .number()
-      .min(0, 'Probability must be between 0 and 100')
-      .max(100, 'Probability must be between 0 and 100')
-      .optional()
-      .describe('Deal success probability percentage'),
-    lost_reason: z
-      .string()
-      .max(255, 'Lost reason cannot exceed 255 characters')
-      .optional()
-      .describe('Reason why the deal was lost'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
-  });
+export const UpdateDealSchema = z.object({
+  id: IdSchema.describe('ID of the deal to update'),
+  title: z
+    .string()
+    .min(1, 'Title cannot be empty')
+    .max(255, 'Title cannot exceed 255 characters')
+    .optional()
+    .describe('Deal title'),
+  value: z.coerce
+    .number()
+    .nonnegative('Value must be non-negative')
+    .optional()
+    .describe('Deal value'),
+  currency: CurrencySchema.optional().describe('Currency code'),
+  user_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
+  person_id: OptionalIdSchema.describe('ID of the person associated with this deal'),
+  org_id: OptionalIdSchema.describe('ID of the organization associated with this deal'),
+  pipeline_id: OptionalIdSchema.describe('ID of the pipeline'),
+  stage_id: OptionalIdSchema.describe('ID of the stage'),
+  status: z
+    .enum(['open', 'won', 'lost'], {
+      errorMap: () => ({ message: 'Status must be one of: open, won, lost' }),
+    })
+    .optional()
+    .describe('Deal status'),
+  expected_close_date: DateStringSchema.optional().describe(
+    'Expected close date in YYYY-MM-DD format'
+  ),
+  probability: z
+    .number()
+    .min(0, 'Probability must be between 0 and 100')
+    .max(100, 'Probability must be between 0 and 100')
+    .optional()
+    .describe('Deal success probability percentage'),
+  lost_reason: z
+    .string()
+    .max(255, 'Lost reason cannot exceed 255 characters')
+    .optional()
+    .describe('Reason why the deal was lost'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
+});
 
 export type UpdateDealInput = z.infer<typeof UpdateDealSchema>;
 

@@ -64,7 +64,8 @@ Common use cases:
           add_time: { type: 'string', description: 'Creation time in ISO 8601 format' },
           custom_fields: {
             type: 'object',
-            description: 'Custom field values keyed by display name or hash. See description for format.',
+            description:
+              'Custom field values keyed by display name or hash. See description for format.',
             additionalProperties: true,
           },
         },

@@ -66,10 +66,7 @@ After creation, the field's \`key\` is the hash you must use in Deal create/upda
       handler: async (args: unknown) => {
         const parsed = CreateDealFieldSchema.parse(args);
 
-        const response = await client.post<PipedriveResponse<unknown>>(
-          '/dealFields',
-          parsed
-        );
+        const response = await client.post<PipedriveResponse<unknown>>('/dealFields', parsed);
 
         return {
           content: [

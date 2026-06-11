@@ -48,10 +48,7 @@ Common use cases:
         const parsed = UpdateDealFieldSchema.parse(args);
         const { id, ...payload } = parsed;
 
-        const response = await client.put<PipedriveResponse<unknown>>(
-          `/dealFields/${id}`,
-          payload
-        );
+        const response = await client.put<PipedriveResponse<unknown>>(`/dealFields/${id}`, payload);
 
         return {
           content: [

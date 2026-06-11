@@ -78,8 +78,7 @@ export class CustomFieldValidationError extends Error {
   readonly value: unknown;
 
   constructor(params: ValidationErrorParams) {
-    const valueStr =
-      typeof params.value === 'string' ? params.value : safeStringify(params.value);
+    const valueStr = typeof params.value === 'string' ? params.value : safeStringify(params.value);
     const detail = params.detail ? ` ${params.detail}` : '';
     super(
       `Custom field "${params.fieldName}" expects type ${params.expectedType}, got ${valueStr}.${detail}`

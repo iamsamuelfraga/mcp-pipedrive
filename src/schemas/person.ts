@@ -14,61 +14,59 @@ import {
 /**
  * Schema for creating a new person
  */
-export const CreatePersonSchema = z
-  .object({
-    name: z
-      .string()
-      .min(1, 'Name is required and cannot be empty')
-      .max(255, 'Name cannot exceed 255 characters')
-      .describe('Person name'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
-    org_id: OptionalIdSchema.describe('ID of the organization this person belongs to'),
-    email: EmailSchema.optional().describe('Email addresses associated with the person'),
-    phone: PhoneSchema.optional().describe('Phone numbers associated with the person'),
-    job_title: z
-      .string()
-      .max(255, 'Job title cannot exceed 255 characters')
-      .optional()
-      .describe('Job title / function of the person'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the person'),
-    marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
-    add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe('Map of custom field names (or hash keys) to values.'),
-  });
+export const CreatePersonSchema = z.object({
+  name: z
+    .string()
+    .min(1, 'Name is required and cannot be empty')
+    .max(255, 'Name cannot exceed 255 characters')
+    .describe('Person name'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
+  org_id: OptionalIdSchema.describe('ID of the organization this person belongs to'),
+  email: EmailSchema.optional().describe('Email addresses associated with the person'),
+  phone: PhoneSchema.optional().describe('Phone numbers associated with the person'),
+  job_title: z
+    .string()
+    .max(255, 'Job title cannot exceed 255 characters')
+    .optional()
+    .describe('Job title / function of the person'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the person'),
+  marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
+  add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values.'),
+});
 
 export type CreatePersonInput = z.infer<typeof CreatePersonSchema>;
 
 /**
  * Schema for updating an existing person
  */
-export const UpdatePersonSchema = z
-  .object({
-    id: IdSchema.describe('ID of the person to update'),
-    name: z
-      .string()
-      .min(1, 'Name cannot be empty')
-      .max(255, 'Name cannot exceed 255 characters')
-      .optional()
-      .describe('Person name'),
-    owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
-    org_id: OptionalIdSchema.describe('ID of the organization this person belongs to'),
-    email: EmailSchema.optional().describe('Email addresses associated with the person'),
-    phone: PhoneSchema.optional().describe('Phone numbers associated with the person'),
-    job_title: z
-      .string()
-      .max(255, 'Job title cannot exceed 255 characters')
-      .optional()
-      .describe('Job title / function of the person'),
-    visible_to: VisibilitySchema.optional().describe('Visibility of the person'),
-    marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
-    custom_fields: z
-      .record(z.unknown())
-      .optional()
-      .describe('Map of custom field names (or hash keys) to values.'),
-  });
+export const UpdatePersonSchema = z.object({
+  id: IdSchema.describe('ID of the person to update'),
+  name: z
+    .string()
+    .min(1, 'Name cannot be empty')
+    .max(255, 'Name cannot exceed 255 characters')
+    .optional()
+    .describe('Person name'),
+  owner_id: OptionalIdSchema.describe('ID of the user who will be marked as the owner'),
+  org_id: OptionalIdSchema.describe('ID of the organization this person belongs to'),
+  email: EmailSchema.optional().describe('Email addresses associated with the person'),
+  phone: PhoneSchema.optional().describe('Phone numbers associated with the person'),
+  job_title: z
+    .string()
+    .max(255, 'Job title cannot exceed 255 characters')
+    .optional()
+    .describe('Job title / function of the person'),
+  visible_to: VisibilitySchema.optional().describe('Visibility of the person'),
+  marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
+  custom_fields: z
+    .record(z.unknown())
+    .optional()
+    .describe('Map of custom field names (or hash keys) to values.'),
+});
 
 export type UpdatePersonInput = z.infer<typeof UpdatePersonSchema>;
 

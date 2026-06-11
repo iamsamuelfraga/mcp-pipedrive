@@ -125,7 +125,11 @@ Common use cases:
         const paginator = client.createPaginator('/deals', filters);
         const allDeals = await paginator.fetchAll(100, max_items);
 
-        const response = { success: true, data: allDeals, additional_data: { total_count: allDeals.length } };
+        const response = {
+          success: true,
+          data: allDeals,
+          additional_data: { total_count: allDeals.length },
+        };
         return enrichEntityWithCustomFields(client, 'deal', response);
       },
     },

@@ -29,10 +29,9 @@ Both shapes are normalized to Pipedrive's expected \`?ids=\` query parameter.`,
         const parsed = BulkDeleteDealFieldsSchema.parse(args);
         const ids = Array.isArray(parsed.ids) ? parsed.ids.join(',') : parsed.ids;
 
-        const response = await client.delete<PipedriveResponse<{ id: number[] }>>(
-          '/dealFields',
-          { ids }
-        );
+        const response = await client.delete<PipedriveResponse<{ id: number[] }>>('/dealFields', {
+          ids,
+        });
 
         return {
           content: [

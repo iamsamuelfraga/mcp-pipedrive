@@ -66,10 +66,7 @@ After creation, the field's \`key\` is the hash you must use in Product create/u
       handler: async (args: unknown) => {
         const parsed = CreateProductFieldSchema.parse(args);
 
-        const response = await client.post<PipedriveResponse<unknown>>(
-          '/productFields',
-          parsed
-        );
+        const response = await client.post<PipedriveResponse<unknown>>('/productFields', parsed);
 
         return {
           content: [

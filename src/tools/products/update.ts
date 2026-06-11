@@ -145,7 +145,11 @@ Custom fields:
         body.billing_frequency_cycles = validated.billing_frequency_cycles;
       }
 
-      const resolved = await resolveCustomFieldsForEntity(client, 'product', validated.custom_fields);
+      const resolved = await resolveCustomFieldsForEntity(
+        client,
+        'product',
+        validated.custom_fields
+      );
       Object.assign(body, resolved);
 
       const response = await client.put<PipedriveResponse<Product>>(

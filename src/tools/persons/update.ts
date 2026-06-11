@@ -134,7 +134,11 @@ Custom fields:
       if (validated.marketing_status !== undefined)
         body.marketing_status = validated.marketing_status;
 
-      const resolved = await resolveCustomFieldsForEntity(client, 'person', validated.custom_fields);
+      const resolved = await resolveCustomFieldsForEntity(
+        client,
+        'person',
+        validated.custom_fields
+      );
       Object.assign(body, resolved);
 
       const response = await client.put<PipedriveResponse<Person>>(
