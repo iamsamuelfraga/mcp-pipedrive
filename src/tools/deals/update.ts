@@ -9,6 +9,11 @@ export function getUpdateDealTools(client: PipedriveClient) {
 
 Updates one or more fields of an existing deal. Only provide fields you want to change.
 
+Custom fields:
+- Pass display names: { "id": 123, "custom_fields": { "Industria": "Tech", "Budget": 5000 } }
+- Or hash keys directly: { "id": 123, "custom_fields": { "abc123...": "raw value" } }
+- For enum/set fields, pass option labels (not ids).
+
 Workflow tips:
 - Only specify fields you want to update
 - Use deals/get first to see current values
