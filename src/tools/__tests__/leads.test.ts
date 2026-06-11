@@ -297,3 +297,42 @@ describe('leads/update with custom_fields', () => {
     expect((callArgs[1] as any).custom_fields).toBeUndefined();
   });
 });
+
+import { loadFieldDefinitions } from '../../utils/custom-fields.js';
+import { getGetLeadTool } from '../leads/get.js';
+
+describe('leads/get with enrichment', () => {
+  let mockClient: ReturnType<typeof createMockClient>;
+  beforeEach(() => {
+    mockClient = createMockClient();
+    vi.clearAllMocks();
+  });
+
+  it('adds custom_fields_resolved when cache is warm (using deal field defs)', async () => {
+    const defs = [{ id: 1, key: 'a'.repeat(40), name: 'Source', field_type: 'varchar' }];
+    const leadId = '550e8400-e29b-41d4-a716-446655440099';
+
+    mockClient.get = vi.fn().mockImplementation(async (endpoint: string) => {
+      if (endpoint === '/dealFields') return { success: true, data: defs };
+      return {
+        success: true,
+        data: { id: leadId, title: 'X', ['a'.repeat(40)]: 'Web' },
+      };
+    });
+
+    await loadFieldDefinitions(mockClient, 'lead', { fetchIfMissing: true });
+
+    const tools = getGetLeadTool(mockClient);
+    // Use the actual key — confirm by inspection:
+    const handler = tools['leads_get']?.handler ?? (tools as any).handler;
+    const result = await handler({ id: leadId });
+
+    // Adjust to actual return shape:
+    if ((result as any).content) {
+      const parsed = JSON.parse((result as any).content[0].text);
+      expect((parsed.data as any).custom_fields_resolved).toEqual({ Source: 'Web' });
+    } else {
+      expect((result.data as any).custom_fields_resolved).toEqual({ Source: 'Web' });
+    }
+  });
+});

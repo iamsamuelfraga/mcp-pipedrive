@@ -1,5 +1,6 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { ListLeadsSchema } from '../../schemas/lead.js';
+import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
 export function getListLeadsTools(client: PipedriveClient) {
   return {
@@ -41,7 +42,7 @@ Common use cases:
         const validated = ListLeadsSchema.parse(args);
         const { start, limit, ...filters } = validated;
 
-        return client.get(
+        const response = await client.get<{ success: boolean; data?: unknown }>(
           '/leads',
           {
             ...filters,
@@ -50,6 +51,7 @@ Common use cases:
           },
           { enabled: true, ttl: 300000 } // Cache for 5 minutes
         );
+        return enrichEntityWithCustomFields(client, 'lead', response);
       },
     },
 
@@ -98,13 +100,14 @@ Common use cases:
         const paginator = client.createPaginator('/leads', filters);
         const allLeads = await paginator.fetchAll(100, max_items);
 
-        return {
+        const response = {
           success: true,
           data: allLeads,
           additional_data: {
             total_count: allLeads.length,
           },
         };
+        return enrichEntityWithCustomFields(client, 'lead', response);
       },
     },
   };
