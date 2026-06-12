@@ -24,3 +24,44 @@ describe('PipedriveClient.resolveUrl (via private access)', () => {
     expect(url).toBe('https://api.pipedrive.com/api/v2/leads/abc-def/convert/deal');
   });
 });
+
+describe('PipedriveClient.invalidateCachePattern (via private access)', () => {
+  it('extracts the resource name from a v1 endpoint', () => {
+    const client = new PipedriveClient('test-token');
+    // Seed a cache entry, invalidate, then read.
+    (client as unknown as { cache: { set(k: string, v: unknown): void } }).cache.set(
+      'GET:/deals:{}',
+      { data: 'cached' }
+    );
+    (client as unknown as { invalidateCachePattern(s: string): void }).invalidateCachePattern(
+      '/deals/123'
+    );
+    const after = (
+      client as unknown as { cache: { get(k: string): unknown } }
+    ).cache.get('GET:/deals:{}');
+    expect(after).toBeUndefined();
+  });
+
+  it('extracts the resource name from a v2 endpoint and invalidates only the v2 family', () => {
+    const client = new PipedriveClient('test-token');
+    const cache = (
+      client as unknown as { cache: { set(k: string, v: unknown): void; get(k: string): unknown } }
+    ).cache;
+    cache.set('GET:/api/v2/stages:{}', { data: 'cached-v2' });
+    cache.set('GET:/deals:{}', { data: 'cached-v1' });
+
+    (client as unknown as { invalidateCachePattern(s: string): void }).invalidateCachePattern(
+      '/api/v2/stages/5'
+    );
+
+    expect(cache.get('GET:/api/v2/stages:{}')).toBeUndefined();
+    expect(cache.get('GET:/deals:{}')).toEqual({ data: 'cached-v1' });
+  });
+
+  it('does nothing when the endpoint has no parseable resource segment', () => {
+    const client = new PipedriveClient('test-token');
+    expect(() =>
+      (client as unknown as { invalidateCachePattern(s: string): void }).invalidateCachePattern('/')
+    ).not.toThrow();
+  });
+});

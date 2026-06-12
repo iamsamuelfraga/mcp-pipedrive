@@ -297,9 +297,12 @@ export class PipedriveClient {
   }
 
   private invalidateCachePattern(endpoint: string): void {
-    // Extract base resource from endpoint (e.g., "/deals/123" -> "deals")
-    const resource = endpoint.split('/')[1];
-    const pattern = new RegExp(`^GET:/${resource}`);
+    const parts = endpoint.split('/').filter(Boolean);
+    // v1: ["deals", "123"] → resource = "deals"
+    // v2: ["api", "v2", "stages", "5"] → resource = "stages"
+    const resource = parts[0] === 'api' ? parts[2] : parts[0];
+    if (!resource) return;
+    const pattern = new RegExp(`^GET:/(api/v2/)?${resource}`);
     this.cache.invalidatePattern(pattern);
     logger.debug('Cache invalidated for pattern', { pattern: pattern.toString() });
   }
