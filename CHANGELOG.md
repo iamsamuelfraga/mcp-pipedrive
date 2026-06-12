@@ -5,17 +5,16 @@
 
 * full custom fields support ([#32](https://github.com/iamsamuelfraga/mcp-pipedrive/issues/32)) ([9145736](https://github.com/iamsamuelfraga/mcp-pipedrive/commit/91457368773978202b51fa3e31a87f4b1e23a0af))
 
-## [Unreleased]
-
-### Added
+#### Added
 - Custom field value assignment on create/update for deals, persons, organizations, products, and leads via a new `custom_fields` object that accepts display names or hash keys.
-- Symmetric read enrichment: `*_get` and `*_list` responses include `custom_fields_resolved` mapping field display names to human-readable values.
+- Symmetric read enrichment: `*_get`, `*_list` and `*_search` responses include `custom_fields_resolved` mapping field display names to human-readable values.
 - CRUD parity for deal, person and product custom field definitions:
   - `fields_create_deal_field`, `fields_update_deal_field`, `fields_delete_deal_field`, `fields_bulk_delete_deal_fields`
   - `fields_create_person_field`, `fields_update_person_field`, `fields_delete_person_field`, `fields_bulk_delete_person_fields`
   - `fields_create_product_field`, `fields_update_product_field`, `fields_delete_product_field`, `fields_bulk_delete_product_fields`
+- Organization tools now expose six additional address fields previously not accessible: `label`, `address_subpremise`, `address_sublocality`, `address_admin_area_level_1`, `address_admin_area_level_2`, `address_formatted_address`.
 
-### Changed
+#### Changed
 - Create/update zod schemas for deals, persons, organizations, products, and leads no longer reject unknown top-level keys (`.strict()` removed). Custom values should be passed inside `custom_fields`.
 
 # [2.2.0](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v2.1.0...v2.2.0) (2026-06-09)
