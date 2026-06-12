@@ -36,9 +36,9 @@ describe('PipedriveClient.invalidateCachePattern (via private access)', () => {
     (client as unknown as { invalidateCachePattern(s: string): void }).invalidateCachePattern(
       '/deals/123'
     );
-    const after = (
-      client as unknown as { cache: { get(k: string): unknown } }
-    ).cache.get('GET:/deals:{}');
+    const after = (client as unknown as { cache: { get(k: string): unknown } }).cache.get(
+      'GET:/deals:{}'
+    );
     expect(after).toBeUndefined();
   });
 

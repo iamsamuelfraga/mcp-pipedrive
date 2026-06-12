@@ -10,7 +10,10 @@ describe('Lead label tools', () => {
   });
 
   it('lead_labels_create posts to /leadLabels', async () => {
-    mockClient.post.mockResolvedValue({ success: true, data: { id: 'uuid-1', name: 'Hot', color: 'red' } });
+    mockClient.post.mockResolvedValue({
+      success: true,
+      data: { id: 'uuid-1', name: 'Hot', color: 'red' },
+    });
     const tools = getLeadLabelTools(mockClient);
     await tools['lead_labels_create'].handler({ name: 'Hot', color: 'red' });
     expect(mockClient.post).toHaveBeenCalledWith('/leadLabels', { name: 'Hot', color: 'red' });

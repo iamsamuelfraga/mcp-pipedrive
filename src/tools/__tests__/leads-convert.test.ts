@@ -30,8 +30,6 @@ describe('Lead conversion tools', () => {
       id: 'lead-uuid',
       conversion_id: 'conv-123',
     });
-    expect(mockClient.get).toHaveBeenCalledWith(
-      '/api/v2/leads/lead-uuid/convert/status/conv-123'
-    );
+    expect(mockClient.get).toHaveBeenCalledWith('/api/v2/leads/lead-uuid/convert/status/conv-123');
   });
 });

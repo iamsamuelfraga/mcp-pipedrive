@@ -1,3 +1,15 @@
+## [Unreleased]
+
+### Added
+- Stages CRUD via API v2: `stages_list`, `stages_get`, `stages_create`, `stages_update`, `stages_delete`. The existing `pipelines_get_stages` is kept as a discovery convenience.
+- Lead label CRUD: `lead_labels_create`, `lead_labels_update`, `lead_labels_delete`. The existing `leads_get_labels` (list) is unchanged.
+- Asynchronous lead↔deal conversion: `leads_convert_to_deal`, `leads_convert_status`, `deals_convert_to_lead`, `deals_convert_status`.
+
+### Changed
+- `PipedriveClient` now routes endpoints starting with `/api/v2/` to the API v2 host directly; v1 endpoints continue using the existing base URL.
+- `PipedriveClient` exposes a new `patch()` method (used by stages and lead labels updates).
+- Cache invalidation correctly extracts the resource segment for both v1 and v2 endpoint shapes.
+
 # [2.3.0](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v2.2.0...v2.3.0) (2026-06-11)
 
 

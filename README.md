@@ -262,6 +262,17 @@ Pass custom field values by display name when creating or updating deals, person
 
 The MCP server resolves names to Pipedrive hash keys automatically. See `docs/CUSTOM_FIELDS.md` for the full guide.
 
+### Stage and lead-label management
+
+Manage pipeline stages and lead labels directly from the LLM:
+
+```json
+{ "name": "Qualified", "pipeline_id": 1, "deal_probability": 75 }
+```
+
+Convert qualified leads into deals (or roll a deal back to a lead) via the asynchronous
+`*_convert_to_*` / `*_convert_status` tool pairs.
+
 ## Architecture
 
 ### Core Components

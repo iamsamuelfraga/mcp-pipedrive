@@ -27,8 +27,6 @@ describe('Deal conversion tools', () => {
     });
     const tools = getDealConvertTools(mockClient);
     await tools['deals_convert_status'].handler({ id: 99, conversion_id: 'conv-456' });
-    expect(mockClient.get).toHaveBeenCalledWith(
-      '/api/v2/deals/99/convert/status/conv-456'
-    );
+    expect(mockClient.get).toHaveBeenCalledWith('/api/v2/deals/99/convert/status/conv-456');
   });
 });
