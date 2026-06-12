@@ -20,6 +20,7 @@ import { getPermissionTools } from './permissions.js';
 import { getPersonTools } from './persons.js';
 import { getStatusTools } from './status.js';
 import { getBulkTools } from './bulk.js';
+import { getDealConvertTools } from './convert.js';
 
 /**
  * Get all deal-related tools for the MCP server
@@ -69,5 +70,6 @@ export function getDealTools(client: PipedriveClient) {
     ...getPersonTools(client),
     ...getStatusTools(client),
     ...getBulkTools(client),
+    ...getDealConvertTools(client),
   };
 }

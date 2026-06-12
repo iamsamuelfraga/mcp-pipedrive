@@ -7,6 +7,8 @@ import { getUpdateLeadTool } from './update.js';
 import { getDeleteLeadTool } from './delete.js';
 import { getSearchLeadsTool } from './search.js';
 import { getLeadLabelsTool } from './labels.js';
+import { getLeadLabelTools } from './labels.js';
+import { getLeadConvertTools } from './convert.js';
 import { getLeadSourcesTool } from './sources.js';
 
 /**
@@ -42,5 +44,7 @@ export function getLeadTools(client: PipedriveClient) {
     ...getSearchLeadsTool(client),
     ...getLeadLabelsTool(client),
     ...getLeadSourcesTool(client),
+    ...getLeadLabelTools(client),
+    ...getLeadConvertTools(client),
   };
 }
