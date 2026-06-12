@@ -89,6 +89,19 @@ export class PipedriveClient {
     return result;
   }
 
+  async patch<T>(
+    endpoint: string,
+    body?: unknown,
+    params?: Record<string, string | number | boolean>
+  ): Promise<T> {
+    const result = await this.request<T>('PATCH', endpoint, body, params);
+
+    // Invalidate related cache entries
+    this.invalidateCachePattern(endpoint);
+
+    return result;
+  }
+
   async delete<T>(
     endpoint: string,
     params?: Record<string, string | number | boolean>

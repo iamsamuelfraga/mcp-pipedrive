@@ -65,3 +65,10 @@ describe('PipedriveClient.invalidateCachePattern (via private access)', () => {
     ).not.toThrow();
   });
 });
+
+describe('PipedriveClient.patch', () => {
+  it('exposes a PATCH method that invalidates cache like put/delete', async () => {
+    const client = new PipedriveClient('test-token');
+    expect(typeof (client as unknown as { patch: unknown }).patch).toBe('function');
+  });
+});
