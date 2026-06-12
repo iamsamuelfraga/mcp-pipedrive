@@ -118,7 +118,7 @@ export class PipedriveClient {
       }
     }
 
-    const url = `${this.baseUrl}${endpoint}`;
+    const url = this.resolveUrl(endpoint);
     const requestId = Math.random().toString(36).substring(7);
     const startTime = Date.now();
 
@@ -195,7 +195,7 @@ export class PipedriveClient {
     body?: unknown,
     params?: Record<string, string | number | boolean>
   ): Promise<T> {
-    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const url = new URL(this.resolveUrl(endpoint));
 
     // Add query parameters
     if (params) {
@@ -286,6 +286,14 @@ export class PipedriveClient {
 
       throw error;
     }
+  }
+
+  private resolveUrl(endpoint: string): string {
+    // v2 endpoints come as "/api/v2/..." — use bare host.
+    // v1 endpoints come as "/deals", "/persons", etc. — prepend "/v1".
+    return endpoint.startsWith('/api/v2/')
+      ? `https://api.pipedrive.com${endpoint}`
+      : `${this.baseUrl}${endpoint}`;
   }
 
   private invalidateCachePattern(endpoint: string): void {
