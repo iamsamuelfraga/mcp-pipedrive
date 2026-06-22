@@ -127,6 +127,12 @@ export const ListDealsSchema = PaginationSchema.extend({
   sort: z.string().optional().describe('Field to sort by (e.g., title, value, stage_id)'),
   sort_by: SortDirectionSchema.optional().describe('Sort direction'),
   owned_by_you: BooleanLikeSchema.optional().describe('Filter deals owned by the authorized user'),
+  add_time_from: DateStringSchema.optional().describe(
+    'Filter deals created on or after this date (YYYY-MM-DD). Applied client-side.'
+  ),
+  add_time_until: DateStringSchema.optional().describe(
+    'Filter deals created on or before this date (YYYY-MM-DD). Applied client-side.'
+  ),
 }).strict();
 
 export type ListDealsInput = z.infer<typeof ListDealsSchema>;

@@ -2,6 +2,34 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { ListLeadsSchema } from '../../schemas/lead.js';
 import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
 
+function applyDateFilter(
+  response: unknown,
+  addTimeFrom?: string,
+  addTimeUntil?: string
+): unknown {
+  if (!addTimeFrom && !addTimeUntil) return response;
+  const resp = response as { success?: boolean; data?: unknown; additional_data?: unknown };
+  if (!resp.data || !Array.isArray(resp.data)) return response;
+
+  const from = addTimeFrom ? new Date(addTimeFrom) : null;
+  const until = addTimeUntil ? new Date(addTimeUntil + 'T23:59:59Z') : null;
+
+  const filtered = resp.data.filter((item: unknown) => {
+    const d = item as { add_time?: string };
+    if (!d.add_time) return true;
+    const t = new Date(d.add_time);
+    if (from && t < from) return false;
+    if (until && t > until) return false;
+    return true;
+  });
+
+  return {
+    ...resp,
+    data: filtered,
+    additional_data: { ...((resp.additional_data as object) ?? {}), total_count: filtered.length },
+  };
+}
+
 export function getListLeadsTools(client: PipedriveClient) {
   return {
     leads_list: {
@@ -34,13 +62,21 @@ Common use cases:
             type: 'string',
             description: 'Field names and sorting mode (e.g., "title ASC, value DESC")',
           },
+          add_time_from: {
+            type: 'string',
+            description: 'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
+          },
+          add_time_until: {
+            type: 'string',
+            description: 'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
+          },
           start: { type: 'number', description: 'Pagination start', default: 0 },
           limit: { type: 'number', description: 'Number of items to return', default: 100 },
         },
       },
       handler: async (args: unknown) => {
         const validated = ListLeadsSchema.parse(args);
-        const { start, limit, ...filters } = validated;
+        const { start, limit, add_time_from, add_time_until, ...filters } = validated;
 
         const response = await client.get<{ success: boolean; data?: unknown }>(
           '/leads',
@@ -49,9 +85,10 @@ Common use cases:
             start: start ?? 0,
             limit: limit ?? 100,
           },
-          { enabled: true, ttl: 300000 } // Cache for 5 minutes
+          { enabled: true, ttl: 300000 }
         );
-        return enrichEntityWithCustomFields(client, 'lead', response);
+        const enriched = await enrichEntityWithCustomFields(client, 'lead', response);
+        return applyDateFilter(enriched, add_time_from, add_time_until);
       },
     },
 
@@ -85,6 +122,14 @@ Common use cases:
             type: 'string',
             description: 'Field names and sorting mode',
           },
+          add_time_from: {
+            type: 'string',
+            description: 'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
+          },
+          add_time_until: {
+            type: 'string',
+            description: 'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
+          },
           max_items: { type: 'number', description: 'Maximum number of items to return' },
         },
       },
@@ -95,7 +140,7 @@ Common use cases:
           })
           .parse(args);
 
-        const { max_items, ...filters } = validated;
+        const { max_items, add_time_from, add_time_until, ...filters } = validated;
 
         const paginator = client.createPaginator('/leads', filters);
         const allLeads = await paginator.fetchAll(100, max_items);
@@ -103,11 +148,10 @@ Common use cases:
         const response = {
           success: true,
           data: allLeads,
-          additional_data: {
-            total_count: allLeads.length,
-          },
+          additional_data: { total_count: allLeads.length },
         };
-        return enrichEntityWithCustomFields(client, 'lead', response);
+        const enriched = await enrichEntityWithCustomFields(client, 'lead', response);
+        return applyDateFilter(enriched, add_time_from, add_time_until);
       },
     },
   };
