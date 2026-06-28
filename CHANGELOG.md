@@ -1,3 +1,10 @@
+# [2.6.0](https://github.com/nubiia-dev/mcp-pipedrive/compare/v2.5.0...v2.6.0) (2026-06-28)
+
+
+### Features
+
+* complete Pipedrive API coverage (installments, lead/note/project fields) ([#48](https://github.com/nubiia-dev/mcp-pipedrive/issues/48)) ([73e6d08](https://github.com/nubiia-dev/mcp-pipedrive/commit/73e6d0820c2278944c3ee831aca41660bf0e95d7))
+
 # [2.5.0](https://github.com/nubiia-dev/mcp-pipedrive/compare/v2.4.0...v2.5.0) (2026-06-28)
 
 
