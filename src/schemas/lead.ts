@@ -109,6 +109,12 @@ export const ListLeadsSchema = PaginationSchema.extend({
     .string()
     .optional()
     .describe('Field names and sorting mode (e.g., "title ASC, value DESC")'),
+  add_time_from: DateStringSchema.optional().describe(
+    'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.'
+  ),
+  add_time_until: DateStringSchema.optional().describe(
+    'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.'
+  ),
 }).strict();
 
 export type ListLeadsInput = z.infer<typeof ListLeadsSchema>;

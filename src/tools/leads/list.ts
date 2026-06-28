@@ -1,6 +1,7 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { ListLeadsSchema } from '../../schemas/lead.js';
 import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
+import { applyDateFilter } from '../../utils/date-filter.js';
 
 export function getListLeadsTools(client: PipedriveClient) {
   return {
@@ -16,6 +17,7 @@ Workflow tips:
 - filter_id takes precedence over other filters
 - Use start/limit for pagination (default limit: 100, max: 500)
 - For all leads without pagination, use leads/list_all_auto instead
+- Use add_time_from / add_time_until to filter by creation date (client-side). NOTE: this only filters the current page; for complete date-range results use leads/list_all_auto
 - Leads inherit custom fields structure from deals
 
 Common use cases:
@@ -34,13 +36,23 @@ Common use cases:
             type: 'string',
             description: 'Field names and sorting mode (e.g., "title ASC, value DESC")',
           },
+          add_time_from: {
+            type: 'string',
+            description:
+              'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
+          },
+          add_time_until: {
+            type: 'string',
+            description:
+              'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
+          },
           start: { type: 'number', description: 'Pagination start', default: 0 },
           limit: { type: 'number', description: 'Number of items to return', default: 100 },
         },
       },
       handler: async (args: unknown) => {
         const validated = ListLeadsSchema.parse(args);
-        const { start, limit, ...filters } = validated;
+        const { start, limit, add_time_from, add_time_until, ...filters } = validated;
 
         const response = await client.get<{ success: boolean; data?: unknown }>(
           '/leads',
@@ -49,9 +61,10 @@ Common use cases:
             start: start ?? 0,
             limit: limit ?? 100,
           },
-          { enabled: true, ttl: 300000 } // Cache for 5 minutes
+          { enabled: true, ttl: 300000 }
         );
-        return enrichEntityWithCustomFields(client, 'lead', response);
+        const enriched = await enrichEntityWithCustomFields(client, 'lead', response);
+        return applyDateFilter(enriched, add_time_from, add_time_until);
       },
     },
 
@@ -85,6 +98,16 @@ Common use cases:
             type: 'string',
             description: 'Field names and sorting mode',
           },
+          add_time_from: {
+            type: 'string',
+            description:
+              'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
+          },
+          add_time_until: {
+            type: 'string',
+            description:
+              'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
+          },
           max_items: { type: 'number', description: 'Maximum number of items to return' },
         },
       },
@@ -95,7 +118,7 @@ Common use cases:
           })
           .parse(args);
 
-        const { max_items, ...filters } = validated;
+        const { max_items, add_time_from, add_time_until, ...filters } = validated;
 
         const paginator = client.createPaginator('/leads', filters);
         const allLeads = await paginator.fetchAll(100, max_items);
@@ -103,11 +126,10 @@ Common use cases:
         const response = {
           success: true,
           data: allLeads,
-          additional_data: {
-            total_count: allLeads.length,
-          },
+          additional_data: { total_count: allLeads.length },
         };
-        return enrichEntityWithCustomFields(client, 'lead', response);
+        const enriched = await enrichEntityWithCustomFields(client, 'lead', response);
+        return applyDateFilter(enriched, add_time_from, add_time_until);
       },
     },
   };
