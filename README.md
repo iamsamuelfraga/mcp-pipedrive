@@ -3,14 +3,17 @@
 [![npm version](https://img.shields.io/npm/v/@nubiia/mcp-pipedrive.svg)](https://www.npmjs.com/package/@nubiia/mcp-pipedrive)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
+[![by Nubiia](https://img.shields.io/badge/by-Nubiia-6C4EE3)](https://nubiia.es)
 
 > The most complete and robust Pipedrive MCP implementation for Claude
 
 A production-ready [Model Context Protocol](https://modelcontextprotocol.io) server that provides Claude with comprehensive access to the Pipedrive CRM API. This server enables seamless automation of sales workflows, deal management, contact organization, and activity tracking through natural language conversations.
 
+> Built and maintained by **[Nubiia](https://nubiia.es)** — automatización e integraciones con IA para negocios (MCP, Holded, Pipedrive y más). ¿Quieres algo así para tu empresa? Escríbenos en **[nubiia.es](https://nubiia.es)**.
+
 ## Features
 
-- **100+ Tools Across 10 Categories** - Complete coverage of Pipedrive's core functionality
+- **300+ Tools Across 29 Categories** - Complete coverage of the entire Pipedrive REST API (v1 + v2)
 - **Advanced Rate Limiting** - 10 requests/second with burst capacity up to 100 requests
 - **Multi-Level Caching** - 5-15 minute TTL for frequently accessed data
 - **Retry Logic** - Exponential backoff for failed requests (429, 500, 502, 503, 504)
@@ -25,18 +28,39 @@ A production-ready [Model Context Protocol](https://modelcontextprotocol.io) ser
 
 ## Tool Categories
 
-| Category          | Tools | Description                                                                                                       |
-| ----------------- | ----- | ----------------------------------------------------------------------------------------------------------------- |
-| **Deals**         | 23    | Complete deal lifecycle management including creation, updates, stage movement, participants, products, and files |
-| **Persons**       | 12    | Contact management with custom fields, activities, deals, files, and follower management                          |
-| **Organizations** | 12    | Company/organization management with relationships to persons, deals, and activities                              |
-| **Activities**    | 8     | Task, call, and meeting scheduling with due dates and completion tracking                                         |
-| **Files**         | 7     | File upload, download, management, and remote file linking                                                        |
-| **Search**        | 6     | Universal search and entity-specific search across deals, persons, organizations, and products                    |
-| **Pipelines**     | 8     | Pipeline and stage management, including stage conversion statistics                                              |
-| **Notes**         | 5     | Note creation and management for deals, persons, and organizations                                                |
-| **Fields**        | 8     | Custom field discovery and metadata for all entity types                                                          |
-| **System**        | 5     | Health checks, metrics, user info, currencies, and cache management                                               |
+307 tools across 29 categories — complete coverage of the Pipedrive REST API (v1 + v2):
+
+| Category              | Tools | Description                                                                                        |
+| --------------------- | ----- | -------------------------------------------------------------------------------------------------- |
+| **Deals**             | 43    | Full lifecycle: CRUD, stages, participants, products, files, merge, conversions, installments (v2) |
+| **Fields**            | 30    | Custom field discovery + CRUD for deal/person/org/product/project fields, plus lead & note fields  |
+| **Persons**           | 23    | Contact management with custom fields, activities, deals, files, and followers                     |
+| **Organizations**     | 21    | Company management with relationships to persons, deals, and activities                            |
+| **Projects**          | 16    | Projects, boards, phases, groups, tasks, and plan management                                       |
+| **Pipelines**         | 15    | Pipeline management, stages, conversion & movement statistics                                      |
+| **Leads**             | 15    | Leads CRUD, labels, sources, search, and lead↔deal conversions                                     |
+| **Roles**             | 14    | Roles, assignments, settings, and pipeline visibility                                              |
+| **Products**          | 13    | Product catalog, deal/person attachments, files, and followers                                     |
+| **Users**             | 12    | Users, permissions, followers, and role assignments                                                |
+| **Notes**             | 9     | Notes and comments for deals, persons, and organizations                                           |
+| **Activities**        | 9     | Task, call, and meeting scheduling with due dates and completion                                   |
+| **System**            | 9     | Health, metrics, currencies, user settings, recents, and cache                                     |
+| **Teams**             | 8     | Team management and membership                                                                     |
+| **Files**             | 7     | File upload, download, management, and remote file linking                                         |
+| **Filters**           | 7     | Filter CRUD and helper metadata                                                                    |
+| **Search**            | 6     | Universal and entity-specific search                                                               |
+| **Mailbox**           | 6     | Mail threads and messages                                                                          |
+| **Stages**            | 5     | Pipeline stage CRUD (v2)                                                                           |
+| **Tasks**             | 5     | Project task management                                                                            |
+| **Goals**             | 5     | Goal CRUD and results                                                                              |
+| **Call logs**         | 5     | Call log CRUD and audio attachments                                                                |
+| **Activity types**    | 5     | Activity type management                                                                           |
+| **Org relationships** | 5     | Organization-to-organization relationships                                                         |
+| **Channels**          | 4     | Messaging channel integration                                                                      |
+| **Webhooks**          | 3     | Webhook CRUD                                                                                       |
+| **Permission sets**   | 3     | Permission set inspection and assignments                                                          |
+| **Project templates** | 2     | Project template discovery                                                                         |
+| **Meetings**          | 2     | Video call provider linking                                                                        |
 
 ## Installation
 
@@ -475,6 +499,14 @@ Please see [SECURITY.md](./SECURITY.md) for our security policy and how to repor
 
 **Important**: Never commit your API token to version control. Always use environment variables.
 
+## About Nubiia
+
+This MCP server is built and maintained by **[Nubiia](https://nubiia.es)**.
+
+[Nubiia](https://nubiia.es) ayuda a empresas a **automatizar procesos e integrar sus herramientas con IA**: servidores MCP a medida, integraciones con CRMs y ERPs (Pipedrive, Holded y más), y agentes que conectan tus datos de negocio con asistentes como Claude. Este `@nubiia/mcp-pipedrive` es un ejemplo open source de lo que hacemos.
+
+👉 ¿Quieres una integración o automatización con IA para tu negocio? **[nubiia.es](https://nubiia.es)** · ✉️ [hola@nubiia.es](mailto:hola@nubiia.es)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
@@ -485,6 +517,7 @@ Inspired by [mcp-holded](https://github.com/ivo-toby/mcp-holded) - an excellent 
 
 ## Support
 
+- **Nubiia — AI automation & integrations**: [nubiia.es](https://nubiia.es)
 - **Issues**: [GitHub Issues](https://github.com/nubiia-dev/mcp-pipedrive/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/nubiia-dev/mcp-pipedrive/discussions)
 - **Documentation**: [docs/](./docs/)
@@ -502,6 +535,12 @@ See [CHANGELOG.md](./CHANGELOG.md) for version history and release notes.
 - [ ] Integration with other CRMs
 - [ ] GraphQL support
 
+## Author
+
+Built by **[Nubiia](https://nubiia.es)** — [nubiia.es](https://nubiia.es) · [hola@nubiia.es](mailto:hola@nubiia.es)
+
+Maintainer: Samuel Fraga — [GitHub](https://github.com/iamsamuelfraga)
+
 ---
 
-Made with dedication by [Samuel Fraga](https://github.com/iamsamuelfraga)
+Made with dedication by [Nubiia](https://nubiia.es)

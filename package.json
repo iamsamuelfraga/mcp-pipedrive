@@ -1,7 +1,7 @@
 {
   "name": "@nubiia/mcp-pipedrive",
   "version": "2.6.0",
-  "description": "Model Context Protocol server for Pipedrive CRM - The most complete and robust Pipedrive MCP implementation",
+  "description": "Pipedrive CRM MCP server: deals, leads, contacts, pipelines, activities & custom fields for AI assistants like Claude. 300+ tools. Built by Nubiia.",
   "type": "module",
   "bin": {
     "mcp-pipedrive": "./dist/index.js"
@@ -35,12 +35,22 @@
     "mcp",
     "model-context-protocol",
     "pipedrive",
+    "pipedrive-api",
     "crm",
+    "crm-api",
     "sales",
+    "sales-automation",
+    "deals",
+    "leads",
+    "contacts",
+    "pipelines",
+    "api",
+    "claude",
+    "anthropic",
     "ai",
     "llm",
-    "claude",
-    "anthropic"
+    "automation",
+    "nubiia"
   ],
   "author": {
     "name": "Nubiia",
