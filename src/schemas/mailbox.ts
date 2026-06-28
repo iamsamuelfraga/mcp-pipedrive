@@ -7,7 +7,7 @@ import { IdSchema, PaginationSchema, BooleanLikeSchema } from './common.js';
 export const GetMailThreadsSchema = PaginationSchema.extend({
   folder: z
     .enum(['inbox', 'drafts', 'sent', 'archive'], {
-      errorMap: () => ({ message: 'Folder must be one of: inbox, drafts, sent, archive' }),
+      error: 'Folder must be one of: inbox, drafts, sent, archive',
     })
     .describe('The type of folder to fetch'),
 }).strict();

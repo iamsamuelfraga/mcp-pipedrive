@@ -13,9 +13,7 @@ export const EventActionSchema = z.enum(
     '*', // All actions
   ],
   {
-    errorMap: () => ({
-      message: 'Event action must be one of: added, updated, deleted, merged, or * (all)',
-    }),
+    error: 'Event action must be one of: added, updated, deleted, merged, or * (all)',
   }
 );
 
@@ -39,10 +37,8 @@ export const EventObjectSchema = z.enum(
     '*', // All objects
   ],
   {
-    errorMap: () => ({
-      message:
-        'Event object must be one of: activity, activityType, deal, note, organization, person, pipeline, product, stage, user, or * (all)',
-    }),
+    error:
+      'Event object must be one of: activity, activityType, deal, note, organization, person, pipeline, product, stage, user, or * (all)',
   }
 );
 

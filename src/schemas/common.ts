@@ -34,9 +34,7 @@ export type PaginationInput = z.infer<typeof PaginationSchema>;
  */
 export const VisibilitySchema = z
   .enum(['1', '3', '5', '7'], {
-    errorMap: () => ({
-      message: 'Visibility must be one of: 1 (private), 3 (shared), 5 (private), 7 (public)',
-    }),
+    error: 'Visibility must be one of: 1 (private), 3 (shared), 5 (private), 7 (public)',
   })
   .describe('Visibility level for the item');
 
@@ -81,9 +79,7 @@ export type PhoneArray = z.infer<typeof PhoneSchema>;
  */
 export const DealStatusSchema = z
   .enum(['open', 'won', 'lost', 'deleted', 'all_not_deleted'], {
-    errorMap: () => ({
-      message: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
-    }),
+    error: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
   })
   .describe('Deal status filter');
 
@@ -94,7 +90,7 @@ export type DealStatus = z.infer<typeof DealStatusSchema>;
  */
 export const SortDirectionSchema = z
   .enum(['asc', 'desc'], {
-    errorMap: () => ({ message: 'Sort direction must be either asc or desc' }),
+    error: 'Sort direction must be either asc or desc',
   })
   .default('asc')
   .describe('Sort direction');
@@ -106,9 +102,7 @@ export type SortDirection = z.infer<typeof SortDirectionSchema>;
  */
 export const MarketingStatusSchema = z
   .enum(['no_consent', 'unsubscribed', 'subscribed', 'archived'], {
-    errorMap: () => ({
-      message: 'Marketing status must be one of: no_consent, unsubscribed, subscribed, archived',
-    }),
+    error: 'Marketing status must be one of: no_consent, unsubscribed, subscribed, archived',
   })
   .describe('Marketing consent status');
 

@@ -168,7 +168,7 @@ export const UpdateRolePipelinesSchema = z
   .object({
     id: IdSchema.describe('ID of the role'),
     visible_pipeline_ids: z
-      .record(z.coerce.number())
+      .record(z.string(), z.coerce.number())
       .describe('Object where keys are pipeline IDs and values are 1 (visible) or 0 (hidden)'),
   })
   .strict();

@@ -6,10 +6,8 @@ import { BooleanLikeSchema, DateTimeStringSchema } from './common.js';
  */
 export const ProviderTypeSchema = z
   .enum(['other', 'facebook', 'instagram', 'whatsapp', 'telegram', 'line', 'viber'], {
-    errorMap: () => ({
-      message:
-        'Provider type must be one of: other, facebook, instagram, whatsapp, telegram, line, viber',
-    }),
+    error:
+      'Provider type must be one of: other, facebook, instagram, whatsapp, telegram, line, viber',
   })
   .describe('Provider type for the channel');
 

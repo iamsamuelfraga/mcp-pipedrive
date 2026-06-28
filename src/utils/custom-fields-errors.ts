@@ -1,8 +1,5 @@
 export type ResolutionErrorKind =
-  | 'not_found'
-  | 'duplicate_name'
-  | 'invalid_value'
-  | 'invalid_option';
+  'not_found' | 'duplicate_name' | 'invalid_value' | 'invalid_option';
 
 export interface ResolutionErrorParams {
   kind: ResolutionErrorKind;

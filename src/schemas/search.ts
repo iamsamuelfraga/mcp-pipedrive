@@ -7,9 +7,7 @@ import { PaginationSchema, OptionalIdSchema } from './common.js';
 export const SearchItemTypeSchema = z.enum(
   ['deal', 'person', 'organization', 'product', 'lead', 'file'],
   {
-    errorMap: () => ({
-      message: 'Item type must be one of: deal, person, organization, product, lead, file',
-    }),
+    error: 'Item type must be one of: deal, person, organization, product, lead, file',
   }
 );
 
@@ -77,10 +75,7 @@ export const SearchByFieldSchema = z
       .describe('Search term'),
     field_type: z
       .enum(['dealField', 'personField', 'organizationField', 'productField'], {
-        errorMap: () => ({
-          message:
-            'Field type must be one of: dealField, personField, organizationField, productField',
-        }),
+        error: 'Field type must be one of: dealField, personField, organizationField, productField',
       })
       .describe('Type of field to search'),
     field_key: z
