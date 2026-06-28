@@ -1,34 +1,7 @@
 import type { PipedriveClient } from '../../pipedrive-client.js';
 import { ListLeadsSchema } from '../../schemas/lead.js';
 import { enrichEntityWithCustomFields } from '../../utils/custom-fields.js';
-
-function applyDateFilter(
-  response: unknown,
-  addTimeFrom?: string,
-  addTimeUntil?: string
-): unknown {
-  if (!addTimeFrom && !addTimeUntil) return response;
-  const resp = response as { success?: boolean; data?: unknown; additional_data?: unknown };
-  if (!resp.data || !Array.isArray(resp.data)) return response;
-
-  const from = addTimeFrom ? new Date(addTimeFrom) : null;
-  const until = addTimeUntil ? new Date(addTimeUntil + 'T23:59:59Z') : null;
-
-  const filtered = resp.data.filter((item: unknown) => {
-    const d = item as { add_time?: string };
-    if (!d.add_time) return true;
-    const t = new Date(d.add_time);
-    if (from && t < from) return false;
-    if (until && t > until) return false;
-    return true;
-  });
-
-  return {
-    ...resp,
-    data: filtered,
-    additional_data: { ...((resp.additional_data as object) ?? {}), total_count: filtered.length },
-  };
-}
+import { applyDateFilter } from '../../utils/date-filter.js';
 
 export function getListLeadsTools(client: PipedriveClient) {
   return {
@@ -44,6 +17,7 @@ Workflow tips:
 - filter_id takes precedence over other filters
 - Use start/limit for pagination (default limit: 100, max: 500)
 - For all leads without pagination, use leads/list_all_auto instead
+- Use add_time_from / add_time_until to filter by creation date (client-side). NOTE: this only filters the current page; for complete date-range results use leads/list_all_auto
 - Leads inherit custom fields structure from deals
 
 Common use cases:
@@ -64,11 +38,13 @@ Common use cases:
           },
           add_time_from: {
             type: 'string',
-            description: 'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
+            description:
+              'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
           },
           add_time_until: {
             type: 'string',
-            description: 'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
+            description:
+              'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
           },
           start: { type: 'number', description: 'Pagination start', default: 0 },
           limit: { type: 'number', description: 'Number of items to return', default: 100 },
@@ -124,11 +100,13 @@ Common use cases:
           },
           add_time_from: {
             type: 'string',
-            description: 'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
+            description:
+              'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.',
           },
           add_time_until: {
             type: 'string',
-            description: 'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
+            description:
+              'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.',
           },
           max_items: { type: 'number', description: 'Maximum number of items to return' },
         },
