@@ -42,7 +42,11 @@
     "claude",
     "anthropic"
   ],
-  "author": "Samuel Fraga",
+  "author": {
+    "name": "Nubiia",
+    "email": "hola@nubiia.es",
+    "url": "https://nubiia.es"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -51,7 +55,7 @@
   "bugs": {
     "url": "https://github.com/nubiia-dev/mcp-pipedrive/issues"
   },
-  "homepage": "https://github.com/nubiia-dev/mcp-pipedrive#readme",
+  "homepage": "https://nubiia.es",
   "publishConfig": {
     "access": "public"
   },
