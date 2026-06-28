@@ -17,6 +17,7 @@ import { getActivityTools } from './tools/activities/index.js';
 import { getFileTools } from './tools/files/index.js';
 import { getSearchTools } from './tools/search/index.js';
 import { getPipelineTools } from './tools/pipelines/index.js';
+import { getStageTools } from './tools/stages/index.js';
 import { getNoteTools } from './tools/notes/index.js';
 import { getFieldTools } from './tools/fields/index.js';
 import { getSystemTools } from './tools/system/index.js';
@@ -110,6 +111,7 @@ const allTools: Record<string, Tool> = {
   ...getFileTools(client),
   ...getSearchTools(client),
   ...getPipelineTools(client),
+  ...getStageTools(client),
   ...getNoteTools(client),
   ...getFieldTools(client),
   ...getSystemTools(client),

@@ -89,6 +89,19 @@ export class PipedriveClient {
     return result;
   }
 
+  async patch<T>(
+    endpoint: string,
+    body?: unknown,
+    params?: Record<string, string | number | boolean>
+  ): Promise<T> {
+    const result = await this.request<T>('PATCH', endpoint, body, params);
+
+    // Invalidate related cache entries
+    this.invalidateCachePattern(endpoint);
+
+    return result;
+  }
+
   async delete<T>(
     endpoint: string,
     params?: Record<string, string | number | boolean>
@@ -119,7 +132,7 @@ export class PipedriveClient {
       }
     }
 
-    const url = `${this.baseUrl}${endpoint}`;
+    const url = this.resolveUrl(endpoint);
     const requestId = Math.random().toString(36).substring(7);
     const startTime = Date.now();
 
@@ -196,7 +209,7 @@ export class PipedriveClient {
     body?: unknown,
     params?: Record<string, string | number | boolean>
   ): Promise<T> {
-    const url = new URL(`${this.baseUrl}${endpoint}`);
+    const url = new URL(this.resolveUrl(endpoint));
 
     // Add query parameters
     if (params) {
@@ -289,10 +302,21 @@ export class PipedriveClient {
     }
   }
 
+  private resolveUrl(endpoint: string): string {
+    // v2 endpoints come as "/api/v2/..." — use bare host.
+    // v1 endpoints come as "/deals", "/persons", etc. — prepend "/v1".
+    return endpoint.startsWith('/api/v2/')
+      ? `https://api.pipedrive.com${endpoint}`
+      : `${this.baseUrl}${endpoint}`;
+  }
+
   private invalidateCachePattern(endpoint: string): void {
-    // Extract base resource from endpoint (e.g., "/deals/123" -> "deals")
-    const resource = endpoint.split('/')[1];
-    const pattern = new RegExp(`^GET:/${resource}`);
+    const parts = endpoint.split('/').filter(Boolean);
+    // v1: ["deals", "123"] → resource = "deals"
+    // v2: ["api", "v2", "stages", "5"] → resource = "stages"
+    const resource = parts[0] === 'api' ? parts[2] : parts[0];
+    if (!resource) return;
+    const pattern = new RegExp(`^GET:/(api/v2/)?${resource}`);
     this.cache.invalidatePattern(pattern);
     logger.debug('Cache invalidated for pattern', { pattern: pattern.toString() });
   }

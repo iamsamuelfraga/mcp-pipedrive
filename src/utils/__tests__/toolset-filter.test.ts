@@ -33,6 +33,12 @@ describe('findToolset', () => {
       ['project_templates_get', 'project_templates'],
       ['permission_sets_list', 'permission_sets'],
       ['permission_sets_get', 'permission_sets'],
+      ['stages_list', 'stages'],
+      ['stages_create', 'stages'],
+      ['stages_update', 'stages'],
+      ['lead_labels_create', 'lead_labels'],
+      ['lead_labels_update', 'lead_labels'],
+      ['lead_labels_delete', 'lead_labels'],
     ])('matches %s → %s', (name, expected) => {
       expect(findToolset(name, toolsets)).toBe(expected);
     });
@@ -43,6 +49,12 @@ describe('findToolset', () => {
       const overlapping = ['org', 'org_relationships'];
       expect(findToolset('org_relationships_create', overlapping)).toBe('org_relationships');
       expect(findToolset('org_create', overlapping)).toBe('org');
+    });
+
+    it('prefers lead_labels over leads for lead_labels_* names', () => {
+      const overlapping = ['leads', 'lead_labels'];
+      expect(findToolset('lead_labels_create', overlapping)).toBe('lead_labels');
+      expect(findToolset('leads_create', overlapping)).toBe('leads');
     });
 
     it('does not match unrelated toolsets that share a prefix substring', () => {
