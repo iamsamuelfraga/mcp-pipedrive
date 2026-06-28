@@ -55,7 +55,7 @@ export const CreateLeadSchema = z.object({
   channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
   channel_id: z.string().optional().describe('Channel identifier string'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values. Uses deal field definitions.'),
 });
@@ -90,7 +90,7 @@ export const UpdateLeadSchema = z.object({
   channel: z.coerce.number().int('Channel must be an integer').optional().describe('Channel ID'),
   channel_id: z.string().optional().describe('Channel identifier string'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values. Uses deal field definitions.'),
 });
@@ -109,6 +109,12 @@ export const ListLeadsSchema = PaginationSchema.extend({
     .string()
     .optional()
     .describe('Field names and sorting mode (e.g., "title ASC, value DESC")'),
+  add_time_from: DateStringSchema.optional().describe(
+    'Filter leads created on or after this date (YYYY-MM-DD). Applied client-side.'
+  ),
+  add_time_until: DateStringSchema.optional().describe(
+    'Filter leads created on or before this date (YYYY-MM-DD). Applied client-side.'
+  ),
 }).strict();
 
 export type ListLeadsInput = z.infer<typeof ListLeadsSchema>;

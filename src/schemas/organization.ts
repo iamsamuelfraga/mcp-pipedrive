@@ -77,7 +77,7 @@ export const CreateOrganizationSchema = z.object({
     .optional()
     .describe('Full formatted address'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
 });
@@ -154,7 +154,7 @@ export const UpdateOrganizationSchema = z.object({
     .optional()
     .describe('Full formatted address'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
 });
@@ -191,9 +191,7 @@ export const SearchOrganizationsSchema = z
       .describe('Search term'),
     fields: z
       .enum(['name', 'address', 'notes', 'custom_fields', 'all'], {
-        errorMap: () => ({
-          message: 'Fields must be one of: name, address, notes, custom_fields, all',
-        }),
+        error: 'Fields must be one of: name, address, notes, custom_fields, all',
       })
       .optional()
       .default('all')
@@ -283,9 +281,7 @@ export const GetOrganizationDealsSchema = z
       .describe('Number of items to return'),
     status: z
       .enum(['open', 'won', 'lost', 'deleted', 'all_not_deleted'], {
-        errorMap: () => ({
-          message: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
-        }),
+        error: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
       })
       .optional()
       .default('all_not_deleted')

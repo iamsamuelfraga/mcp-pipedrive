@@ -38,10 +38,8 @@ export type PriceInput = z.infer<typeof PriceSchema>;
  */
 export const BillingFrequencySchema = z
   .enum(['one-time', 'weekly', 'monthly', 'quarterly', 'semi-annually', 'annually'], {
-    errorMap: () => ({
-      message:
-        'Billing frequency must be one of: one-time, weekly, monthly, quarterly, semi-annually, annually',
-    }),
+    error:
+      'Billing frequency must be one of: one-time, weekly, monthly, quarterly, semi-annually, annually',
   })
   .describe('Billing frequency for the product');
 
@@ -86,7 +84,7 @@ export const CreateProductSchema = z.object({
     .nullable()
     .describe('Number of billing cycles'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values.'),
 });
@@ -131,7 +129,7 @@ export const UpdateProductSchema = z.object({
     .nullable()
     .describe('Number of billing cycles'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values.'),
 });
@@ -250,9 +248,7 @@ export const GetProductDealsSchema = z
       .describe('Number of items to return'),
     status: z
       .enum(['open', 'won', 'lost', 'deleted', 'all_not_deleted'], {
-        errorMap: () => ({
-          message: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
-        }),
+        error: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
       })
       .optional()
       .default('all_not_deleted')

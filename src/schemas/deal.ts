@@ -33,7 +33,7 @@ export const CreateDealSchema = z.object({
   stage_id: OptionalIdSchema.describe('ID of the stage this deal will be placed in'),
   status: z
     .enum(['open', 'won', 'lost'], {
-      errorMap: () => ({ message: 'Status must be one of: open, won, lost' }),
+      error: 'Status must be one of: open, won, lost',
     })
     .optional()
     .default('open')
@@ -55,7 +55,7 @@ export const CreateDealSchema = z.object({
   visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
   add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
 });
@@ -86,7 +86,7 @@ export const UpdateDealSchema = z.object({
   stage_id: OptionalIdSchema.describe('ID of the stage'),
   status: z
     .enum(['open', 'won', 'lost'], {
-      errorMap: () => ({ message: 'Status must be one of: open, won, lost' }),
+      error: 'Status must be one of: open, won, lost',
     })
     .optional()
     .describe('Deal status'),
@@ -106,7 +106,7 @@ export const UpdateDealSchema = z.object({
     .describe('Reason why the deal was lost'),
   visible_to: VisibilitySchema.optional().describe('Visibility of the deal'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values. Resolved server-side.'),
 });
@@ -127,6 +127,12 @@ export const ListDealsSchema = PaginationSchema.extend({
   sort: z.string().optional().describe('Field to sort by (e.g., title, value, stage_id)'),
   sort_by: SortDirectionSchema.optional().describe('Sort direction'),
   owned_by_you: BooleanLikeSchema.optional().describe('Filter deals owned by the authorized user'),
+  add_time_from: DateStringSchema.optional().describe(
+    'Filter deals created on or after this date (YYYY-MM-DD). Applied client-side.'
+  ),
+  add_time_until: DateStringSchema.optional().describe(
+    'Filter deals created on or before this date (YYYY-MM-DD). Applied client-side.'
+  ),
 }).strict();
 
 export type ListDealsInput = z.infer<typeof ListDealsSchema>;
@@ -177,7 +183,7 @@ export const SearchDealsSchema = z
       .describe('Search term'),
     fields: z
       .enum(['title', 'notes', 'custom_fields', 'all'], {
-        errorMap: () => ({ message: 'Fields must be one of: title, notes, custom_fields, all' }),
+        error: 'Fields must be one of: title, notes, custom_fields, all',
       })
       .optional()
       .default('all')
@@ -457,7 +463,7 @@ export const GetDealsTimelineSchema = z
     start_date: DateStringSchema.describe('The date when the first interval starts (YYYY-MM-DD)'),
     interval: z
       .enum(['day', 'week', 'month', 'quarter'], {
-        errorMap: () => ({ message: 'Interval must be one of: day, week, month, quarter' }),
+        error: 'Interval must be one of: day, week, month, quarter',
       })
       .describe('The type of the interval'),
     amount: z
@@ -491,7 +497,7 @@ export const ListDealActivitiesSchema = PaginationSchema.extend({
   id: IdSchema.describe('ID of the deal'),
   done: z
     .enum(['0', '1'], {
-      errorMap: () => ({ message: 'Done must be 0 or 1' }),
+      error: 'Done must be 0 or 1',
     })
     .optional()
     .describe('Filter by activity done status (0 = not done, 1 = done)'),
@@ -586,7 +592,7 @@ export const BulkEditDealsSchema = z
     stage_id: OptionalIdSchema.describe('ID of the stage'),
     status: z
       .enum(['open', 'won', 'lost'], {
-        errorMap: () => ({ message: 'Status must be one of: open, won, lost' }),
+        error: 'Status must be one of: open, won, lost',
       })
       .optional()
       .describe('Deal status'),

@@ -1,6 +1,6 @@
 # Pipedrive MCP Server
 
-[![npm version](https://img.shields.io/npm/v/@iamsamuelfraga/mcp-pipedrive.svg)](https://www.npmjs.com/package/@iamsamuelfraga/mcp-pipedrive)
+[![npm version](https://img.shields.io/npm/v/@nubiia/mcp-pipedrive.svg)](https://www.npmjs.com/package/@nubiia/mcp-pipedrive)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 
@@ -43,13 +43,13 @@ A production-ready [Model Context Protocol](https://modelcontextprotocol.io) ser
 ### Global Installation
 
 ```bash
-npm install -g @iamsamuelfraga/mcp-pipedrive
+npm install -g @nubiia/mcp-pipedrive
 ```
 
 ### Using npx (No Installation Required)
 
 ```bash
-npx -y @iamsamuelfraga/mcp-pipedrive
+npx -y @nubiia/mcp-pipedrive
 ```
 
 ## Configuration
@@ -70,7 +70,7 @@ Edit `~/Library/Application Support/Claude/claude_desktop_config.json`:
   "mcpServers": {
     "pipedrive": {
       "command": "npx",
-      "args": ["-y", "@iamsamuelfraga/mcp-pipedrive"],
+      "args": ["-y", "@nubiia/mcp-pipedrive"],
       "env": {
         "PIPEDRIVE_API_TOKEN": "your_api_token_here"
       }
@@ -88,7 +88,7 @@ Edit `%APPDATA%\Claude\claude_desktop_config.json`:
   "mcpServers": {
     "pipedrive": {
       "command": "npx",
-      "args": ["-y", "@iamsamuelfraga/mcp-pipedrive"],
+      "args": ["-y", "@nubiia/mcp-pipedrive"],
       "env": {
         "PIPEDRIVE_API_TOKEN": "your_api_token_here"
       }
@@ -117,7 +117,7 @@ Perfect for exploratory use or when you want to prevent accidental modifications
   "mcpServers": {
     "pipedrive": {
       "command": "npx",
-      "args": ["-y", "@iamsamuelfraga/mcp-pipedrive"],
+      "args": ["-y", "@nubiia/mcp-pipedrive"],
       "env": {
         "PIPEDRIVE_API_TOKEN": "your_token",
         "PIPEDRIVE_READ_ONLY": "true"
@@ -136,7 +136,7 @@ Only enable specific tool categories:
   "mcpServers": {
     "pipedrive": {
       "command": "npx",
-      "args": ["-y", "@iamsamuelfraga/mcp-pipedrive"],
+      "args": ["-y", "@nubiia/mcp-pipedrive"],
       "env": {
         "PIPEDRIVE_API_TOKEN": "your_token",
         "PIPEDRIVE_TOOLSETS": "deals,persons,search"
@@ -155,7 +155,7 @@ Enable verbose logging for troubleshooting:
   "mcpServers": {
     "pipedrive": {
       "command": "npx",
-      "args": ["-y", "@iamsamuelfraga/mcp-pipedrive"],
+      "args": ["-y", "@nubiia/mcp-pipedrive"],
       "env": {
         "PIPEDRIVE_API_TOKEN": "your_token",
         "LOG_LEVEL": "debug"
@@ -412,7 +412,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for gu
 
 ```bash
 # Clone the repository
-git clone https://github.com/iamsamuelfraga/mcp-pipedrive.git
+git clone https://github.com/nubiia-dev/mcp-pipedrive.git
 cd mcp-pipedrive
 
 # Install dependencies
@@ -457,8 +457,8 @@ Inspired by [mcp-holded](https://github.com/ivo-toby/mcp-holded) - an excellent 
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/iamsamuelfraga/mcp-pipedrive/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/iamsamuelfraga/mcp-pipedrive/discussions)
+- **Issues**: [GitHub Issues](https://github.com/nubiia-dev/mcp-pipedrive/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/nubiia-dev/mcp-pipedrive/discussions)
 - **Documentation**: [docs/](./docs/)
 
 ## Changelog

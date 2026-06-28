@@ -4,8 +4,7 @@ import { z } from 'zod';
  * Validation result type
  */
 export type ValidationResult<T> =
-  | { success: true; data: T }
-  | { success: false; error: z.ZodError };
+  { success: true; data: T } | { success: false; error: z.ZodError };
 
 /**
  * Validates data against a Zod schema and returns a type-safe result
@@ -40,7 +39,7 @@ export function validateStrict<T>(schema: z.ZodSchema<T>, data: unknown): T {
  * @returns A formatted error message string
  */
 export function formatZodError(error: z.ZodError): string {
-  const issues = error.errors.map((issue) => {
+  const issues = error.issues.map((issue) => {
     const path = issue.path.length > 0 ? issue.path.join('.') : 'root';
     return `${path}: ${issue.message}`;
   });

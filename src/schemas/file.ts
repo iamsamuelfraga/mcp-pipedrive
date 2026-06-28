@@ -158,9 +158,7 @@ export const LinkRemoteFileSchema = z
   .object({
     item_type: z
       .enum(['deal', 'person', 'organization', 'activity', 'product'], {
-        errorMap: () => ({
-          message: 'Item type must be one of: deal, person, organization, activity, product',
-        }),
+        error: 'Item type must be one of: deal, person, organization, activity, product',
       })
       .describe('Type of item to link the file to'),
     item_id: IdSchema.describe('ID of the item to link the file to'),
@@ -171,10 +169,7 @@ export const LinkRemoteFileSchema = z
       .describe('ID of the file in the remote system'),
     remote_location: z
       .enum(['googledrive', 'dropbox', 'onedrive', 'box', 'sharepoint'], {
-        errorMap: () => ({
-          message:
-            'Remote location must be one of: googledrive, dropbox, onedrive, box, sharepoint',
-        }),
+        error: 'Remote location must be one of: googledrive, dropbox, onedrive, box, sharepoint',
       })
       .describe('Remote file storage location'),
   })
@@ -190,9 +185,7 @@ export const UnlinkRemoteFileSchema = z
     id: IdSchema.describe('ID of the remote file link to remove'),
     item_type: z
       .enum(['deal', 'person', 'organization', 'activity', 'product'], {
-        errorMap: () => ({
-          message: 'Item type must be one of: deal, person, organization, activity, product',
-        }),
+        error: 'Item type must be one of: deal, person, organization, activity, product',
       })
       .describe('Type of item the file is linked to'),
     item_id: IdSchema.describe('ID of the item the file is linked to'),
@@ -220,10 +213,8 @@ export const SearchFilesSchema = z
       .enum(
         ['document', 'image', 'video', 'audio', 'spreadsheet', 'presentation', 'archive', 'other'],
         {
-          errorMap: () => ({
-            message:
-              'File type must be one of: document, image, video, audio, spreadsheet, presentation, archive, other',
-          }),
+          error:
+            'File type must be one of: document, image, video, audio, spreadsheet, presentation, archive, other',
         }
       )
       .optional()
