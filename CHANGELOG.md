@@ -1,3 +1,10 @@
+# [2.4.0](https://github.com/nubiia-dev/mcp-pipedrive/compare/v2.3.0...v2.4.0) (2026-06-28)
+
+
+### Features
+
+* add_time date filters for deals and leads (hardened) ([#46](https://github.com/nubiia-dev/mcp-pipedrive/issues/46)) ([3b77c4f](https://github.com/nubiia-dev/mcp-pipedrive/commit/3b77c4f0781b10a9a033c7716df41e122101e990))
+
 # [2.3.0](https://github.com/iamsamuelfraga/mcp-pipedrive/compare/v2.2.0...v2.3.0) (2026-06-11)
 
 
