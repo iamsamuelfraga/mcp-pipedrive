@@ -1,5 +1,5 @@
 {
-  "name": "@iamsamuelfraga/mcp-pipedrive",
+  "name": "@nubiia/mcp-pipedrive",
   "version": "2.3.0",
   "description": "Model Context Protocol server for Pipedrive CRM - The most complete and robust Pipedrive MCP implementation",
   "type": "module",
@@ -28,7 +28,8 @@
     "format:check": "prettier --check \"src/**/*.ts\"",
     "type-check": "tsc --noEmit",
     "prepare": "husky",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
     "mcp",
@@ -45,12 +46,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamsamuelfraga/mcp-pipedrive.git"
+    "url": "https://github.com/nubiia-dev/mcp-pipedrive.git"
   },
   "bugs": {
-    "url": "https://github.com/iamsamuelfraga/mcp-pipedrive/issues"
+    "url": "https://github.com/nubiia-dev/mcp-pipedrive/issues"
   },
-  "homepage": "https://github.com/iamsamuelfraga/mcp-pipedrive#readme",
+  "homepage": "https://github.com/nubiia-dev/mcp-pipedrive#readme",
   "publishConfig": {
     "access": "public"
   },
