@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/nubiia-dev/mcp-pipedrive/compare/v2.4.0...v2.5.0) (2026-06-28)
+
+
+### Features
+
+* stages CRUD, lead labels CRUD, lead↔deal conversions ([#34](https://github.com/nubiia-dev/mcp-pipedrive/issues/34)) ([8a7860f](https://github.com/nubiia-dev/mcp-pipedrive/commit/8a7860fd0a7e17ab0f9250fb83ca437920352756))
+
 # [2.4.0](https://github.com/nubiia-dev/mcp-pipedrive/compare/v2.3.0...v2.4.0) (2026-06-28)
 
 
