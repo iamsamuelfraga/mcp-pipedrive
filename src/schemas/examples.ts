@@ -238,7 +238,7 @@ export function exampleErrorHandling(rawData: unknown) {
 
   if (!result.success) {
     // Get detailed error information
-    const errors = result.error.errors;
+    const errors = result.error.issues;
 
     console.error('Validation failed with the following errors:');
     errors.forEach((err) => {

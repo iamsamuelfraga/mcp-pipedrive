@@ -2,7 +2,7 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { z } from 'zod';
 
 const SearchFieldsSchema = z.object({
-  query: z.string({ description: 'Search query to match against field names or keys' }),
+  query: z.string().describe('Search query to match against field names or keys'),
   entity_type: z
     .enum(['deal', 'person', 'organization', 'activity', 'product', 'all'])
     .optional()

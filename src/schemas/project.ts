@@ -6,7 +6,7 @@ import { IdSchema, OptionalIdSchema, DateStringSchema, BooleanLikeSchema } from 
  */
 export const ProjectStatusSchema = z
   .enum(['open', 'completed', 'canceled', 'deleted'], {
-    errorMap: () => ({ message: 'Status must be one of: open, completed, canceled, deleted' }),
+    error: 'Status must be one of: open, completed, canceled, deleted',
   })
   .describe('Project status');
 

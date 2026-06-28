@@ -2,10 +2,10 @@ import type { PipedriveClient } from '../../pipedrive-client.js';
 import { z } from 'zod';
 
 const GetFieldSchema = z.object({
-  entity_type: z.enum(['deal', 'person', 'organization', 'activity', 'product'], {
-    description: 'Type of entity (deal, person, organization, activity, product)',
-  }),
-  field_id: z.coerce.number({ description: 'Field ID to retrieve' }),
+  entity_type: z
+    .enum(['deal', 'person', 'organization', 'activity', 'product'])
+    .describe('Type of entity (deal, person, organization, activity, product)'),
+  field_id: z.coerce.number().describe('Field ID to retrieve'),
 });
 
 export function getGetFieldTool(client: PipedriveClient) {

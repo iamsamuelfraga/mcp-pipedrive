@@ -36,7 +36,10 @@ const CreateActivityArgsSchema = z.object({
   participants: z.array(ActivityParticipantSchema).optional().describe('Array of participants'),
   attendees: z.array(ActivityAttendeeSchema).optional().describe('Array of attendees'),
   done: z.boolean().optional().describe('Mark as done'),
-  custom_fields: z.record(z.any()).optional().describe('Custom fields as key-value pairs'),
+  custom_fields: z
+    .record(z.string(), z.any())
+    .optional()
+    .describe('Custom fields as key-value pairs'),
 });
 
 export function createCreateActivityTool(client: PipedriveClient) {

@@ -33,7 +33,7 @@ export const CreatePersonSchema = z.object({
   marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
   add_time: z.string().optional().describe('Creation time in ISO 8601 format'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values.'),
 });
@@ -63,7 +63,7 @@ export const UpdatePersonSchema = z.object({
   visible_to: VisibilitySchema.optional().describe('Visibility of the person'),
   marketing_status: MarketingStatusSchema.optional().describe('Marketing consent status'),
   custom_fields: z
-    .record(z.unknown())
+    .record(z.string(), z.unknown())
     .optional()
     .describe('Map of custom field names (or hash keys) to values.'),
 });
@@ -101,9 +101,7 @@ export const SearchPersonsSchema = z
       .describe('Search term'),
     fields: z
       .enum(['name', 'email', 'phone', 'notes', 'custom_fields', 'all'], {
-        errorMap: () => ({
-          message: 'Fields must be one of: name, email, phone, notes, custom_fields, all',
-        }),
+        error: 'Fields must be one of: name, email, phone, notes, custom_fields, all',
       })
       .optional()
       .default('all')
@@ -194,9 +192,7 @@ export const GetPersonDealsSchema = z
       .describe('Number of items to return'),
     status: z
       .enum(['open', 'won', 'lost', 'deleted', 'all_not_deleted'], {
-        errorMap: () => ({
-          message: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
-        }),
+        error: 'Status must be one of: open, won, lost, deleted, all_not_deleted',
       })
       .optional()
       .default('all_not_deleted')

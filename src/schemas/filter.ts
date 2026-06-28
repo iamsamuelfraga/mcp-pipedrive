@@ -6,7 +6,7 @@ import { IdSchema } from './common.js';
  */
 export const FilterTypeSchema = z
   .enum(['deals', 'org', 'people', 'products', 'activities'], {
-    errorMap: () => ({ message: 'Type must be one of: deals, org, people, products, activities' }),
+    error: 'Type must be one of: deals, org, people, products, activities',
   })
   .describe('The type of filter');
 
@@ -19,7 +19,7 @@ export const FilterOperatorSchema = z
   .enum(
     ['=', '!=', '<', '>', '<=', '>=', 'IS NULL', 'IS NOT NULL', 'LIKE', 'NOT LIKE', 'IN', 'NOT IN'],
     {
-      errorMap: () => ({ message: 'Invalid operator' }),
+      error: 'Invalid operator',
     }
   )
   .describe('Condition operator');
@@ -61,7 +61,7 @@ export const FilterConditionGroupSchema: z.ZodType<{
   z.object({
     glue: z
       .enum(['and', 'or'], {
-        errorMap: () => ({ message: 'Glue must be "and" or "or"' }),
+        error: 'Glue must be "and" or "or"',
       })
       .describe('How to combine conditions (AND/OR)'),
     conditions: z

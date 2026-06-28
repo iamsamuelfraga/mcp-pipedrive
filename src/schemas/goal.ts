@@ -9,7 +9,10 @@ export const GoalTypeSchema = z.object({
     .string()
     .min(1, 'Goal type name is required')
     .describe('Type of goal (e.g., deals_won, activities_completed)'),
-  params: z.record(z.unknown()).optional().describe('Additional parameters for the goal type'),
+  params: z
+    .record(z.string(), z.unknown())
+    .optional()
+    .describe('Additional parameters for the goal type'),
 });
 
 /**
@@ -19,7 +22,7 @@ export const GoalAssigneeSchema = z.object({
   id: IdSchema.describe('User or team ID'),
   type: z
     .enum(['person', 'team'], {
-      errorMap: () => ({ message: 'Assignee type must be either person or team' }),
+      error: 'Assignee type must be either person or team',
     })
     .describe('Type of assignee'),
 });
@@ -60,9 +63,7 @@ export const CreateGoalSchema = z
     duration: GoalDurationSchema.describe('Goal duration period'),
     interval: z
       .enum(['weekly', 'monthly', 'quarterly', 'yearly'], {
-        errorMap: () => ({
-          message: 'Interval must be one of: weekly, monthly, quarterly, yearly',
-        }),
+        error: 'Interval must be one of: weekly, monthly, quarterly, yearly',
       })
       .describe('Goal interval'),
   })
@@ -88,9 +89,7 @@ export const UpdateGoalSchema = z
     duration: GoalDurationSchema.optional().describe('Goal duration period'),
     interval: z
       .enum(['weekly', 'monthly', 'quarterly', 'yearly'], {
-        errorMap: () => ({
-          message: 'Interval must be one of: weekly, monthly, quarterly, yearly',
-        }),
+        error: 'Interval must be one of: weekly, monthly, quarterly, yearly',
       })
       .optional()
       .describe('Goal interval'),

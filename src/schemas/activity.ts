@@ -14,9 +14,7 @@ import {
  */
 export const ActivityTypeSchema = z
   .enum(['call', 'meeting', 'task', 'deadline', 'email', 'lunch'], {
-    errorMap: () => ({
-      message: 'Activity type must be one of: call, meeting, task, deadline, email, lunch',
-    }),
+    error: 'Activity type must be one of: call, meeting, task, deadline, email, lunch',
   })
   .describe('Type of activity');
 
@@ -27,7 +25,7 @@ export type ActivityType = z.infer<typeof ActivityTypeSchema>;
  */
 export const DurationUnitSchema = z
   .enum(['h', 'm'], {
-    errorMap: () => ({ message: 'Duration unit must be h (hours) or m (minutes)' }),
+    error: 'Duration unit must be h (hours) or m (minutes)',
   })
   .describe('Duration unit');
 

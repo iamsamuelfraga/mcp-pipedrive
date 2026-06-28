@@ -108,7 +108,8 @@ export class PipedriveClient {
     additionalFields?: Record<string, string | number>
   ): Promise<unknown> {
     const formData = new FormData();
-    const blob = new Blob([file]);
+    // @types/node 26 no longer treats Buffer as a BlobPart; wrap in a Uint8Array view.
+    const blob = new Blob([new Uint8Array(file)]);
     formData.append('file', blob, filename);
 
     // Add additional fields
