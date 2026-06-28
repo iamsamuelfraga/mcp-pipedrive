@@ -1,6 +1,6 @@
 {
   "name": "@nubiia/mcp-pipedrive",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Pipedrive CRM MCP server: deals, leads, contacts, pipelines, activities & custom fields for AI assistants like Claude. 300+ tools. Built by Nubiia.",
   "type": "module",
   "bin": {

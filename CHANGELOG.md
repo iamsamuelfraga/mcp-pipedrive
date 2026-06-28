@@ -1,3 +1,10 @@
+## [2.6.1](https://github.com/nubiia-dev/mcp-pipedrive/compare/v2.6.0...v2.6.1) (2026-06-28)
+
+
+### Bug Fixes
+
+* refresh npm package metadata and README (Nubiia branding, keywords, tool table) ([1ab552f](https://github.com/nubiia-dev/mcp-pipedrive/commit/1ab552f214c84fddc66f0850b0ca9429ae7499a1))
+
 # [2.6.0](https://github.com/nubiia-dev/mcp-pipedrive/compare/v2.5.0...v2.6.0) (2026-06-28)
 
 
