@@ -25,18 +25,18 @@ A production-ready [Model Context Protocol](https://modelcontextprotocol.io) ser
 
 ## Tool Categories
 
-| Category | Tools | Description |
-|----------|-------|-------------|
-| **Deals** | 23 | Complete deal lifecycle management including creation, updates, stage movement, participants, products, and files |
-| **Persons** | 12 | Contact management with custom fields, activities, deals, files, and follower management |
-| **Organizations** | 12 | Company/organization management with relationships to persons, deals, and activities |
-| **Activities** | 8 | Task, call, and meeting scheduling with due dates and completion tracking |
-| **Files** | 7 | File upload, download, management, and remote file linking |
-| **Search** | 6 | Universal search and entity-specific search across deals, persons, organizations, and products |
-| **Pipelines** | 8 | Pipeline and stage management, including stage conversion statistics |
-| **Notes** | 5 | Note creation and management for deals, persons, and organizations |
-| **Fields** | 8 | Custom field discovery and metadata for all entity types |
-| **System** | 5 | Health checks, metrics, user info, currencies, and cache management |
+| Category          | Tools | Description                                                                                                       |
+| ----------------- | ----- | ----------------------------------------------------------------------------------------------------------------- |
+| **Deals**         | 23    | Complete deal lifecycle management including creation, updates, stage movement, participants, products, and files |
+| **Persons**       | 12    | Contact management with custom fields, activities, deals, files, and follower management                          |
+| **Organizations** | 12    | Company/organization management with relationships to persons, deals, and activities                              |
+| **Activities**    | 8     | Task, call, and meeting scheduling with due dates and completion tracking                                         |
+| **Files**         | 7     | File upload, download, management, and remote file linking                                                        |
+| **Search**        | 6     | Universal search and entity-specific search across deals, persons, organizations, and products                    |
+| **Pipelines**     | 8     | Pipeline and stage management, including stage conversion statistics                                              |
+| **Notes**         | 5     | Note creation and management for deals, persons, and organizations                                                |
+| **Fields**        | 8     | Custom field discovery and metadata for all entity types                                                          |
+| **System**        | 5     | Health checks, metrics, user info, currencies, and cache management                                               |
 
 ## Installation
 
@@ -99,12 +99,12 @@ Edit `%APPDATA%\Claude\claude_desktop_config.json`:
 
 ### Environment Variables
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `PIPEDRIVE_API_TOKEN` | Yes | - | Your Pipedrive API token |
-| `PIPEDRIVE_READ_ONLY` | No | `false` | Enable read-only mode (blocks all write operations) |
-| `PIPEDRIVE_TOOLSETS` | No | `deals,persons,organizations,activities` | Comma-separated list of enabled tool categories |
-| `LOG_LEVEL` | No | `info` | Logging level (`debug`, `info`, `warn`, `error`) |
+| Variable              | Required | Default                                  | Description                                         |
+| --------------------- | -------- | ---------------------------------------- | --------------------------------------------------- |
+| `PIPEDRIVE_API_TOKEN` | Yes      | -                                        | Your Pipedrive API token                            |
+| `PIPEDRIVE_READ_ONLY` | No       | `false`                                  | Enable read-only mode (blocks all write operations) |
+| `PIPEDRIVE_TOOLSETS`  | No       | `deals,persons,organizations,activities` | Comma-separated list of enabled tool categories     |
+| `LOG_LEVEL`           | No       | `info`                                   | Logging level (`debug`, `info`, `warn`, `error`)    |
 
 ### Advanced Configuration Examples
 
@@ -176,6 +176,7 @@ to the end of next month and add a follow-up call for tomorrow.
 ```
 
 Claude will:
+
 1. Search for or create the person "John Smith"
 2. Create the deal linked to this person
 3. Schedule a call activity for tomorrow
@@ -188,6 +189,7 @@ Find all contacts at Acme Corporation and show me their recent deals.
 ```
 
 Claude will:
+
 1. Search organizations for "Acme Corporation"
 2. Get all persons associated with that organization
 3. Retrieve deals for each person
@@ -201,6 +203,7 @@ to next week.
 ```
 
 Claude will:
+
 1. List all activities with `done=false` and past due dates
 2. Filter for activities linked to open deals
 3. Update each activity with new dates next week
@@ -214,6 +217,7 @@ for deals and explain what each one means.
 ```
 
 Claude will:
+
 1. Access the `pipedrive://custom-fields` resource
 2. Extract deal-specific custom fields
 3. Display field names, types, and options
@@ -227,6 +231,7 @@ each stage in my sales pipeline.
 ```
 
 Claude will:
+
 1. Use the `pipedrive://pipelines` resource
 2. Get deal summaries grouped by stage
 3. Calculate totals and percentages
@@ -239,6 +244,7 @@ Run the weekly pipeline review prompt.
 ```
 
 Claude will:
+
 1. Execute the `weekly-pipeline-review` prompt
 2. Gather all open deals by stage
 3. Calculate metrics (won/lost, approaching close, stale deals)
@@ -272,6 +278,25 @@ Manage pipeline stages and lead labels directly from the LLM:
 
 Convert qualified leads into deals (or roll a deal back to a lead) via the asynchronous
 `*_convert_to_*` / `*_convert_status` tool pairs.
+
+### Deal installments
+
+Manage scheduled, fixed payments on a deal (API v2 — the modern replacement for the legacy
+subscriptions feature):
+
+```json
+{ "id": 123, "description": "Deposit", "amount": 500, "billing_date": "2026-01-15" }
+```
+
+Tools: `deals_list_installments`, `deals_add_installment`, `deals_update_installment`,
+`deals_delete_installment`.
+
+### Full field coverage
+
+Field tools now cover every entity: deal, person, organization, product, **lead** and
+**note** field listings (`fields_list_lead_fields`, `fields_list_note_fields` — read-only),
+plus full **project field** CRUD via API v2 (`fields_list_project_fields`,
+`fields_create_project_field`, `fields_update_project_field`, `fields_delete_project_field`).
 
 ## Architecture
 
@@ -320,16 +345,17 @@ Five guided workflows for common operations:
 
 ### Caching Strategy
 
-| Data Type | TTL | Reason |
-|-----------|-----|--------|
-| Pipelines | 10 min | Pipeline structures change infrequently |
+| Data Type     | TTL    | Reason                                  |
+| ------------- | ------ | --------------------------------------- |
+| Pipelines     | 10 min | Pipeline structures change infrequently |
 | Custom Fields | 15 min | Field definitions are relatively static |
-| User Info | 1 min | User data may change during session |
-| List Requests | 5 min | Default for paginated results |
+| User Info     | 1 min  | User data may change during session     |
+| List Requests | 5 min  | Default for paginated results           |
 
 ### Metrics
 
 The server tracks:
+
 - Total requests and success rate
 - Average response time
 - Error rate by type
@@ -354,18 +380,19 @@ Before creating or updating entities, check available custom fields:
 
 ```javascript
 // Access via MCP resource
-pipedrive://custom-fields
+//custom-fields
 
 // Or use field tools
-fields/deal-fields
-fields/person-fields
-fields/org-fields
-fields/activity-fields
+pipedrive: fields / deal - fields;
+fields / person - fields;
+fields / org - fields;
+fields / activity - fields;
 ```
 
 ### Error Handling
 
 All tools return structured errors with:
+
 - Error type (validation, authentication, rate limit, etc.)
 - Detailed message
 - Suggested actions
@@ -399,6 +426,7 @@ Chain multiple tools together for complex workflows:
 See [TROUBLESHOOTING.md](./docs/TROUBLESHOOTING.md) for common issues and solutions.
 
 Quick fixes:
+
 - **Authentication errors**: Verify your API token at https://app.pipedrive.com/settings/api
 - **Rate limiting**: Reduce request frequency or enable caching
 - **Validation errors**: Check tool input schema and required fields

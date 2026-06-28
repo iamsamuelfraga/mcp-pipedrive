@@ -21,6 +21,7 @@ import { getPersonTools } from './persons.js';
 import { getStatusTools } from './status.js';
 import { getBulkTools } from './bulk.js';
 import { getDealConvertTools } from './convert.js';
+import { getInstallmentTools } from './installments.js';
 
 /**
  * Get all deal-related tools for the MCP server
@@ -43,6 +44,8 @@ import { getDealConvertTools } from './convert.js';
  * - Persons: list_persons
  * - Status: mark_as_won, mark_as_lost
  * - Bulk: bulk_delete
+ * - Conversions: convert_to_lead, convert_status
+ * - Installments (API v2): list_installments, add_installment, update_installment, delete_installment
  *
  * @param client - The PipedriveClient instance to use for API calls
  * @returns Object containing all deal tools with their configurations
@@ -71,5 +74,6 @@ export function getDealTools(client: PipedriveClient) {
     ...getStatusTools(client),
     ...getBulkTools(client),
     ...getDealConvertTools(client),
+    ...getInstallmentTools(client),
   };
 }

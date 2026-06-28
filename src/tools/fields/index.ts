@@ -4,6 +4,9 @@ import { getListPersonFieldsTool } from './person-fields.js';
 import { getListOrganizationFieldsTool } from './org-fields.js';
 import { getListActivityFieldsTool } from './activity-fields.js';
 import { getListProductFieldsTool } from './product-fields.js';
+import { getListLeadFieldsTool } from './lead-fields.js';
+import { getListNoteFieldsTool } from './note-fields.js';
+import { getProjectFieldTools } from './project-fields.js';
 import { getGetFieldTool } from './get-field.js';
 import { getListAllFieldsTool } from './all-fields.js';
 import { getSearchFieldsTool } from './search-fields.js';
@@ -53,6 +56,8 @@ export function getFieldTools(client: PipedriveClient) {
     ...getListOrganizationFieldsTool(client),
     ...getListActivityFieldsTool(client),
     ...getListProductFieldsTool(client),
+    ...getListLeadFieldsTool(client),
+    ...getListNoteFieldsTool(client),
     ...getGetFieldTool(client),
     ...getListAllFieldsTool(client),
     ...getSearchFieldsTool(client),
@@ -76,5 +81,7 @@ export function getFieldTools(client: PipedriveClient) {
     ...getUpdateProductFieldTool(client),
     ...getDeleteProductFieldTool(client),
     ...getBulkDeleteProductFieldsTool(client),
+
+    ...getProjectFieldTools(client),
   };
 }
