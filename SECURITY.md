@@ -25,7 +25,7 @@ Send a detailed report to:
 
 Or use GitHub's private security advisory feature:
 
-1. Go to the [Security tab](https://github.com/iamsamuelfraga/mcp-pipedrive/security)
+1. Go to the [Security tab](https://github.com/nubiia-dev/mcp-pipedrive/security)
 2. Click "Report a vulnerability"
 3. Fill out the form with details
 
@@ -137,10 +137,10 @@ For exploratory use or when you don't need write access:
 
 ```bash
 # Check for updates regularly
-npm outdated -g @iamsamuelfraga/mcp-pipedrive
+npm outdated -g @nubiia/mcp-pipedrive
 
 # Update to latest version
-npm update -g @iamsamuelfraga/mcp-pipedrive
+npm update -g @nubiia/mcp-pipedrive
 ```
 
 #### 6. Secure Your Development Environment

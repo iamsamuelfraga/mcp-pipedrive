@@ -1,18 +1,18 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/draft/server.schema.json",
-  "name": "io.github.iamsamuelfraga/mcp-pipedrive",
+  "name": "io.github.nubiia-dev/mcp-pipedrive",
   "description": "Complete Pipedrive CRM integration with 254 MCP tools for deals, contacts, and pipelines",
   "version": "1.1.1",
-  "homepage": "https://github.com/iamsamuelfraga/mcp-pipedrive",
+  "homepage": "https://github.com/nubiia-dev/mcp-pipedrive",
   "license": "MIT",
   "author": {
     "name": "Samuel Fraga",
     "url": "https://github.com/iamsamuelfraga"
   },
-  "sourceCode": "https://github.com/iamsamuelfraga/mcp-pipedrive",
+  "sourceCode": "https://github.com/nubiia-dev/mcp-pipedrive",
   "package": {
     "registryType": "npm",
-    "identifier": "@iamsamuelfraga/mcp-pipedrive",
+    "identifier": "@nubiia/mcp-pipedrive",
     "version": "1.1.1"
   },
   "environmentVariables": {
