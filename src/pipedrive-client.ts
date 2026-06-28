@@ -303,11 +303,15 @@ export class PipedriveClient {
   }
 
   private resolveUrl(endpoint: string): string {
-    // v2 endpoints come as "/api/v2/..." — use bare host.
-    // v1 endpoints come as "/deals", "/persons", etc. — prepend "/v1".
-    return endpoint.startsWith('/api/v2/')
-      ? `https://api.pipedrive.com${endpoint}`
-      : `${this.baseUrl}${endpoint}`;
+    // v1 endpoints come as "/deals", "/persons", etc. and live under baseUrl (".../v1").
+    // v2 endpoints come as "/api/v2/..." and hang off the bare host — derive it from
+    // baseUrl (strip the trailing "/v1") so both share the same host even if baseUrl
+    // is ever pointed at a company-specific domain.
+    if (endpoint.startsWith('/api/v2/')) {
+      const host = this.baseUrl.replace(/\/v1\/?$/, '');
+      return `${host}${endpoint}`;
+    }
+    return `${this.baseUrl}${endpoint}`;
   }
 
   private invalidateCachePattern(endpoint: string): void {
